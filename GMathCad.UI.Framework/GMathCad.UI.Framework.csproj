@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{89883CC4-E276-40ED-802F-260F61A610C1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GMathCad.UI.Framework</RootNamespace>
+    <AssemblyName>GMathCad.UI.Framework</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MyClass.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="UIElement.cs" />
+    <Compile Include="Screen.cs" />
+    <Compile Include="ElementHost.cs" />
+    <Compile Include="FrameworkElement.cs" />
+    <Compile Include="Common\Size.cs" />
+    <Compile Include="Common\Thickness.cs" />
+    <Compile Include="Common\Color.cs" />
+    <Compile Include="Controls\UserControl.cs" />
+    <Compile Include="Controls\ContentControl.cs" />
+    <Compile Include="Controls\Border.cs" />
+    <Compile Include="Controls\Decorator.cs" />
+    <Compile Include="Controls\Canvas.cs" />
+    <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="Input\Keyboard.cs" />
+    <Compile Include="Input\KeyboardDevice.cs" />
+    <Compile Include="Input\IKeyboardInputProvider.cs" />
+    <Compile Include="Input\WidgetKeyboardInputProvider.cs" />
+    <Compile Include="Input\Mouse.cs" />
+    <Compile Include="Input\MouseDevice.cs" />
+    <Compile Include="Input\IMouseInputProvider.cs" />
+    <Compile Include="Input\WidgetMouseInputProvider.cs" />
+    <Compile Include="Input\EventRouteFactory.cs" />
+    <Compile Include="Media\Visual.cs" />
+    <Compile Include="Controls\StackPanel.cs" />
+    <Compile Include="Controls\Orientation.cs" />
+    <Compile Include="Shapes\Shape.cs" />
+    <Compile Include="Shapes\Line.cs" />
+    <Compile Include="Common\HorizontalAlignment.cs" />
+    <Compile Include="Controls\PanelChildrenCollection.cs" />
+    <Compile Include="Controls\CanvasChildContainer.cs" />
+    <Compile Include="Controls\StackPanelChildContainer.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Shapes\" />
+  </ItemGroup>
+</Project>
