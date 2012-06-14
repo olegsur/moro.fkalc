@@ -45,9 +45,9 @@ namespace GMathCad.UI
 				Height = 1
 			};			
 			
-			panel.Children.Add (new StackPanelChildContainer(dividend));
-			panel.Children.Add (new StackPanelChildContainer(line));			
-			panel.Children.Add (new StackPanelChildContainer(divisor));
+			panel.AddChild (dividend);
+			panel.AddChild (line);			
+			panel.AddChild (divisor);
 			
 			panel.SetMargin (new Thickness (5), dividend);
 			panel.SetMargin (new Thickness (5), divisor);

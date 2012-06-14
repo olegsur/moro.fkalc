@@ -31,15 +31,37 @@ using System.Linq;
 
 namespace GMathCad.UI.Framework
 {
-	public class Canvas : Panel<CanvasChildContainer>
-	{
+	public class Canvas : Panel<CanvasChild>
+	{		
+		private List<CanvasChild> children = new List<CanvasChild>();
+		public override IEnumerable<CanvasChild> Children { get { return children; }}
+		
 		public Canvas ()
-		{
+		{		
 		}
-	
+		
+		public override void AddChild (UIElement uielement)
+		{
+			var child = new CanvasChild (uielement);
+			
+			AddVisualChild (child);
+			children.Add (child);
+		}
+		
+		public override void RemoveChild (UIElement uielement)
+		{
+			var child = children.FirstOrDefault (c => c.Content == uielement);			
+			
+			if (child == null)
+				return;
+			
+			RemoveVisualChild (child);			
+			children.Remove (child);
+		}
+						
 		protected override void OnRender (Cairo.Context cr)
 		{
-			foreach (var element in Children) {
+			foreach (var element in children) {
 				cr.Save ();				
 				
 				var matrix = new Cairo.Matrix (1, 0, 0, 1, element.X, element.Y);				
@@ -53,7 +75,7 @@ namespace GMathCad.UI.Framework
 		
 		public double GetLeft (UIElement element)
 		{
-			var el = Children.Cast<CanvasChildContainer>().FirstOrDefault (c => c.Content == element);
+			var el = children.FirstOrDefault (c => c.Content == element);
 			
 			if (el == null)
 				return 0;
@@ -63,7 +85,7 @@ namespace GMathCad.UI.Framework
 		
 		public void SetLeft (double left, UIElement element)
 		{
-			var el = Children.Cast<CanvasChildContainer> ().FirstOrDefault (c => c.Content == element);
+			var el = children.FirstOrDefault (c => c.Content == element);
 			
 			if (el == null)
 				return;
@@ -73,7 +95,7 @@ namespace GMathCad.UI.Framework
 		
 		public double GetTop (UIElement element)
 		{
-			var el = Children.Cast<CanvasChildContainer> ().FirstOrDefault (c => c.Content == element);
+			var el = children.FirstOrDefault (c => c.Content == element);
 			
 			if (el == null)
 				return 0;
@@ -83,7 +105,7 @@ namespace GMathCad.UI.Framework
 		
 		public void SetTop (double top, UIElement element)
 		{
-			var el = Children.Cast<CanvasChildContainer> ().FirstOrDefault (c => c.Content == element);
+			var el = children.FirstOrDefault (c => c.Content == element);
 			
 			if (el == null)
 				return;
@@ -93,27 +115,25 @@ namespace GMathCad.UI.Framework
 				
 		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
 		{
-			Children.ToList ().ForEach (r => r.Measure (availableSize, cr));
+			children.ToList ().ForEach (r => r.Measure (availableSize, cr));
 			
 			return availableSize;
 		}
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			foreach (var container in Children) {				
+			foreach (var container in children) {				
 				container.Arrange (!container.DesiredSize.IsEmpty ? container.DesiredSize : finalSize);
 			}
 		}
 		
 		public override Visual HitTest (double x, double y)
 		{
-			var hitTest = Children.Cast<CanvasChildContainer> ().FirstOrDefault (r => r.HitTest (x, y) != null);
+			var hitTest = children.FirstOrDefault (r => r.HitTest (x, y) != null);
 			if (hitTest != null) {
 				return hitTest.Content;
 			}
 			return this;
-		}	
-		
-		
+		}			
 	}
 }

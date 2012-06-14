@@ -1,5 +1,5 @@
 // 
-// StackPanelChildContainer.cs
+// CanvasChildContainer.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,19 +25,23 @@
 // THE SOFTWARE.
 
 using System;
+
 namespace GMathCad.UI.Framework
 {
-	public class StackPanelChildContainer : ContentControl
+	public class CanvasChild : ContentControl
 	{
-		public Thickness Margin { get; set; }
+		public double X { get; set; }
 
-		public HorizontalAlignment HorizontalAlignment { get; set; }
-			
-		public StackPanelChildContainer (UIElement child)
+		public double Y { get; set; }
+
+		public CanvasChild (UIElement child)
 		{
 			Content = child;
+		}
 			
-			HorizontalAlignment = HorizontalAlignment.Center;
+		public override Visual HitTest (double x, double y)
+		{
+			return Content.HitTest (x - X, y - Y);
 		}
 	}
 }

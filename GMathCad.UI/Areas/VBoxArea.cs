@@ -40,7 +40,7 @@ namespace GMathCad.UI
 		
 		public void AddArea (Area area)
 		{
-			panel.Children.Add (new StackPanelChildContainer(area));			
+			panel.AddChild (area);			
 			
 			area.Parent = this;	
 			

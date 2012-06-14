@@ -41,12 +41,12 @@ namespace GMathCad.UI.Framework
 			return null;
 		}
 		
-		protected internal void AddVisualChild (Visual visual)
+		protected void AddVisualChild (Visual visual)
 		{
 			visual.VisaulParent = this;
 		}
 		
-		protected internal void RemoveVisualChild (Visual visual)
+		protected void RemoveVisualChild (Visual visual)
 		{
 			visual.VisaulParent = null;
 		}

@@ -1,5 +1,5 @@
 // 
-// Panel.cs
+// StackPanelChildContainer.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,19 +25,19 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace GMathCad.UI.Framework
 {
-	public abstract class Panel<TChild> : FrameworkElement where TChild : UIElement
+	public class StackPanelChild : ContentControl
 	{
-		public PanelChildrenCollection<TChild> Children { get; private set; }		
-		
-		public Panel ()
-		{		
-			Children = new PanelChildrenCollection<TChild> (this);
-		}		
+		public Thickness Margin { get; set; }
+		public HorizontalAlignment HorizontalAlignment { get; set; }
+			
+		public StackPanelChild (UIElement child)
+		{
+			Content = child;
+			
+			HorizontalAlignment = HorizontalAlignment.Center;
+		}
 	}
 }
 

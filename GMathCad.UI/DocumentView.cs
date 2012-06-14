@@ -46,7 +46,7 @@ namespace GMathCad.UI
 			
 			Content = canvas;
 			
-			canvas.Children.Add (new CanvasChildContainer (documentCursor));
+			canvas.AddChild (documentCursor);
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
@@ -79,7 +79,7 @@ namespace GMathCad.UI
 		
 				var region = new MathRegion();
 				
-				canvas.Children.Add (new CanvasChildContainer(region));                				
+				canvas.AddChild (region);                				
 				canvas.SetLeft (canvas.GetLeft (documentCursor), region);
 				canvas.SetTop (canvas.GetTop (documentCursor), region);
 				

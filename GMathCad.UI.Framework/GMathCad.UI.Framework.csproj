@@ -50,8 +50,6 @@
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\Border.cs" />
     <Compile Include="Controls\Decorator.cs" />
-    <Compile Include="Controls\Canvas.cs" />
-    <Compile Include="Controls\Panel.cs" />
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardDevice.cs" />
@@ -63,17 +61,19 @@
     <Compile Include="Input\WidgetMouseInputProvider.cs" />
     <Compile Include="Input\EventRouteFactory.cs" />
     <Compile Include="Media\Visual.cs" />
-    <Compile Include="Controls\StackPanel.cs" />
     <Compile Include="Controls\Orientation.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="Common\HorizontalAlignment.cs" />
-    <Compile Include="Controls\PanelChildrenCollection.cs" />
-    <Compile Include="Controls\CanvasChildContainer.cs" />
-    <Compile Include="Controls\StackPanelChildContainer.cs" />
+    <Compile Include="Controls\Panels\Canvas.cs" />
+    <Compile Include="Controls\Panels\Panel.cs" />
+    <Compile Include="Controls\Panels\StackPanel.cs" />
+    <Compile Include="Controls\Panels\CanvasChild.cs" />
+    <Compile Include="Controls\Panels\StackPanelChild.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Shapes\" />
+    <Folder Include="Controls\Panels\" />
   </ItemGroup>
 </Project>

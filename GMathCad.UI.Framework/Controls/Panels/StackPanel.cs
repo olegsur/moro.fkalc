@@ -30,8 +30,11 @@ using System.Collections.Generic;
 
 namespace GMathCad.UI.Framework
 {
-	public class StackPanel : Panel<StackPanelChildContainer>
+	public class StackPanel : Panel<StackPanelChild>
 	{	
+		private List<StackPanelChild> children = new List<StackPanelChild>();
+		public override IEnumerable<StackPanelChild> Children { get { return children; }}
+		
 		public Orientation Orientation { get; set; }
 		
 		public StackPanel ()
@@ -39,9 +42,45 @@ namespace GMathCad.UI.Framework
 			Orientation = Orientation.Vertical;
 		}		
 		
+		public override void AddChild (UIElement uielement)
+		{
+			var child = new StackPanelChild (uielement);
+			
+			AddVisualChild (child);			
+			children.Add (child);
+		}
+		
+		public override void RemoveChild (UIElement uielement)
+		{
+			var child = children.FirstOrDefault (c => c.Content == uielement);	
+			
+			if (child == null)
+				return;
+			
+			RemoveVisualChild (child);			
+			children.Remove (child);
+		}
+		
+		public int GetPosition (UIElement uielement)
+		{
+			return children.FindIndex (c => c.Content == uielement);
+		}
+		
+		public void SetPosition (int position, UIElement uielement)
+		{
+			var oldIndex = children.FindIndex (c => c.Content == uielement);
+			
+			if (oldIndex == -1)
+				return;
+			
+			var child = children.ElementAt (oldIndex);
+			children.RemoveAt (oldIndex);
+			children.Insert (position, child);			
+		}
+		
 		public void SetMargin (Thickness margin, UIElement element)
 		{
-			var el = Children.FirstOrDefault (c => c.Content == element);
+			var el = children.FirstOrDefault (c => c.Content == element);
 			
 			if (el == null)
 				return;
@@ -51,7 +90,7 @@ namespace GMathCad.UI.Framework
 		
 		public void SetHorizontalAlignment (HorizontalAlignment alignment, UIElement element)
 		{
-			var el = Children.FirstOrDefault (c => c.Content == element);
+			var el = children.FirstOrDefault (c => c.Content == element);
 			
 			if (el == null)
 				return;
@@ -69,11 +108,11 @@ namespace GMathCad.UI.Framework
 			var height = 0d;			
 						
 			if (Orientation == Orientation.Horizontal) {
-				width = Children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				height = Children.Where (c => !c.DesiredSize.IsEmpty).Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
+				width = children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				height = children.Where (c => !c.DesiredSize.IsEmpty).Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
 			} else {
-				width = Children.Where (c => !c.DesiredSize.IsEmpty).Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				height = Children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
+				width = children.Where (c => !c.DesiredSize.IsEmpty).Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				height = children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
 			}
 		
 			return new Size (width, height);
@@ -81,7 +120,7 @@ namespace GMathCad.UI.Framework
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			foreach (var container in Children) {	
+			foreach (var container in children) {	
 				var width = !container.DesiredSize.IsEmpty ? container.DesiredSize.Width : finalSize.Width;
 				var height = !container.DesiredSize.IsEmpty ? container.DesiredSize.Height : finalSize.Height;
 				
@@ -98,7 +137,7 @@ namespace GMathCad.UI.Framework
 			var x = 0d;
 			var y = 0d;
 			
-			foreach (var child in Children) {
+			foreach (var child in children) {
 				cr.Save ();
 				
 				if (Orientation == Orientation.Horizontal)
@@ -126,7 +165,5 @@ namespace GMathCad.UI.Framework
 					y += child.Height + child.Margin.Bottom;
 			}
 		}
-		
-		
 	}
 }

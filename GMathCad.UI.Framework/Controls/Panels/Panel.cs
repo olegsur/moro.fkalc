@@ -1,5 +1,5 @@
 // 
-// CanvasChildContainer.cs
+// Panel.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,24 +25,21 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GMathCad.UI.Framework
 {
-	public class CanvasChildContainer : ContentControl
+	public abstract class Panel<TChild> : FrameworkElement
 	{
-		public double X { get; set; }
-
-		public double Y { get; set; }
-
-		public CanvasChildContainer (UIElement child)
-		{
-			Content = child;
-		}
-			
-		public override Visual HitTest (double x, double y)
-		{
-			return Content.HitTest (x - X, y - Y);
-		}
+		public abstract IEnumerable<TChild> Children { get; }		
+		
+		public Panel ()
+		{	
+		}		
+		
+		public abstract void AddChild (UIElement uielement);
+		public abstract void RemoveChild (UIElement uielement);
 	}
 }
 

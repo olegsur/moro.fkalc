@@ -41,7 +41,7 @@ namespace GMathCad.UI
 		
 		public void AddArea (Area area)
 		{
-			panel.Children.Add (new StackPanelChildContainer (area));			
+			panel.AddChild (area);			
 			
 			area.Parent = this;	
 			
@@ -50,11 +50,8 @@ namespace GMathCad.UI
 		
 		public void Replace (Area oldArea, Area newArea)
 		{
-			var oldContainer = panel.Children.First (c => c.Content == oldArea);
-			
-			var index = panel.Children.IndexOf (oldContainer);
-			panel.Children.Remove (oldContainer);
-			panel.Children.Insert (index, new StackPanelChildContainer (newArea));		
+			var container = panel.Children.First (c => c.Content == oldArea);			
+			container.Content = newArea;
 		}
 	}
 }
