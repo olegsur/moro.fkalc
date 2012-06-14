@@ -38,7 +38,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="UIElement.cs" />
     <Compile Include="Screen.cs" />

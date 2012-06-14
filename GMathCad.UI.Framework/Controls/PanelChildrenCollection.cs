@@ -6,12 +6,12 @@ namespace GMathCad.UI.Framework
 {
 	public class PanelChildrenCollection<T> : IList<T> where T:UIElement
 	{
-		private Panel<T> owner;
+		private Visual parent;
 		private List<T> children = new List<T>();	
 		
-		public PanelChildrenCollection (Panel<T> owner)
+		public PanelChildrenCollection (Visual parent)
 		{
-			this.owner = owner;
+			this.parent = parent;
 		}
 
 		#region IEnumerable implementation
@@ -31,14 +31,14 @@ namespace GMathCad.UI.Framework
 		#region ICollection implementation
 		public void Add (T item)
 		{
-			owner.AddVisualChild (item);
+			parent.AddVisualChild (item);
 			children.Add (item);
 		}
 
 		public void Clear ()
 		{
 			foreach (var item in children)
-				owner.RemoveVisualChild (item);
+				parent.RemoveVisualChild (item);
 			
 			children.Clear ();
 		}
@@ -58,7 +58,7 @@ namespace GMathCad.UI.Framework
 			var removed = children.Remove (item);
 			
 			if (removed)
-				owner.RemoveVisualChild (item);
+				parent.RemoveVisualChild (item);
 			
 			return removed; 
 		}
@@ -84,13 +84,13 @@ namespace GMathCad.UI.Framework
 
 		public void Insert (int index, T item)
 		{
-			owner.AddVisualChild (item);
+			parent.AddVisualChild (item);
 			children.Insert (index, item);
 		}
 
 		public void RemoveAt (int index)
 		{
-			owner.RemoveVisualChild (this [index]);
+			parent.RemoveVisualChild (this [index]);
 			children.RemoveAt (index);
 		}
 
