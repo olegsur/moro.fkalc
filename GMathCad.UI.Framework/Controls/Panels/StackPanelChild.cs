@@ -1,5 +1,5 @@
 // 
-// StackPanelChildContainer.cs
+// StackPanelChild.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>

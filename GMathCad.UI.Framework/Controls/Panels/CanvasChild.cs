@@ -1,5 +1,5 @@
 // 
-// CanvasChildContainer.cs
+// CanvasChild.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
