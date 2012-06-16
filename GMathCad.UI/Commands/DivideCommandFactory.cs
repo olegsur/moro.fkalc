@@ -1,5 +1,5 @@
 // 
-// DevideArea.cs
+// DivideCommandFactory.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,37 +25,25 @@
 // THE SOFTWARE.
 
 using System;
-using GMathCad.UI.Framework;
 
 namespace GMathCad.UI
 {
-	public class DevideArea : Area
+	public class DivideCommandFactory
 	{
-		private StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
-		
-		//public Area Dividend { get; private set; }
-		//public Area Divisor { get; private set; }
-		
-		public DevideArea (Area dividend, Area divisor) : base ()
+		public DivideCommandFactory ()
 		{
-			Content = panel;
+		}
+		
+		public bool IsSupported (uint keyval)
+		{
+			var name = Gdk.Keyval.Name (keyval);			
 			
-			var line = new Line ()
-			{
-				Height = 1
-			};			
-			
-			panel.AddChild (dividend);
-			panel.AddChild (line);			
-			panel.AddChild (divisor);
-			
-			panel.SetMargin (new Thickness (5), dividend);
-			panel.SetMargin (new Thickness (5), divisor);
-			
-			panel.SetHorizontalAlignment (HorizontalAlignment.Stretch, line);
-			
-			dividend.Parent = this;
-			divisor.Parent = this;
+			return name.ToLower () == "slash";	
+		}
+		
+		public DivideCommand Build (MathRegion region)
+		{			
+			return new DivideCommand (region);
 		}
 	}
 }

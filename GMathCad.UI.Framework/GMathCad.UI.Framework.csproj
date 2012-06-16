@@ -70,6 +70,7 @@
     <Compile Include="Controls\Panels\StackPanel.cs" />
     <Compile Include="Controls\Panels\CanvasChild.cs" />
     <Compile Include="Controls\Panels\StackPanelChild.cs" />
+    <Compile Include="Controls\Control.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

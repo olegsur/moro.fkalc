@@ -28,7 +28,7 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public class ContentControl : FrameworkElement
+	public class ContentControl : Control
 	{
 		private UIElement content;		
 		
@@ -70,7 +70,10 @@ namespace GMathCad.UI.Framework
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
-			if (Content == null) return;
+			base.OnRender (cr);
+			
+			if (Content == null)
+				return;
 			
 			Content.Render (cr);
 		}

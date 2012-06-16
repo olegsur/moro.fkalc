@@ -1,5 +1,5 @@
 // 
-// VBoxArea.cs
+// DivideArea.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -30,22 +30,58 @@ using System.Linq;
 
 namespace GMathCad.UI
 {
-	public class VBoxArea: ContainerArea
+	public class DivideArea : ContainerArea
 	{
-		private StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };  
+		private StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
 		
-		public VBoxArea ()
+		private Area dividend;
+		private Area divisor;				
+		
+		public DivideArea ()
 		{
-			Content = panel;
+			Content = panel;		
+			
+			dividend = new TextArea ();
+			divisor = new TextArea ();
+			
+			var line = new Line ()
+			{
+				Height = 1
+			};
+			
+			panel.AddChild (dividend);
+			panel.AddChild (line);			
+			panel.AddChild (divisor);
+			
+			panel.SetMargin (new Thickness (5, 0, 5, 5), dividend);
+			panel.SetMargin (new Thickness (5, 5, 5, 0), divisor);
+			
+			panel.SetHorizontalAlignment (HorizontalAlignment.Stretch, line);
+			
+			dividend.Parent = this;
+			divisor.Parent = this;			
+		}
+					
+		public Area Dividend { 
+			get { return dividend;} 
+			set {
+				if (dividend == value)
+					return;
+								
+				Replace (dividend, value);
+				dividend = value;
+			}
 		}
 		
-		public void AddArea (Area area)
-		{
-			panel.AddChild (area);			
-			
-			area.Parent = this;	
-			
-			panel.SetMargin (new Thickness (5), area);
+		public Area Divisor { 
+			get { return divisor;} 
+			set {
+				if (divisor == value)
+					return;
+				
+				Replace (divisor, value);				
+				divisor = value;				
+			}
 		}
 		
 		public override void Replace (Area oldArea, Area newArea)
@@ -55,7 +91,7 @@ namespace GMathCad.UI
 			
 			oldArea.Parent = null;
 			newArea.Parent = this;
-		}		
+		}
+		
 	}
 }
-

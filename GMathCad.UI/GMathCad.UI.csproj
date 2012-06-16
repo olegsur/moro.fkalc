@@ -73,7 +73,13 @@
     <Compile Include="Areas\HBoxArea.cs" />
     <Compile Include="Areas\Area.cs" />
     <Compile Include="Areas\VBoxArea.cs" />
-    <Compile Include="Areas\DevideArea.cs" />
+    <Compile Include="Commands\InsertCharacterCommandFactory.cs" />
+    <Compile Include="Commands\PlusCommand.cs" />
+    <Compile Include="Commands\PlusCommandFactory.cs" />
+    <Compile Include="Areas\ContainerArea.cs" />
+    <Compile Include="Areas\DivideArea.cs" />
+    <Compile Include="Commands\DivideCommand.cs" />
+    <Compile Include="Commands\DivideCommandFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

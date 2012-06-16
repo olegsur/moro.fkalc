@@ -1,5 +1,5 @@
 // 
-// Thickness.cs
+// ContainerArea.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,31 +23,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public struct Thickness
-	{	
-		public double Bottom { get; private set; }
-
-		public double Left { get; private set; }
-
-		public double Right { get; private set; }
-
-		public double Top { get; private set; }
-		
-		public Thickness (double uniformLength) : this (uniformLength,uniformLength,uniformLength,uniformLength)
-		{
-		}
-		
-		public Thickness (double left, double top, double right, double bottom) : this()
-		{
-			Left = left;
-			Top = top;
-			Right = right;
-			Bottom = bottom;		
-		}
+	public abstract class ContainerArea : Area
+	{
+		public abstract void Replace (Area oldArea, Area newArea);
 	}
 }
+

@@ -31,10 +31,11 @@ namespace GMathCad.UI
 {
 	public class Area : UserControl
 	{
-		public Area Parent { get; set; }
+		public ContainerArea Parent { get; set; }
 		
 		public Area ()
 		{
+			//BorderColor = new Color (200, 0, 0);
 		}
 	}
 }

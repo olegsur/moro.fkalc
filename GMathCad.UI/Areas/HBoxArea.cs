@@ -30,7 +30,7 @@ using System.Linq;
 
 namespace GMathCad.UI
 {
-	public class HBoxArea : Area
+	public class HBoxArea : ContainerArea
 	{
 		private StackPanel panel = new StackPanel () { Orientation = Orientation.Horizontal };  
 		
@@ -48,10 +48,13 @@ namespace GMathCad.UI
 			panel.SetMargin (new Thickness (5), area);
 		}
 		
-		public void Replace (Area oldArea, Area newArea)
+		public override void Replace (Area oldArea, Area newArea)
 		{
 			var container = panel.Children.First (c => c.Content == oldArea);			
 			container.Content = newArea;
+			
+			oldArea.Parent = null;
+			newArea.Parent = this;
 		}
 	}
 }

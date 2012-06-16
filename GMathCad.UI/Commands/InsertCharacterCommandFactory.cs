@@ -1,5 +1,5 @@
 // 
-// Thickness.cs
+// InsertCharacterCommandFactory.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,31 +23,32 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public struct Thickness
-	{	
-		public double Bottom { get; private set; }
-
-		public double Left { get; private set; }
-
-		public double Right { get; private set; }
-
-		public double Top { get; private set; }
-		
-		public Thickness (double uniformLength) : this (uniformLength,uniformLength,uniformLength,uniformLength)
+	public class InsertCharacterCommandFactory
+	{
+		public InsertCharacterCommandFactory ()
 		{
 		}
 		
-		public Thickness (double left, double top, double right, double bottom) : this()
+		public bool IsSupported (uint keyval)
 		{
-			Left = left;
-			Top = top;
-			Right = right;
-			Bottom = bottom;		
+			var name = Gdk.Keyval.Name (keyval);			
+			
+			if (name.Length != 1) return false;
+			
+			var key = name[0];
+			
+			return (key >= '0' && key <= '9') ||
+				(key >= 'A' && key <= 'Z') ||
+				(key >= 'a' && key <= 'z');
+		}
+		
+		public InsertCharacterCommand Build (uint key, MathRegion region)
+		{			
+			return new InsertCharacterCommand (key, region);
 		}
 	}
 }
+

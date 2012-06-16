@@ -74,12 +74,28 @@ namespace GMathCad.UI
 
 		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
 		{
-			ProcessKey (args.Event.Key);
+			ProcessKey (args.Event.KeyValue);
 		}
 		
-		private void ProcessKey (Gdk.Key key)
-		{			
-			new InsertCharacterCommand (key, this).Execute ();
+		private void ProcessKey (uint key)
+		{	
+			var factory = new InsertCharacterCommandFactory ();
+			if (factory.IsSupported (key)) {
+				factory.Build (key, this).Execute ();
+				return;
+			}
+			
+			var plusFactory = new PlusCommandFactory ();
+			if (plusFactory.IsSupported (key)) {
+				plusFactory.Build (this).Execute ();
+				return;
+			}
+			
+			var devideFactory = new DivideCommandFactory ();
+			if (devideFactory.IsSupported (key)) {
+				devideFactory.Build (this).Execute ();
+				return;
+			}
 		}
 		
 		public override Visual HitTest (double x, double y)

@@ -30,16 +30,22 @@ namespace GMathCad.UI.Framework
 {
 	public struct Color
 	{
-		public int R { get; set; }
-		public int G { get; set; }
-		public int B { get; set; }
+		public ushort Alfa { get; private set;}
+		public ushort R { get; private set; }
+		public ushort G { get; private set; }
+		public ushort B { get; private set; }
 		
-		public Color (int r, int g, int b) : this()
+		public Color (ushort r, ushort g, ushort b) : this(r, g, b, 255)
 		{
+		}
+		
+		public Color (ushort r, ushort g, ushort b, ushort alfa) : this()
+		{
+			Alfa = alfa;
 			R = r;			
 			G = g;
 			B = b;
-		}		
+		}
 		
 	}
 }

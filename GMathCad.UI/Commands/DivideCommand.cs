@@ -1,5 +1,5 @@
 // 
-// Thickness.cs
+// DivideCommand.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -26,28 +26,31 @@
 
 using System;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public struct Thickness
-	{	
-		public double Bottom { get; private set; }
-
-		public double Left { get; private set; }
-
-		public double Right { get; private set; }
-
-		public double Top { get; private set; }
+	public class DivideCommand
+	{
+		private MathRegion Region { get; set; }
 		
-		public Thickness (double uniformLength) : this (uniformLength,uniformLength,uniformLength,uniformLength)
+		public DivideCommand (MathRegion region)
 		{
+			Region = region;
 		}
 		
-		public Thickness (double left, double top, double right, double bottom) : this()
+		public void Execute ()
 		{
-			Left = left;
-			Top = top;
-			Right = right;
-			Bottom = bottom;		
+			var parent = Region.ActiveArea.Parent;
+			var dividend = Region.ActiveArea;
+			var divisor = new TextArea ();
+				
+			var divideArea = new DivideArea ();			
+
+			parent.Replace (Region.ActiveArea, divideArea);
+			divideArea.Dividend = dividend;
+			divideArea.Divisor = divisor;
+				
+			Region.ActiveArea = divisor;
 		}
 	}
 }
+

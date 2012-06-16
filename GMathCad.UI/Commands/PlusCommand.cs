@@ -1,5 +1,5 @@
 // 
-// Thickness.cs
+// PlusCommand.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -26,28 +26,46 @@
 
 using System;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public struct Thickness
-	{	
-		public double Bottom { get; private set; }
-
-		public double Left { get; private set; }
-
-		public double Right { get; private set; }
-
-		public double Top { get; private set; }
+	public class PlusCommand
+	{
+		private MathRegion Region { get; set; }
 		
-		public Thickness (double uniformLength) : this (uniformLength,uniformLength,uniformLength,uniformLength)
+		public PlusCommand (MathRegion region)
 		{
+			Region = region;
 		}
 		
-		public Thickness (double left, double top, double right, double bottom) : this()
+		public void Execute ()
 		{
-			Left = left;
-			Top = top;
-			Right = right;
-			Bottom = bottom;		
+			var operation = new TextArea ();
+			operation.Append ('+');
+				
+			var right = new TextArea ();
+				
+			if (Region.ActiveArea.Parent is HBoxArea) {				
+				var parent = Region.ActiveArea.Parent as HBoxArea;	
+				
+				parent.AddArea (operation);	
+				parent.AddArea (right);
+				
+				
+			} else {				
+				var parent = Region.ActiveArea.Parent;
+				
+				var container = new HBoxArea ();				
+				var area = Region.ActiveArea;
+				
+				parent.Replace(area, container);
+				
+				container.AddArea (area);
+				container.AddArea (operation);
+				container.AddArea (right);
+			}
+				
+			Region.ActiveArea = right;
 		}
 	}
 }
+
