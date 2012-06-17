@@ -43,6 +43,9 @@ namespace GMathCad.UI.Framework
 
 		public bool IsFocused { get; set; }
 		
+		public Visibility Visibility { get; set; }
+		public bool IsVisible { get { return Visibility == Visibility.Visible;} }
+		
 		public UIElement ()
 		{
 			Mouse.PreviewButtonPressEvent += HandlePreviewButtonPressEvent;

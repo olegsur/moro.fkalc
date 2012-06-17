@@ -23,29 +23,29 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 
 namespace GMathCad.UI.Framework
 {
 	public class ContentControl : Control
 	{
-		private UIElement content;		
+		private UIElement content;
 		
 		public ContentControl ()
 		{			
 		}
 		
-		public UIElement Content 
-		{ 
+		public UIElement Content { 
 			get { return content; }
-			set
-			{
-				if (content == value) return;
+			set {
+				if (content == value)
+					return;
 				
-				if (content != null) RemoveVisualChild (content);
+				if (content != null)
+					RemoveVisualChild (content);
 				
-				if (value != null) AddVisualChild (value);
+				if (value != null)
+					AddVisualChild (value);
 				
 				content = value;					
 			}
@@ -53,7 +53,8 @@ namespace GMathCad.UI.Framework
 		
 		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
 		{
-			if (Content == null) return Size.Empty;
+			if (Content == null || Content.Visibility == Visibility.Collapsed)
+				return Size.Empty;
 			
 			Content.Measure (availableSize, cr);
 			
@@ -62,7 +63,7 @@ namespace GMathCad.UI.Framework
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			if (Content == null)
+			if (Content == null || Content.Visibility == Visibility.Collapsed)
 				return;
 			
 			Content.Arrange (!Content.DesiredSize.IsEmpty ? new Size (Width, Height) : finalSize);
@@ -72,7 +73,7 @@ namespace GMathCad.UI.Framework
 		{
 			base.OnRender (cr);
 			
-			if (Content == null)
+			if (Content == null || !Content.IsVisible)
 				return;
 			
 			Content.Render (cr);
@@ -80,7 +81,8 @@ namespace GMathCad.UI.Framework
 		
 		public override Visual HitTest (double x, double y)
 		{
-			if (Content == null) return null;
+			if (Content == null || !Content.IsVisible)
+				return null;
 			
 			return Content.HitTest (x, y);
 		}

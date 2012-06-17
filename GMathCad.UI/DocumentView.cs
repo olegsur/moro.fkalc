@@ -53,9 +53,8 @@ namespace GMathCad.UI
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{		
-			if (Mouse.Device.TargetElement != canvas)
-			{
-				documentCursor.IsVisible = false;
+			if (Mouse.Device.TargetElement != canvas) {
+				documentCursor.Visibility = Visibility.Collapsed;
 				Screen.QueueDraw ();
 				return;
 			}
@@ -63,7 +62,7 @@ namespace GMathCad.UI
 			canvas.SetLeft (args.Event.X, documentCursor);
 			canvas.SetTop (args.Event.Y, documentCursor);
 						
-			documentCursor.IsVisible = true;
+			documentCursor.Visibility = Visibility.Visible;
     
 			Screen.QueueDraw ();			
 		}
@@ -75,9 +74,8 @@ namespace GMathCad.UI
 		
 		private void ProcessKey (Gdk.EventKey evnt)
 		{
-			if (Keyboard.FocusedElement == canvas)
-		    {
-				documentCursor.IsVisible = false;
+			if (Keyboard.FocusedElement == canvas) {
+				documentCursor.Visibility = Visibility.Collapsed;
 		
 				var region = new MathRegion();
 				

@@ -100,7 +100,7 @@ namespace GMathCad.UI.Framework
 						
 		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
 		{
-			foreach (var container in Children) {
+			foreach (var container in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
 				container.Measure (availableSize, cr);
 			}
 			
@@ -120,7 +120,7 @@ namespace GMathCad.UI.Framework
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			foreach (var container in children) {	
+			foreach (var container in children.Where(c => c.Visibility != Visibility.Collapsed)) {	
 				var width = !container.DesiredSize.IsEmpty ? container.DesiredSize.Width : finalSize.Width;
 				var height = !container.DesiredSize.IsEmpty ? container.DesiredSize.Height : finalSize.Height;
 				
@@ -137,7 +137,7 @@ namespace GMathCad.UI.Framework
 			var x = 0d;
 			var y = 0d;
 			
-			foreach (var child in children) {
+			foreach (var child in children.Where(c => c.IsVisible)) {
 				cr.Save ();
 				
 				if (Orientation == Orientation.Horizontal)

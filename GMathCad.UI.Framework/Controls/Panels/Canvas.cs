@@ -101,27 +101,29 @@ namespace GMathCad.UI.Framework
 				
 		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
 		{
-			children.ToList ().ForEach (r => r.Measure (availableSize, cr));
+			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {
+				child.Measure (availableSize, cr);
+			}			
 			
 			return new Size (0, 0);
 		}
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			foreach (var container in children) {				
-				container.Arrange (!container.DesiredSize.IsEmpty ? container.DesiredSize : finalSize);
+			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {				
+				child.Arrange (!child.DesiredSize.IsEmpty ? child.DesiredSize : finalSize);
 			}
 		}
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
-			foreach (var element in children) {
+			foreach (var child in children.Where(c => c.IsVisible)) {
 				cr.Save ();				
 				
-				var matrix = new Cairo.Matrix (1, 0, 0, 1, element.X, element.Y);				
+				var matrix = new Cairo.Matrix (1, 0, 0, 1, child.X, child.Y);				
 				cr.Transform (matrix);
 				
-				element.Render (cr);
+				child.Render (cr);
 				
 				cr.Restore ();
 			}
@@ -129,11 +131,11 @@ namespace GMathCad.UI.Framework
 		
 		public override Visual HitTest (double x, double y)
 		{
-			var hitTest = children.FirstOrDefault (r => r.HitTest (x, y) != null);
+			var hitTest = children.Where(c => IsVisible).FirstOrDefault (c => c.HitTest (x, y) != null);
 			if (hitTest != null) {
 				return hitTest.Content;
 			}
-			return this;
+			return x >= 0 && x <= Width && y >= 0 && y <= Height  ? this : null;
 		}
 	}
 }

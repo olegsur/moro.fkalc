@@ -51,8 +51,8 @@ namespace GMathCad.UI.Framework
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
-			cr.MoveTo (0, StrokeThickness / 2);
-			cr.LineTo (Width, Height - StrokeThickness / 2);			
+			cr.MoveTo (StrokeThickness / 2, StrokeThickness / 2);
+			cr.LineTo (Width - StrokeThickness / 2, Height - StrokeThickness / 2);			
 			
 			cr.LineWidth = StrokeThickness;
 			

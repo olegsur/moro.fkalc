@@ -1,5 +1,5 @@
 // 
-// DocumentCursor.cs
+// Visibility.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,63 +25,14 @@
 // THE SOFTWARE.
 
 using System;
-using Cairo;
-using GMathCad.UI.Framework;
 
-namespace GMathCad.UI
+namespace GMathCad.UI.Framework
 {
-	public class DocumentCursor : UserControl
+	public enum Visibility
 	{
-		public DocumentCursor ()
-		{
-			Visibility = Visibility.Visible;
-			
-			HeightRequest = 10;
-			WidthRequest = 10;
-			
-			var canvas = new Canvas ();
-			
-			var line1 = new Line ()
-			{
-				WidthRequest = 10,
-				HeightRequest = 2,
-				StrokeThickness = 2
-			};
-			
-			var line2 = new Line ()
-			{
-				WidthRequest = 2,
-				HeightRequest = 10,
-				StrokeThickness = 2
-			};
-			
-			canvas.AddChild (line1);
-			canvas.AddChild (line2);
-			
-			canvas.SetTop (4, line1);
-			canvas.SetLeft (4, line2);
-			
-			Content = canvas;
-		}	
-		
-	
-/*		protected override void OnRender (Context cr)
-		{
-			if (!IsVisible) return;
-			
-			cr.NewSubPath ();
-
-        	cr.MoveTo (5, 0);
-        	cr.LineTo (5, 10);
-        	cr.MoveTo (0, 5);
-        	cr.LineTo (10, 5);
-			
-			cr.Stroke ();
-		} */
-		
-		public override Visual HitTest (double x, double y)
-		{
-			return base.HitTest (x, y);
-		}
+		Visible,
+		Hidden,
+		Collapsed
 	}
 }
+
