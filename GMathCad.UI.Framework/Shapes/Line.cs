@@ -25,26 +25,37 @@
 // THE SOFTWARE.
 
 using System;
+
 namespace GMathCad.UI.Framework
 {
 	public class Line : Shape
 	{
+		public double? X1 { get; set; }		
+		public double? Y1 { get; set; }
+		
+		public double? X2 { get; set; }
+		public double? Y2 { get; set; }
+		
+		
 		public Line ()
 		{
 		}
 		
-		protected override void ArrangeCore (Size finalSize)
-		{			
-			Height = finalSize.Height;
-			Width = finalSize.Width;
+		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		{
+			var width = X1.HasValue && X2.HasValue ? Math.Abs (X1.Value - X2.Value) : 0;
+			var height = Y1.HasValue && Y2.HasValue ? Math.Abs (Y1.Value - Y2.Value) : 0;
 			
-			DesiredSize = new Size (Width, Height);
-		}		
+			return new Size (width, height);
+		}				
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
-			cr.MoveTo (0, 0);
-			cr.LineTo (Width, 0);			
+			cr.MoveTo (0, StrokeThickness / 2);
+			cr.LineTo (Width, Height - StrokeThickness / 2);			
+			
+			cr.LineWidth = StrokeThickness;
+			
 			cr.Stroke ();
 		}
 	}

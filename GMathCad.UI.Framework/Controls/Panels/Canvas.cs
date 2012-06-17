@@ -58,21 +58,7 @@ namespace GMathCad.UI.Framework
 			RemoveVisualChild (child);			
 			children.Remove (child);
 		}
-						
-		protected override void OnRender (Cairo.Context cr)
-		{
-			foreach (var element in children) {
-				cr.Save ();				
 				
-				var matrix = new Cairo.Matrix (1, 0, 0, 1, element.X, element.Y);				
-				cr.Transform (matrix);
-				
-				element.Render (cr);
-				
-				cr.Restore ();
-			}
-		}
-		
 		public double GetLeft (UIElement element)
 		{
 			var el = children.FirstOrDefault (c => c.Content == element);
@@ -117,13 +103,27 @@ namespace GMathCad.UI.Framework
 		{
 			children.ToList ().ForEach (r => r.Measure (availableSize, cr));
 			
-			return availableSize;
+			return new Size (0, 0);
 		}
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
 			foreach (var container in children) {				
 				container.Arrange (!container.DesiredSize.IsEmpty ? container.DesiredSize : finalSize);
+			}
+		}
+		
+		protected override void OnRender (Cairo.Context cr)
+		{
+			foreach (var element in children) {
+				cr.Save ();				
+				
+				var matrix = new Cairo.Matrix (1, 0, 0, 1, element.X, element.Y);				
+				cr.Transform (matrix);
+				
+				element.Render (cr);
+				
+				cr.Restore ();
 			}
 		}
 		
@@ -134,6 +134,6 @@ namespace GMathCad.UI.Framework
 				return hitTest.Content;
 			}
 			return this;
-		}			
+		}
 	}
 }

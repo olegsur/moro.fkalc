@@ -30,8 +30,11 @@ namespace GMathCad.UI.Framework
 {
 	public class Shape : FrameworkElement
 	{
+		public double StrokeThickness { get; set; }
+		
 		public Shape ()
 		{
+			StrokeThickness = 1;
 		}
 	}
 }

@@ -46,7 +46,8 @@ namespace GMathCad.UI
 			
 			var line = new Line ()
 			{
-				HeightRequest = 1
+				HeightRequest = 1,
+				StrokeThickness = 2
 			};
 			
 			panel.AddChild (dividend);
