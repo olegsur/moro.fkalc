@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 
 using System;
-using Cairo;
 using GMathCad.UI.Framework;
 
 namespace GMathCad.UI
@@ -45,14 +44,16 @@ namespace GMathCad.UI
 			{
 				WidthRequest = 10,
 				HeightRequest = 2,
-				StrokeThickness = 2
+				StrokeThickness = 2,
+				Stroke = new Color (255, 0, 0)
 			};
 			
 			var line2 = new Line ()
 			{
 				WidthRequest = 2,
 				HeightRequest = 10,
-				StrokeThickness = 2
+				StrokeThickness = 2,
+				Stroke = new Color (255, 0, 0)
 			};
 			
 			canvas.AddChild (line1);
@@ -62,26 +63,6 @@ namespace GMathCad.UI
 			canvas.SetLeft (4, line2);
 			
 			Content = canvas;
-		}	
-		
-	
-/*		protected override void OnRender (Context cr)
-		{
-			if (!IsVisible) return;
-			
-			cr.NewSubPath ();
-
-        	cr.MoveTo (5, 0);
-        	cr.LineTo (5, 10);
-        	cr.MoveTo (0, 5);
-        	cr.LineTo (10, 5);
-			
-			cr.Stroke ();
-		} */
-		
-		public override Visual HitTest (double x, double y)
-		{
-			return base.HitTest (x, y);
-		}
+		}					
 	}
 }

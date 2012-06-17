@@ -51,12 +51,17 @@ namespace GMathCad.UI.Framework
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
+			cr.Save ();
+									
 			cr.MoveTo (StrokeThickness / 2, StrokeThickness / 2);
 			cr.LineTo (Width - StrokeThickness / 2, Height - StrokeThickness / 2);			
 			
 			cr.LineWidth = StrokeThickness;
+			cr.Color = new Cairo.Color (Stroke.R, Stroke.G, Stroke.B);
 			
 			cr.Stroke ();
+			
+			cr.Restore ();
 		}
 	}
 }
