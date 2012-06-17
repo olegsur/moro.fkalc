@@ -45,7 +45,7 @@ namespace GMathCad.UI
 				WidthRequest = 10,
 				HeightRequest = 2,
 				StrokeThickness = 2,
-				Stroke = new Color (255, 0, 0)
+				Stroke = Colors.Red
 			};
 			
 			var line2 = new Line ()
@@ -53,7 +53,7 @@ namespace GMathCad.UI
 				WidthRequest = 2,
 				HeightRequest = 10,
 				StrokeThickness = 2,
-				Stroke = new Color (255, 0, 0)
+				Stroke = Colors.Red
 			};
 			
 			canvas.AddChild (line1);

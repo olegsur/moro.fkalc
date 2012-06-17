@@ -35,7 +35,7 @@ namespace GMathCad.UI.Framework
 		
 		public Border ()
 		{
-			BorderColor = new Color (0, 0, 0);
+			BorderColor = Colors.Black;
 			Padding = new Thickness (5);
 		}
 		

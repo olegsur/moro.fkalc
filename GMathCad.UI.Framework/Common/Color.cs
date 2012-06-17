@@ -35,7 +35,7 @@ namespace GMathCad.UI.Framework
 		public ushort G { get; private set; }
 		public ushort B { get; private set; }
 		
-		public Color (ushort r, ushort g, ushort b) : this(r, g, b, 255)
+		public Color (ushort r, ushort g, ushort b) : this(r, g, b, 1)
 		{
 		}
 		

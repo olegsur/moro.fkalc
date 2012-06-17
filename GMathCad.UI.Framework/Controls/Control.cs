@@ -8,7 +8,7 @@ namespace GMathCad.UI.Framework
 		
 		public Control ()
 		{
-			Background = new Color (255, 255, 255, 0);
+			Background = Colors.Transparent;
 		}
 		
 		protected override void OnRender (Cairo.Context cr)

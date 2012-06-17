@@ -36,7 +36,7 @@ namespace GMathCad.UI.Framework
 		public Shape ()
 		{
 			StrokeThickness = 1;
-			Stroke = new Color (0, 0, 0);
+			Stroke = Colors.Black;
 		}
 	}
 }
