@@ -33,11 +33,6 @@ namespace GMathCad.UI.Framework
 		{
 		}
 		
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
-		{
-			return new Size (Width, Height);
-		}
-		
 		protected override void ArrangeCore (Size finalSize)
 		{			
 			Height = finalSize.Height;

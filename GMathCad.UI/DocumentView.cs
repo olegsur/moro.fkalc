@@ -47,6 +47,8 @@ namespace GMathCad.UI
 			Content = canvas;
 			
 			canvas.AddChild (documentCursor);
+			
+			Background = new Color (255, 255, 255);
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)

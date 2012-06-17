@@ -30,8 +30,11 @@ namespace GMathCad.UI.Framework
 {
 	public class FrameworkElement : UIElement
 	{
-		public double Height { get; set; }
-		public double Width { get; set; }		
+		public double Height { get; protected set; }
+		public double Width { get; protected set; }	
+		
+		public double? HeightRequest { get; set; }
+		public double? WidthRequest { get; set; }
 		
 		public FrameworkElement ()
 		{			
@@ -39,7 +42,15 @@ namespace GMathCad.UI.Framework
 		
 		protected override Size MeasureCore (Size availableSize, Cairo.Context cr)
 		{
-			return MeasureOverride (availableSize, cr);
+			var size = MeasureOverride (availableSize, cr);
+			
+			if (size.IsEmpty)
+				return size;
+			
+			var height = HeightRequest ?? size.Height;
+			var width = WidthRequest ?? size.Width;
+			
+			return new Size (width, height);
 		}
 		
 		protected override void ArrangeCore (Size finalSize)
@@ -55,7 +66,7 @@ namespace GMathCad.UI.Framework
 		
 		protected virtual Size MeasureOverride (Size availableSize, Cairo.Context cr)
 		{		
-			return Size.Empty;
+			return new Size (0, 0);
 		}
 		
 		protected virtual void ArrangeOverride (Size finalSize)

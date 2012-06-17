@@ -60,7 +60,7 @@ namespace GMathCad.UI
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
 		{
-			border.BorderColor = new Color (155, 155, 155);
+			border.BorderColor = new Color (255, 0, 0);
 			
 			Screen.QueueDraw ();
 		}
