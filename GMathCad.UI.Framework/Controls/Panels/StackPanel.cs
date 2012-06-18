@@ -98,10 +98,10 @@ namespace GMathCad.UI.Framework
 			el.HorizontalAlignment = alignment;
 		}
 						
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureOverride (Size availableSize)
 		{
 			foreach (var container in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
-				container.Measure (availableSize, cr);
+				container.Measure (availableSize);
 			}
 			
 			var width = 0d;

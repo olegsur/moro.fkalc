@@ -41,7 +41,7 @@ namespace GMathCad.UI.Framework
 		{
 		}
 		
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureOverride (Size availableSize)
 		{
 			var width = X1.HasValue && X2.HasValue ? Math.Abs (X1.Value - X2.Value) : 0;
 			var height = Y1.HasValue && Y2.HasValue ? Math.Abs (Y1.Value - Y2.Value) : 0;

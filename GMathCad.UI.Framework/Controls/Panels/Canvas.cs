@@ -99,10 +99,10 @@ namespace GMathCad.UI.Framework
 			el.Y = top;
 		}
 				
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureOverride (Size availableSize)
 		{
 			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {
-				child.Measure (availableSize, cr);
+				child.Measure (availableSize);
 			}			
 			
 			return new Size (0, 0);

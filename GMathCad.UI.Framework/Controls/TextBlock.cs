@@ -46,14 +46,18 @@ namespace GMathCad.UI.Framework
 		    cr.ShowText(Text);
 		}
 		
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureOverride (Size availableSize)
 		{
-			cr.SelectFontFace("Georgia",Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
-			cr.SetFontSize(20);
+			var surface = new Cairo.ImageSurface (Cairo.Format.A1, 1, 1);
 			
-			var textExtents = cr.TextExtents(Text);
+			using (Cairo.Context cr = new Cairo.Context(surface)) {			
+				cr.SelectFontFace ("Georgia", Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
+				cr.SetFontSize (20);
 			
-			return new Size (textExtents.Width, textExtents.Height);
+				var textExtents = cr.TextExtents (Text);
+			
+				return new Size (textExtents.Width, textExtents.Height);
+			}
 		}		
 	}
 }

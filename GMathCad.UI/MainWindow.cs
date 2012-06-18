@@ -62,7 +62,7 @@ public partial class MainWindow: Gtk.Window
 			
 			var size = new Size (width, height);
 			
-			rootElement.Measure (size, cr);
+			rootElement.Measure (size);
 			rootElement.Arrange (size);
 			rootElement.Render (cr);
 		}		

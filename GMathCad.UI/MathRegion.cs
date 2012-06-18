@@ -48,7 +48,7 @@ namespace GMathCad.UI
 			border = new Border ()
 			{
 				Child = root,
-				BorderColor = Colors.Brown
+				BorderColor = Colors.Black
 			};	
 			
 			Content = border;
@@ -68,7 +68,7 @@ namespace GMathCad.UI
 		
 		private void HandleMouseLeaveEvent (object sender, EventArgs e)
 		{
-			border.BorderColor = Colors.Brown;
+			border.BorderColor = Colors.Black;
 			
 			Screen.QueueDraw ();
 		}

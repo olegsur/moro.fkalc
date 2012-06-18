@@ -51,12 +51,12 @@ namespace GMathCad.UI.Framework
 			}
 		}
 		
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureOverride (Size availableSize)
 		{
 			if (Content == null || Content.Visibility == Visibility.Collapsed)
 				return Size.Empty;
 			
-			Content.Measure (availableSize, cr);
+			Content.Measure (availableSize);
 			
 			return Content.DesiredSize;
 		}

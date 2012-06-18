@@ -68,12 +68,12 @@ namespace GMathCad.UI.Framework
 			cr.Stroke ();
 		}
 		
-		protected override Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureOverride (Size availableSize)
 		{
 			if (Child == null)
 				return Size.Empty;
 			
-			Child.Measure (availableSize, cr);
+			Child.Measure (availableSize);
 			
 			var width = Child.DesiredSize.Width + Padding.Left + Padding.Right;
 			var height = Child.DesiredSize.Height + Padding.Top + Padding.Bottom;

@@ -61,9 +61,9 @@ namespace GMathCad.UI.Framework
 			Keyboard.KeyPressEvent += OnKeyPressEvent;
 		}
 		
-		public void Measure (Size availableSize, Cairo.Context cr)
+		public void Measure (Size availableSize)
 		{	
-			DesiredSize = MeasureCore (availableSize, cr);
+			DesiredSize = MeasureCore (availableSize);
 		}
 		
 		public void Arrange (Size finalSize)
@@ -71,7 +71,7 @@ namespace GMathCad.UI.Framework
 			ArrangeCore (finalSize);
 		}
 		
-		protected virtual Size MeasureCore (Size availableSize, Cairo.Context cr)
+		protected virtual Size MeasureCore (Size availableSize)
 		{		
 			return Size.Empty;
 		}

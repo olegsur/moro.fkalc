@@ -40,9 +40,9 @@ namespace GMathCad.UI.Framework
 		{			
 		}
 		
-		protected override Size MeasureCore (Size availableSize, Cairo.Context cr)
+		protected override Size MeasureCore (Size availableSize)
 		{
-			var size = MeasureOverride (availableSize, cr);
+			var size = MeasureOverride (availableSize);
 			
 			if (size.IsEmpty)
 				return size;
@@ -64,7 +64,7 @@ namespace GMathCad.UI.Framework
 			ArrangeOverride (finalSize);
 		}
 		
-		protected virtual Size MeasureOverride (Size availableSize, Cairo.Context cr)
+		protected virtual Size MeasureOverride (Size availableSize)
 		{		
 			return new Size (0, 0);
 		}
