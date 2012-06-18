@@ -1,5 +1,5 @@
 // 
-// Line.cs
+// Ellipse.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -28,26 +28,11 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public class Line : Shape
+	public class Ellipse : Shape
 	{
-		public double? X1 { get; set; }		
-		public double? Y1 { get; set; }
-		
-		public double? X2 { get; set; }
-		public double? Y2 { get; set; }
-		
-		
-		public Line ()
+		public Ellipse ()
 		{
 		}
-		
-		protected override Size MeasureOverride (Size availableSize)
-		{
-			var width = X1.HasValue && X2.HasValue ? Math.Abs (X1.Value - X2.Value) : 0;
-			var height = Y1.HasValue && Y2.HasValue ? Math.Abs (Y1.Value - Y2.Value) : 0;
-			
-			return new Size (width, height);
-		}				
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
@@ -56,14 +41,14 @@ namespace GMathCad.UI.Framework
 			var anialias = cr.Antialias;
 			
 			cr.Antialias = SnapsToDevicePixels ? Cairo.Antialias.None : anialias;
-			
-			cr.MoveTo (StrokeThickness / 2, StrokeThickness / 2);
-			
-			cr.LineTo (Width - StrokeThickness / 2, Height - StrokeThickness / 2);			
-			
+						
 			cr.LineWidth = StrokeThickness;
 			cr.Color = new Cairo.Color (Stroke.R, Stroke.G, Stroke.B);
 			
+			cr.Scale (1, Height / Width);
+			
+			cr.Arc (Width / 2, Width / 2, Width / 2 - StrokeThickness / 2, 0, 2 * Math.PI);			
+						
 			cr.Stroke ();
 			
 			cr.Restore ();

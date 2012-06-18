@@ -46,6 +46,8 @@ namespace GMathCad.UI.Framework
 		public Visibility Visibility { get; set; }
 		public bool IsVisible { get { return Visibility == Visibility.Visible;} }
 		
+		public bool SnapsToDevicePixels { get; set; }
+		
 		public UIElement ()
 		{
 			Mouse.PreviewButtonPressEvent += HandlePreviewButtonPressEvent;

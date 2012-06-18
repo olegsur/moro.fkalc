@@ -1,5 +1,5 @@
 // 
-// InsertCharacterCommand.cs
+// MinusArea.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,38 +25,34 @@
 // THE SOFTWARE.
 
 using System;
+using GMathCad.UI.Framework;
 
 namespace GMathCad.UI
 {
-	public class InsertCharacterCommand
+	public class MinusArea : Area
 	{
-		private uint Key { get; set; }
-
-		private MathRegion Region { get; set; }
-
-		public InsertCharacterCommand (uint key, MathRegion region)
+		public MinusArea ()
 		{
-			Key = key;
-			Region = region;
-		}
-		
-		public void Execute ()
-		{
-			var name = Gdk.Keyval.Name (Key);
+			WidthRequest = 100;
+			HeightRequest = 20;
 			
-			Region.ActiveArea.Append (name[0]);
 			
-/*			return;
+			var canvas = new Canvas ();
 			
-			case Gdk.Key.slash:			
-				ProcessSlash ();				
-				break;
-			}		*/	
-		}
-		
-		private void ProcessSlash ()
-		{
+			var line = new Line ()
+			{
+				WidthRequest = 12,
+				HeightRequest = 2,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+						
+			canvas.AddChild (line);
 			
+			canvas.SetTop (5, line);
+			
+			Content = canvas;
 		}
 	}
 }

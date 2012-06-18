@@ -1,5 +1,5 @@
 // 
-// PlusCommand.cs
+// MultiplicationArea.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,48 +23,32 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
+
+using GMathCad.UI.Framework;
 
 namespace GMathCad.UI
 {
-	public class PlusCommand
+	public class MultiplicationArea : Area
 	{
-		private MathRegion Region { get; set; }
-		
-		public PlusCommand (MathRegion region)
+		public MultiplicationArea ()
 		{
-			Region = region;
-		}
-		
-		public void Execute ()
-		{
-			var operation = new TextArea ();
-			operation.Append ('+');
-				
-			var right = new TextArea ();
-				
-			if (Region.ActiveArea.Parent is HBoxArea) {				
-				var parent = Region.ActiveArea.Parent as HBoxArea;	
-				
-				parent.AddArea (operation);	
-				parent.AddArea (right);
-				
-				
-			} else {				
-				var parent = Region.ActiveArea.Parent;
-				
-				var container = new HBoxArea ();				
-				var area = Region.ActiveArea;
-				
-				parent.Replace(area, container);
-				
-				container.AddArea (area);
-				container.AddArea (operation);
-				container.AddArea (right);
-			}
-				
-			Region.ActiveArea = right;
+			HeightRequest = 4;
+			WidthRequest = 4;
+			
+			var canvas = new Canvas ();
+			
+			var ellipse = new Ellipse ()
+			{
+				WidthRequest = 4,
+				HeightRequest = 4,
+				StrokeThickness = 2
+			};
+						
+			canvas.AddChild (ellipse);	
+			
+			
+			Content = canvas;
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace GMathCad.UI
 		
 		public Area ()
 		{
-			//BorderColor = new Color (200, 0, 0);
+			//BorderColor = Colors.Lime;
 		}
 	}
 }

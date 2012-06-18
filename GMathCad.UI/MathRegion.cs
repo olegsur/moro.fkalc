@@ -53,10 +53,15 @@ namespace GMathCad.UI
 			
 			Content = border;
 			
-			KeyPressEvent += HandleKeyPressEvent;
-			
 			MouseEnterEvent += HandleMouseEnterEvent;
 			MouseLeaveEvent += HandleMouseLeaveEvent;
+			
+			new InsertCharacterProcessor (this);
+			new DivideProcessor (this);
+			new PlusProcessor (this);
+			new MinusProcessor (this);
+			new MultiplicationProcessor (this);
+			
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
@@ -71,32 +76,6 @@ namespace GMathCad.UI
 			border.BorderColor = Colors.Bisque;
 			
 			Screen.QueueDraw ();
-		}
-
-		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
-		{
-			ProcessKey (args.Event.KeyValue);
-		}
-		
-		private void ProcessKey (uint key)
-		{	
-			var factory = new InsertCharacterCommandFactory ();
-			if (factory.IsSupported (key)) {
-				factory.Build (key, this).Execute ();
-				return;
-			}
-			
-			var plusFactory = new PlusCommandFactory ();
-			if (plusFactory.IsSupported (key)) {
-				plusFactory.Build (this).Execute ();
-				return;
-			}
-			
-			var devideFactory = new DivideCommandFactory ();
-			if (devideFactory.IsSupported (key)) {
-				devideFactory.Build (this).Execute ();
-				return;
-			}
 		}
 		
 		public override Visual HitTest (double x, double y)

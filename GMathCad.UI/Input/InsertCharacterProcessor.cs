@@ -1,5 +1,5 @@
 // 
-// InsertCharacterCommandFactory.cs
+// InsertCharacterProcessor.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,31 +23,41 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
+
 namespace GMathCad.UI
 {
-	public class InsertCharacterCommandFactory
+	public class InsertCharacterProcessor
 	{
-		public InsertCharacterCommandFactory ()
+		private MathRegion Region { get; set; }
+		
+		public InsertCharacterProcessor (MathRegion region)
 		{
+			Region = region;
+			Region.KeyPressEvent += HandleKeyPressEvent;
+		}
+
+		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		{
+			if (!NeedToProcess (args.Event.KeyValue))
+				return;
+			
+			new InsertCharacterAction (args.Event.KeyValue, Region).Execute ();
 		}
 		
-		public bool IsSupported (uint keyval)
+		private bool NeedToProcess (uint keyval)
 		{
 			var name = Gdk.Keyval.Name (keyval);			
 			
-			if (name.Length != 1) return false;
+			if (name.Length != 1)
+				return false;
 			
-			var key = name[0];
+			var key = name [0];
 			
 			return (key >= '0' && key <= '9') ||
 				(key >= 'A' && key <= 'Z') ||
 				(key >= 'a' && key <= 'z');
-		}
-		
-		public InsertCharacterCommand Build (uint key, MathRegion region)
-		{			
-			return new InsertCharacterCommand (key, region);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 // 
-// DivideCommand.cs
+// PlusActionFactory.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -28,28 +28,22 @@ using System;
 
 namespace GMathCad.UI
 {
-	public class DivideCommand
+	public class PlusActionFactory
 	{
-		private MathRegion Region { get; set; }
-		
-		public DivideCommand (MathRegion region)
+		public PlusActionFactory ()
 		{
-			Region = region;
 		}
 		
-		public void Execute ()
+		public bool IsSupported (uint keyval)
 		{
-			var parent = Region.ActiveArea.Parent;
-			var dividend = Region.ActiveArea;
-			var divisor = new TextArea ();
-				
-			var divideArea = new DivideArea ();			
-
-			parent.Replace (Region.ActiveArea, divideArea);
-			divideArea.Dividend = dividend;
-			divideArea.Divisor = divisor;
-				
-			Region.ActiveArea = divisor;
+			var name = Gdk.Keyval.Name (keyval);			
+			
+			return name.ToLower () == "plus";			
+		}
+		
+		public PlusAction Build (MathRegion region)
+		{			
+			return new PlusAction (region);
 		}
 	}
 }

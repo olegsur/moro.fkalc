@@ -150,8 +150,7 @@ namespace GMathCad.UI.Framework
 					x = (Width - child.Width) / 2;
 					y += child.Margin.Top;
 				}
-				
-				
+								
 				var matrix = new Cairo.Matrix (1, 0, 0, 1, x, y);				
 				cr.Transform (matrix);
 				

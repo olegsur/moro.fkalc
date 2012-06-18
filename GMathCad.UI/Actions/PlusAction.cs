@@ -1,5 +1,5 @@
 // 
-// Line.cs
+// PlusAction.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -26,49 +26,42 @@
 
 using System;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public class Line : Shape
+	public class PlusAction
 	{
-		public double? X1 { get; set; }		
-		public double? Y1 { get; set; }
+		private MathRegion Region { get; set; }
 		
-		public double? X2 { get; set; }
-		public double? Y2 { get; set; }
-		
-		
-		public Line ()
+		public PlusAction (MathRegion region)
 		{
+			Region = region;
 		}
 		
-		protected override Size MeasureOverride (Size availableSize)
+		public void Execute ()
 		{
-			var width = X1.HasValue && X2.HasValue ? Math.Abs (X1.Value - X2.Value) : 0;
-			var height = Y1.HasValue && Y2.HasValue ? Math.Abs (Y1.Value - Y2.Value) : 0;
-			
-			return new Size (width, height);
-		}				
-		
-		protected override void OnRender (Cairo.Context cr)
-		{
-			cr.Save ();			
-			
-			var anialias = cr.Antialias;
-			
-			cr.Antialias = SnapsToDevicePixels ? Cairo.Antialias.None : anialias;
-			
-			cr.MoveTo (StrokeThickness / 2, StrokeThickness / 2);
-			
-			cr.LineTo (Width - StrokeThickness / 2, Height - StrokeThickness / 2);			
-			
-			cr.LineWidth = StrokeThickness;
-			cr.Color = new Cairo.Color (Stroke.R, Stroke.G, Stroke.B);
-			
-			cr.Stroke ();
-			
-			cr.Restore ();
-			cr.Antialias = anialias;
+			var operation = new PlusArea ();			
+				
+			var right = new TextArea ();
+				
+			if (Region.ActiveArea.Parent is HBoxArea) {				
+				var parent = Region.ActiveArea.Parent as HBoxArea;	
+				
+				parent.AddArea (operation);	
+				parent.AddArea (right);
+			} else {				
+				var parent = Region.ActiveArea.Parent;
+				
+				var container = new HBoxArea ();				
+				var area = Region.ActiveArea;
+				
+				parent.Replace(area, container);
+				
+				container.AddArea (area);
+				container.AddArea (operation);
+				container.AddArea (right);
+			}
+				
+			Region.ActiveArea = right;
 		}
 	}
 }
-

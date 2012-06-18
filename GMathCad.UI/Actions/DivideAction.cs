@@ -1,5 +1,5 @@
 // 
-// DivideCommandFactory.cs
+// DivideAction.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -28,22 +28,28 @@ using System;
 
 namespace GMathCad.UI
 {
-	public class DivideCommandFactory
+	public class DivideAction
 	{
-		public DivideCommandFactory ()
+		private MathRegion Region { get; set; }
+		
+		public DivideAction (MathRegion region)
 		{
+			Region = region;
 		}
 		
-		public bool IsSupported (uint keyval)
+		public void Execute ()
 		{
-			var name = Gdk.Keyval.Name (keyval);			
-			
-			return name.ToLower () == "slash";	
-		}
-		
-		public DivideCommand Build (MathRegion region)
-		{			
-			return new DivideCommand (region);
+			var parent = Region.ActiveArea.Parent;
+			var dividend = Region.ActiveArea;
+			var divisor = new TextArea ();
+				
+			var divideArea = new DivideArea ();			
+
+			parent.Replace (Region.ActiveArea, divideArea);
+			divideArea.Dividend = dividend;
+			divideArea.Divisor = divisor;
+				
+			Region.ActiveArea = divisor;
 		}
 	}
 }

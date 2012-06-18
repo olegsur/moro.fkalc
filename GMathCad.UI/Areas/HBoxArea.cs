@@ -45,7 +45,7 @@ namespace GMathCad.UI
 			
 			area.Parent = this;	
 			
-			panel.SetMargin (new Thickness (5), area);
+			panel.SetMargin (new Thickness (2), area);
 		}
 		
 		public override void Replace (Area oldArea, Area newArea)

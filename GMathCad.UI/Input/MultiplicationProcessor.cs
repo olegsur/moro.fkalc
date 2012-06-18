@@ -1,5 +1,5 @@
 // 
-// Line.cs
+// MultiplicationProcessor.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -26,49 +26,30 @@
 
 using System;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public class Line : Shape
-	{
-		public double? X1 { get; set; }		
-		public double? Y1 { get; set; }
+	public class MultiplicationProcessor
+	{		
+		private MathRegion Region { get; set; }
 		
-		public double? X2 { get; set; }
-		public double? Y2 { get; set; }
-		
-		
-		public Line ()
+		public MultiplicationProcessor (MathRegion region)
 		{
+			Region = region;	
+			Region.KeyPressEvent += HandleKeyPressEvent;
+		}
+
+		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		{
+			if (!NeedToProcess (args))
+				return;
+			
+			new MultiplicationAction (Region).Execute ();
 		}
 		
-		protected override Size MeasureOverride (Size availableSize)
+		private bool NeedToProcess (Gtk.KeyPressEventArgs args)
 		{
-			var width = X1.HasValue && X2.HasValue ? Math.Abs (X1.Value - X2.Value) : 0;
-			var height = Y1.HasValue && Y2.HasValue ? Math.Abs (Y1.Value - Y2.Value) : 0;
-			
-			return new Size (width, height);
-		}				
-		
-		protected override void OnRender (Cairo.Context cr)
-		{
-			cr.Save ();			
-			
-			var anialias = cr.Antialias;
-			
-			cr.Antialias = SnapsToDevicePixels ? Cairo.Antialias.None : anialias;
-			
-			cr.MoveTo (StrokeThickness / 2, StrokeThickness / 2);
-			
-			cr.LineTo (Width - StrokeThickness / 2, Height - StrokeThickness / 2);			
-			
-			cr.LineWidth = StrokeThickness;
-			cr.Color = new Cairo.Color (Stroke.R, Stroke.G, Stroke.B);
-			
-			cr.Stroke ();
-			
-			cr.Restore ();
-			cr.Antialias = anialias;
-		}
+			return args.Event.Key == Gdk.Key.asterisk;	
+		}	
 	}
 }
 

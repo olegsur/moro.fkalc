@@ -33,8 +33,6 @@ namespace GMathCad.UI
 	{
 		public DocumentCursor ()
 		{
-			Visibility = Visibility.Visible;
-			
 			HeightRequest = 10;
 			WidthRequest = 10;
 			

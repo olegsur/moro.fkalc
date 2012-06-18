@@ -1,5 +1,5 @@
 // 
-// PlusCommandFactory.cs
+// PlusArea.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,25 +25,44 @@
 // THE SOFTWARE.
 
 using System;
+using GMathCad.UI.Framework;
 
 namespace GMathCad.UI
 {
-	public class PlusCommandFactory
+	public class PlusArea : Area
 	{
-		public PlusCommandFactory ()
+		public PlusArea ()
 		{
-		}
-		
-		public bool IsSupported (uint keyval)
-		{
-			var name = Gdk.Keyval.Name (keyval);			
+			HeightRequest = 12;
+			WidthRequest = 12;
 			
-			return name.ToLower () == "plus";			
-		}
-		
-		public PlusCommand Build (MathRegion region)
-		{			
-			return new PlusCommand (region);
+			var canvas = new Canvas ();
+			
+			var line1 = new Line ()
+			{
+				WidthRequest = 12,
+				HeightRequest = 2,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+			
+			var line2 = new Line ()
+			{
+				WidthRequest = 2,
+				HeightRequest = 12,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+			
+			canvas.AddChild (line1);
+			canvas.AddChild (line2);
+			
+			canvas.SetTop (5, line1);
+			canvas.SetLeft (5, line2);
+			
+			Content = canvas;
 		}
 	}
 }
