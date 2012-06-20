@@ -33,9 +33,8 @@ namespace GMathCad.UI
 	{
 		public MinusArea ()
 		{
-			WidthRequest = 100;
-			HeightRequest = 20;
-			
+			HeightRequest = 12;
+			WidthRequest = 12;			
 			
 			var canvas = new Canvas ();
 			
