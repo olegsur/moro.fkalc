@@ -32,7 +32,7 @@ namespace GMathCad.UI
 {
 	public class HBoxArea : ContainerArea
 	{
-		private StackPanel panel = new StackPanel () { Orientation = Orientation.Horizontal };  
+		private HStackPanel panel = new HStackPanel ();  
 		
 		public HBoxArea ()
 		{
@@ -56,6 +56,40 @@ namespace GMathCad.UI
 			oldArea.Parent = null;
 			newArea.Parent = this;
 		}
+		
+		private class HStackPanel : StackPanel
+		{
+			public HStackPanel ()
+			{
+				Orientation = Orientation.Horizontal;
+			}
+			
+			protected override Size MeasureOverride (Size availableSize)
+			{
+				foreach (var child in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
+					child.Measure (availableSize);
+				}
+				
+				var width = Children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				var heightTop = Children.Where (c => !c.DesiredSize.IsEmpty)
+					.Max (c => BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Top);			
+				var heightBottom = Children.Where (c => !c.DesiredSize.IsEmpty)
+					.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Bottom); 
+						
+				return new Size (width, heightTop + heightBottom);
+			}
+			
+			protected override void ArrangeOverride (Size finalSize)
+			{
+				base.ArrangeOverride (finalSize);
+				
+				var baseLine = Children.Where (c => c.Visibility != Visibility.Collapsed)
+					.Max (c => BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Top);
+								
+				foreach (var child in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
+					child.Y = baseLine - BaseLineCalculator.GetDesiredBaseLine(((Area)child.Content));					
+				}	
+			}
+		}
 	}
 }
-

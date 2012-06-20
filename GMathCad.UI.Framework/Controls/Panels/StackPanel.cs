@@ -100,8 +100,8 @@ namespace GMathCad.UI.Framework
 						
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			foreach (var container in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
-				container.Measure (availableSize);
+			foreach (var child in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
+				child.Measure (availableSize);
 			}
 			
 			var width = 0d;

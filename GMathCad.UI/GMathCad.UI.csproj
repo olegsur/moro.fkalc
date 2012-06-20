@@ -87,6 +87,7 @@
     <Compile Include="Areas\MultiplicationArea.cs" />
     <Compile Include="Actions\MultiplicationAction.cs" />
     <Compile Include="Input\MultiplicationProcessor.cs" />
+    <Compile Include="Areas\BaseLineCalculator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
