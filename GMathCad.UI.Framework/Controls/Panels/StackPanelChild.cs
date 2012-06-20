@@ -31,6 +31,9 @@ namespace GMathCad.UI.Framework
 	{
 		public Thickness Margin { get; set; }
 		public HorizontalAlignment HorizontalAlignment { get; set; }
+		
+		public double X { get; set; }
+		public double Y { get; set; }
 			
 		public StackPanelChild (UIElement child)
 		{

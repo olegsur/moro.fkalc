@@ -78,7 +78,7 @@ namespace GMathCad.UI.Framework
 			var width = Child.DesiredSize.Width + Padding.Left + Padding.Right;
 			var height = Child.DesiredSize.Height + Padding.Top + Padding.Bottom;
 			
-			return new Size(width, height);
+			return new Size (width, height);
 		}
 		
 		protected override void ArrangeOverride (Size finalSize)

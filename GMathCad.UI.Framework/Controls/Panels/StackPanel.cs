@@ -120,48 +120,47 @@ namespace GMathCad.UI.Framework
 		
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			foreach (var container in children.Where(c => c.Visibility != Visibility.Collapsed)) {	
-				var width = !container.DesiredSize.IsEmpty ? container.DesiredSize.Width : finalSize.Width;
-				var height = !container.DesiredSize.IsEmpty ? container.DesiredSize.Height : finalSize.Height;
+			var x = 0d;
+			var y = 0d;
+			
+			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {	
+				var width = !child.DesiredSize.IsEmpty ? child.DesiredSize.Width : finalSize.Width;
+				var height = !child.DesiredSize.IsEmpty ? child.DesiredSize.Height : finalSize.Height;
 				
-				if (Orientation == Orientation.Vertical && container.HorizontalAlignment == HorizontalAlignment.Stretch) {
+				if (Orientation == Orientation.Vertical && child.HorizontalAlignment == HorizontalAlignment.Stretch) {
 					width = finalSize.Width;
 				}
 				
-				container.Arrange (new Size (width, height));
+				child.Arrange (new Size (width, height));
+				
+				if (Orientation == Orientation.Horizontal) {
+					x += child.Margin.Left;	
+					y = (Height - child.Height) / 2;
+				} else {
+					x = (Width - child.Width) / 2;
+					y += child.Margin.Top;
+				}
+				
+				child.X = x;
+				child.Y = y;
+				
+				if (Orientation == Orientation.Horizontal)				
+					x += child.Width + child.Margin.Right;
+				else
+					y += child.Height + child.Margin.Bottom;
 			}
 		}
 		
 		protected override void OnRender (Cairo.Context cr)
 		{
-			var x = 0d;
-			var y = 0d;
-			
 			foreach (var child in children.Where(c => c.IsVisible)) {
 				cr.Save ();
 				
-				if (Orientation == Orientation.Horizontal)
-				{
-					x += child.Margin.Left;	
-					y = (Height - child.Height) / 2;
-				}
-				else
-				{
-					x = (Width - child.Width) / 2;
-					y += child.Margin.Top;
-				}
-								
-				var matrix = new Cairo.Matrix (1, 0, 0, 1, x, y);				
-				cr.Transform (matrix);
+				cr.Translate (child.X, child.Y);
 				
 				child.Render (cr);
 				
 				cr.Restore ();
-				
-				if (Orientation == Orientation.Horizontal)				
-					x += child.Width + child.Margin.Right;				
-				else
-					y += child.Height + child.Margin.Bottom;
 			}
 		}
 	}

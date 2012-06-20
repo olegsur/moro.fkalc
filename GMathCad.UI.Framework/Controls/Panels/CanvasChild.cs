@@ -31,7 +31,6 @@ namespace GMathCad.UI.Framework
 	public class CanvasChild : ContentControl
 	{
 		public double X { get; set; }
-
 		public double Y { get; set; }
 
 		public CanvasChild (UIElement child)

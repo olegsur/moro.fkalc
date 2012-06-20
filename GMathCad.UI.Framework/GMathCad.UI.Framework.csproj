@@ -61,7 +61,6 @@
     <Compile Include="Input\WidgetMouseInputProvider.cs" />
     <Compile Include="Input\EventRouteFactory.cs" />
     <Compile Include="Media\Visual.cs" />
-    <Compile Include="Controls\Orientation.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="Common\HorizontalAlignment.cs" />
@@ -74,6 +73,7 @@
     <Compile Include="Common\Visibility.cs" />
     <Compile Include="Common\Colors.cs" />
     <Compile Include="Shapes\Ellipse.cs" />
+    <Compile Include="Common\Orientation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
