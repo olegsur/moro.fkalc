@@ -54,7 +54,7 @@ namespace GMathCad.UI.Framework
 		protected override Size MeasureOverride (Size availableSize)
 		{
 			if (Content == null || Content.Visibility == Visibility.Collapsed)
-				return Size.Empty;
+				return new Size (0, 0);
 			
 			Content.Measure (availableSize);
 			
@@ -66,7 +66,7 @@ namespace GMathCad.UI.Framework
 			if (Content == null || Content.Visibility == Visibility.Collapsed)
 				return;
 			
-			Content.Arrange (!Content.DesiredSize.IsEmpty ? new Size (Width, Height) : finalSize);
+			Content.Arrange (new Size (Width, Height));
 		}
 		
 		protected override void OnRender (Cairo.Context cr)

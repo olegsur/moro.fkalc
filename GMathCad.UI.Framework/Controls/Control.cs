@@ -15,7 +15,7 @@ namespace GMathCad.UI.Framework
 		{
 			base.OnRender (cr);
 			
-			if (DesiredSize.IsEmpty || !IsVisible)
+			if (!IsVisible)
 				return;
 			
 			cr.Save ();

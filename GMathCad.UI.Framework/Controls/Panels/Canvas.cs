@@ -111,7 +111,7 @@ namespace GMathCad.UI.Framework
 		protected override void ArrangeOverride (Size finalSize)
 		{
 			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {				
-				child.Arrange (!child.DesiredSize.IsEmpty ? child.DesiredSize : finalSize);
+				child.Arrange (child.DesiredSize);
 			}
 		}
 		

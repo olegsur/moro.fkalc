@@ -44,8 +44,6 @@ namespace GMathCad.UI.Framework
 		{
 			var size = MeasureOverride (availableSize);
 			
-			if (size.IsEmpty)
-				return size;
 			
 			var height = HeightRequest ?? size.Height;
 			var width = WidthRequest ?? size.Width;
@@ -54,10 +52,7 @@ namespace GMathCad.UI.Framework
 		}
 		
 		protected override void ArrangeCore (Size finalSize)
-		{
-			if (finalSize.IsEmpty)
-				return;
-			
+		{	
 			Height = finalSize.Height;
 			Width = finalSize.Width;
 			

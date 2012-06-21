@@ -75,7 +75,7 @@ namespace GMathCad.UI.Framework
 		
 		protected virtual Size MeasureCore (Size availableSize)
 		{		
-			return Size.Empty;
+			return new Size (0 ,0);
 		}
 		
 		protected virtual void ArrangeCore (Size finalSize)

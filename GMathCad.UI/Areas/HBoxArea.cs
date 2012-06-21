@@ -70,11 +70,9 @@ namespace GMathCad.UI
 					child.Measure (availableSize);
 				}
 				
-				var width = Children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				var heightTop = Children.Where (c => !c.DesiredSize.IsEmpty)
-					.Max (c => BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Top);			
-				var heightBottom = Children.Where (c => !c.DesiredSize.IsEmpty)
-					.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Bottom); 
+				var width = Children.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				var heightTop = Children.Max (c => BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Top);			
+				var heightBottom = Children.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Bottom); 
 						
 				return new Size (width, heightTop + heightBottom);
 			}

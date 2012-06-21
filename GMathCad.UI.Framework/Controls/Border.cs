@@ -71,7 +71,7 @@ namespace GMathCad.UI.Framework
 		protected override Size MeasureOverride (Size availableSize)
 		{
 			if (Child == null)
-				return Size.Empty;
+				return new Size (0, 0);
 			
 			Child.Measure (availableSize);
 			
@@ -86,7 +86,7 @@ namespace GMathCad.UI.Framework
 			if (Child == null)
 				return;
 				
-			Child.Arrange (!Child.DesiredSize.IsEmpty ? Child.DesiredSize : finalSize);
+			Child.Arrange (Child.DesiredSize);
 		}
 	}
 }

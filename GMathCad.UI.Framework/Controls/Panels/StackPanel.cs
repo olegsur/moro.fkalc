@@ -108,11 +108,11 @@ namespace GMathCad.UI.Framework
 			var height = 0d;			
 						
 			if (Orientation == Orientation.Horizontal) {
-				width = children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				height = children.Where (c => !c.DesiredSize.IsEmpty).Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
+				width = children.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				height = children.Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
 			} else {
-				width = children.Where (c => !c.DesiredSize.IsEmpty).Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				height = children.Where (c => !c.DesiredSize.IsEmpty).Sum (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
+				width = children.Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				height = children.Sum (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
 			}
 		
 			return new Size (width, height);
@@ -124,8 +124,8 @@ namespace GMathCad.UI.Framework
 			var y = 0d;
 			
 			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {	
-				var width = !child.DesiredSize.IsEmpty ? child.DesiredSize.Width : finalSize.Width;
-				var height = !child.DesiredSize.IsEmpty ? child.DesiredSize.Height : finalSize.Height;
+				var width = child.DesiredSize.Width;
+				var height = child.DesiredSize.Height;
 				
 				if (Orientation == Orientation.Vertical && child.HorizontalAlignment == HorizontalAlignment.Stretch) {
 					width = finalSize.Width;
