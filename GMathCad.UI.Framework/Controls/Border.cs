@@ -80,14 +80,6 @@ namespace GMathCad.UI.Framework
 			
 			return new Size (width, height);
 		}
-		
-		protected override void ArrangeOverride (Size finalSize)
-		{
-			if (Child == null)
-				return;
-				
-			Child.Arrange (Child.DesiredSize);
-		}
 	}
 }
 

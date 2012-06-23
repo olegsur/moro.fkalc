@@ -74,6 +74,9 @@
     <Compile Include="Common\Colors.cs" />
     <Compile Include="Shapes\Ellipse.cs" />
     <Compile Include="Common\Orientation.cs" />
+    <Compile Include="Controls\AdornerDecorator.cs" />
+    <Compile Include="Controls\AdornerLayer.cs" />
+    <Compile Include="Controls\Adorner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

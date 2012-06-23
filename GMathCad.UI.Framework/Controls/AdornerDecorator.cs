@@ -1,5 +1,5 @@
 // 
-// Decorator.cs
+// AdornerDecorator.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,58 +23,40 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 
 namespace GMathCad.UI.Framework
 {
-	public class Decorator : FrameworkElement
+	public class AdornerDecorator : Decorator
 	{
-		private UIElement child;		
+		public AdornerLayer AdornerLayer { get; private set; }
 		
-		public Decorator ()
+		public AdornerDecorator ()
 		{
-		}
-		
-		public UIElement Child 
-		{ 
-			get { return child; }
-			set
-			{
-				if (child == value) return;
-				
-				if (child != null) RemoveVisualChild (child);
-				
-				if (value != null) AddVisualChild (value);
-				
-				child = value;					
-			}
-		}
-		
+			AdornerLayer = new AdornerLayer ();
+		}	
+
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			if (Child == null)
-				return new Size (0, 0);
-			
-			Child.Measure (availableSize);			
-					
-			return Child.DesiredSize;
+			var size = base.MeasureOverride (availableSize);
+
+			AdornerLayer.Measure (availableSize);
+
+			return size;
 		}
-		
+
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			if (Child == null)
-				return;
-				
-			Child.Arrange (Child.DesiredSize);
+			base.ArrangeOverride (finalSize);
+
+			AdornerLayer.Arrange (finalSize);
 		}
-		
+
 		protected override void OnRender (Cairo.Context cr)
 		{
-			if (Child == null)
-				return;
-			
-			Child.Render (cr);
+			base.OnRender (cr);
+
+			AdornerLayer.Render (cr);
 		}
 	}
 }

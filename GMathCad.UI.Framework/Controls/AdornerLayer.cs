@@ -1,5 +1,5 @@
 // 
-// Decorator.cs
+// AdornerLayer.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,56 +25,59 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 
 namespace GMathCad.UI.Framework
 {
-	public class Decorator : FrameworkElement
+	public class AdornerLayer : FrameworkElement
 	{
-		private UIElement child;		
+		private List<Adorner> adorners = new List<Adorner> ();
 		
-		public Decorator ()
+		public AdornerLayer ()
 		{
 		}
 		
-		public UIElement Child 
-		{ 
-			get { return child; }
-			set
-			{
-				if (child == value) return;
-				
-				if (child != null) RemoveVisualChild (child);
-				
-				if (value != null) AddVisualChild (value);
-				
-				child = value;					
-			}
+		public void Add (Adorner adorner)
+		{
+			adorners.Add (adorner);
 		}
-		
+
+		public static AdornerLayer GetAdornerLayer (Visual visual)
+		{
+			if (visual == null)
+				throw new ArgumentNullException ();
+
+			if (visual is AdornerDecorator)
+				return (visual as AdornerDecorator).AdornerLayer;
+
+			if (visual.VisaulParent == null)
+				return null;
+
+
+			return GetAdornerLayer (visual.VisaulParent);
+		}
+
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			if (Child == null)
-				return new Size (0, 0);
-			
-			Child.Measure (availableSize);			
-					
-			return Child.DesiredSize;
+			foreach (var adorner in adorners) {
+				adorner.Measure (availableSize);
+			}
+
+			return availableSize;
 		}
-		
+
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			if (Child == null)
-				return;
-				
-			Child.Arrange (Child.DesiredSize);
+			foreach (var adorner in adorners) {
+				adorner.Arrange (finalSize);
+			}
 		}
-		
+
 		protected override void OnRender (Cairo.Context cr)
 		{
-			if (Child == null)
-				return;
-			
-			Child.Render (cr);
+			foreach (var adorner in adorners) {
+				adorner.Render (cr);
+			}
 		}
 	}
 }
