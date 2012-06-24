@@ -36,31 +36,6 @@ namespace GMathCad.UI.Framework
 			this.cr = cr;
 		}
 
-
-		#region implemented abstract members of GMathCad.UI.Framework.DrawingContext
-
-		public override void Save ()
-		{
-			cr.Save ();
-		}
-
-		public override void Restore ()
-		{
-			cr.Restore ();
-		}
-
-		public override void Translate (double x, double y)
-		{
-			cr.Translate (x, y);
-		}
-
-		public override void Stroke ()
-		{
-			cr.Stroke ();
-		}
-
-		#endregion		
-
 		public override void DrawLine (Pen pen, Point point0, Point point2)
 		{
 			cr.Save ();	
@@ -124,6 +99,19 @@ namespace GMathCad.UI.Framework
 				cr.Stroke ();
 			}
 			
+			cr.Restore ();
+		}
+
+		public override void PushTransform (Transform transform)
+		{
+			cr.Save ();
+
+			var m = transform.Value;
+			cr.Transform (new Cairo.Matrix (m.M11, m.M12, m.M21, m.M22, m.OffsetX, m.OffsetY));
+		}
+
+		public override void Pop ()
+		{
 			cr.Restore ();
 		}
 	}

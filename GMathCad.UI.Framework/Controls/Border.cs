@@ -45,14 +45,12 @@ namespace GMathCad.UI.Framework
 				return;
 
 			dc.DrawRectangle (null, new Pen (BorderColor, 1), new Rect (0, 0, Width, Height));
-			
 
-
-			dc.Translate (Padding.Left, Padding.Top);			
+			dc.PushTransform (new TranslateTransform (Padding.Left, Padding.Top));			
 			
 			Child.Render (dc);
 			
-			dc.Restore ();
+			dc.Pop ();
 		}
 		
 		protected override Size MeasureOverride (Size availableSize)

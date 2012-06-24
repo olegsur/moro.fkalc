@@ -1,5 +1,5 @@
 //
-// DrawingContext.cs
+// Matrix.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,20 +27,24 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public abstract class DrawingContext
+	public struct Matrix
 	{
-		public Antialias Antialias { get; set; }
+		public double M11 { get; private set; }
+		public double M12 { get; private set; }
+		public double M21 { get; private set; }
+		public double M22 { get; private set; }
+		public double OffsetX { get; private set; }
+		public double OffsetY { get; private set; }
 
-		public DrawingContext ()
+		public Matrix (double m11, double m12, double m21, double m22, double offsetX, double offsetY) : this()
 		{
+			M11 = m11;
+			M12 = m12;
+			M21 = m21;
+			M22 = m22;
+			OffsetX = offsetX;
+			OffsetY = offsetY;
 		}
-
-		public abstract void PushTransform (Transform transform);
-		public abstract void Pop ();
-
-		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Color color, Pen pen, Point center, double radiusX, double radiusY);
-		public abstract void DrawText (FormattedText formattedText, Point origin);
-		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
 	}
 }
+

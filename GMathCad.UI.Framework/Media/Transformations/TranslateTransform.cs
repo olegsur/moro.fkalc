@@ -1,5 +1,5 @@
 //
-// DrawingContext.cs
+// TranslateTransform.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,20 +27,19 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public abstract class DrawingContext
+	public class TranslateTransform : Transform
 	{
-		public Antialias Antialias { get; set; }
+		public double X { get; private set; }
+		public double Y { get; private set; }
+		public override Matrix Value { get; protected set; }
 
-		public DrawingContext ()
+		public TranslateTransform (double x, double y)
 		{
+			X = x;
+			Y = y;
+
+			Value = new Matrix (1, 0, 0, 1, x, y);
 		}
-
-		public abstract void PushTransform (Transform transform);
-		public abstract void Pop ();
-
-		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Color color, Pen pen, Point center, double radiusX, double radiusY);
-		public abstract void DrawText (FormattedText formattedText, Point origin);
-		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
 	}
 }
+

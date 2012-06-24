@@ -118,13 +118,11 @@ namespace GMathCad.UI.Framework
 		protected override void OnRender (DrawingContext dc)
 		{
 			foreach (var child in children.Where(c => c.IsVisible)) {
-				dc.Save ();				
-											
-				dc.Translate (child.X, child.Y);
+				dc.PushTransform (new TranslateTransform (child.X, child.Y));
 				
 				child.Render (dc);
 				
-				dc.Restore ();
+				dc.Pop ();
 			}
 		}
 		

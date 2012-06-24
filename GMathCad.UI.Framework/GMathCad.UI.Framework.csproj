@@ -87,10 +87,14 @@
     <Compile Include="Media\SolidColorBrush.cs" />
     <Compile Include="Common\Rect.cs" />
     <Compile Include="Media\Brushes.cs" />
+    <Compile Include="Media\Transformations\Transform.cs" />
+    <Compile Include="Media\Transformations\TranslateTransform.cs" />
+    <Compile Include="Common\Matrix.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Shapes\" />
     <Folder Include="Controls\Panels\" />
+    <Folder Include="Media\Transformations\" />
   </ItemGroup>
 </Project>

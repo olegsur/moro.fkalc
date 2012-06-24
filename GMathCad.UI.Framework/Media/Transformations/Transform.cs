@@ -1,5 +1,5 @@
 //
-// DrawingContext.cs
+// Transform.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,20 +27,13 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public abstract class DrawingContext
+	public abstract class Transform
 	{
-		public Antialias Antialias { get; set; }
+		public abstract Matrix Value { get; protected set; }
 
-		public DrawingContext ()
+		public Transform ()
 		{
 		}
-
-		public abstract void PushTransform (Transform transform);
-		public abstract void Pop ();
-
-		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Color color, Pen pen, Point center, double radiusX, double radiusY);
-		public abstract void DrawText (FormattedText formattedText, Point origin);
-		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
 	}
 }
+
