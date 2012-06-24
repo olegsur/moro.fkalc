@@ -36,16 +36,17 @@ namespace GMathCad.UI.Framework
 		{
 		}
 		
-		public UIElement Child 
-		{ 
+		public UIElement Child { 
 			get { return child; }
-			set
-			{
-				if (child == value) return;
+			set {
+				if (child == value)
+					return;
 				
-				if (child != null) RemoveVisualChild (child);
+				if (child != null)
+					RemoveVisualChild (child);
 				
-				if (value != null) AddVisualChild (value);
+				if (value != null)
+					AddVisualChild (value);
 				
 				child = value;					
 			}
@@ -69,12 +70,12 @@ namespace GMathCad.UI.Framework
 			Child.Arrange (Child.DesiredSize);
 		}
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
 			if (Child == null)
 				return;
 			
-			Child.Render (cr);
+			Child.Render (dc);
 		}
 	}
 }

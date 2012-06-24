@@ -35,23 +35,27 @@ namespace GMathCad.UI
 		private TextArea activeArea = new TextArea ();
 		private Border border;
 		
-		public TextArea ActiveArea 
-		{ 
+		public TextArea ActiveArea { 
 			get { return activeArea; } 
 			set { activeArea = value; }
 		}
 		
 		public MathRegion ()
-		{
+		{			
 			root.AddArea (activeArea);
 			
 			border = new Border ()
 			{
-				Child = root,
+				Child = new AdornerDecorator()
+				{
+					Child = root
+				},
 				BorderColor = Colors.Bisque
 			};	
 			
 			Content = border;
+
+			AdornerLayer.GetAdornerLayer (root).Add (new CursorLines (this));
 			
 			MouseEnterEvent += HandleMouseEnterEvent;
 			MouseLeaveEvent += HandleMouseLeaveEvent;

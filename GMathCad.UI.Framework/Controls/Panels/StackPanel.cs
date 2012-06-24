@@ -32,8 +32,8 @@ namespace GMathCad.UI.Framework
 {
 	public class StackPanel : Panel<StackPanelChild>
 	{	
-		private List<StackPanelChild> children = new List<StackPanelChild>();
-		public override IEnumerable<StackPanelChild> Children { get { return children; }}
+		private List<StackPanelChild> children = new List<StackPanelChild> ();
+		public override IEnumerable<StackPanelChild> Children { get { return children; } }
 		
 		public Orientation Orientation { get; set; }
 		
@@ -151,16 +151,16 @@ namespace GMathCad.UI.Framework
 			}
 		}
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
 			foreach (var child in children.Where(c => c.IsVisible)) {
-				cr.Save ();
+				dc.Save ();
 				
-				cr.Translate (child.X, child.Y);
+				dc.Translate (child.X, child.Y);
 				
-				child.Render (cr);
+				child.Render (dc);
 				
-				cr.Restore ();
+				dc.Restore ();
 			}
 		}
 	}

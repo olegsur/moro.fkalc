@@ -49,25 +49,17 @@ namespace GMathCad.UI.Framework
 			return new Size (width, height);
 		}				
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
-			cr.Save ();			
+			var anialias = dc.Antialias;
 			
-			var anialias = cr.Antialias;
-			
-			cr.Antialias = SnapsToDevicePixels ? Cairo.Antialias.None : anialias;
-			
-			cr.MoveTo (StrokeThickness / 2, StrokeThickness / 2);
-			
-			cr.LineTo (Width - StrokeThickness / 2, Height - StrokeThickness / 2);			
-			
-			cr.LineWidth = StrokeThickness;
-			cr.Color = new Cairo.Color (Stroke.R, Stroke.G, Stroke.B);
-			
-			cr.Stroke ();
-			
-			cr.Restore ();
-			cr.Antialias = anialias;
+			dc.Antialias = SnapsToDevicePixels ? Antialias.None : anialias;
+
+			dc.DrawLine (new Pen (Stroke, StrokeThickness), 
+			             new Point (StrokeThickness / 2, StrokeThickness / 2), 
+			             new Point (Width - StrokeThickness / 2, Height - StrokeThickness / 2));
+
+			dc.Antialias = anialias;
 		}
 	}
 }

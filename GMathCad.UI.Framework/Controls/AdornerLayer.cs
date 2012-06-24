@@ -73,10 +73,10 @@ namespace GMathCad.UI.Framework
 			}
 		}
 
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
 			foreach (var adorner in adorners) {
-				adorner.Render (cr);
+				adorner.Render (dc);
 			}
 		}
 	}

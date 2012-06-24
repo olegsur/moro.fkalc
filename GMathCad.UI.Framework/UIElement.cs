@@ -44,7 +44,7 @@ namespace GMathCad.UI.Framework
 		public bool IsFocused { get; set; }
 		
 		public Visibility Visibility { get; set; }
-		public bool IsVisible { get { return Visibility == Visibility.Visible;} }
+		public bool IsVisible { get { return Visibility == Visibility.Visible; } }
 		
 		public bool SnapsToDevicePixels { get; set; }
 		
@@ -75,20 +75,20 @@ namespace GMathCad.UI.Framework
 		
 		protected virtual Size MeasureCore (Size availableSize)
 		{		
-			return new Size (0 ,0);
+			return new Size (0, 0);
 		}
 		
 		protected virtual void ArrangeCore (Size finalSize)
 		{			
 		}
 		
-		protected virtual void OnRender (Cairo.Context cr)
+		protected virtual void OnRender (DrawingContext dr)
 		{			
 		}
 		
-		public void Render (Cairo.Context cr)
+		public void Render (DrawingContext dr)
 		{
-			OnRender (cr);
+			OnRender (dr);
 		}
 		
 		private void HandlePreviewButtonPressEvent (object o, ButtonPressEventArgs args)

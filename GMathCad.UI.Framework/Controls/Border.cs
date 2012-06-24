@@ -39,33 +39,20 @@ namespace GMathCad.UI.Framework
 			Padding = new Thickness (5);
 		}
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{		
-			if (Child == null) return;
+			if (Child == null)
+				return;
+
+			dc.DrawRectangle (null, new Pen (BorderColor, 1), new Rect (0, 0, Width, Height));
 			
-			cr.NewSubPath();
+
+
+			dc.Translate (Padding.Left, Padding.Top);			
 			
-			cr.Save ();
+			Child.Render (dc);
 			
-			cr.Color = new Cairo.Color (BorderColor.R, BorderColor.G, BorderColor.B);	
-			cr.Rectangle (0, 0, Width, Height);			
-			
-			cr.Stroke ();
-			
-			cr.Restore ();
-			
-			cr.NewSubPath ();
-			
-			cr.Save ();
-			
-			Cairo.Matrix m = new Cairo.Matrix(1, 0, 0, 1, Padding.Left, Padding.Top);
-			cr.Transform (m);			
-			
-			Child.Render (cr);
-			
-			cr.Restore ();
-			
-			cr.Stroke ();
+			dc.Restore ();
 		}
 		
 		protected override Size MeasureOverride (Size availableSize)

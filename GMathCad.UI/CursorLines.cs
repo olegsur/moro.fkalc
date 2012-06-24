@@ -1,5 +1,5 @@
 // 
-// TextBlock.cs
+// CursorLines.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,34 +25,24 @@
 // THE SOFTWARE.
 
 using System;
+using GMathCad.UI.Framework;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public class TextBlock : FrameworkElement
+	public class CursorLines : Adorner
 	{
-		public string Text { get; set; }
-		
-		public TextBlock ()
+		private MathRegion Region { get; set; }
+
+		public CursorLines (MathRegion region)
 		{
+			Region = region;
 		}	
-		
+
 		protected override void OnRender (DrawingContext dc)
-		{	
-			dc.DrawText (new FormattedText (Text) {FontFamily = "Georgia", FontSize = 20}, new Point (0, Height));
-		}
-		
-		protected override Size MeasureOverride (Size availableSize)
 		{
-			var surface = new Cairo.ImageSurface (Cairo.Format.A1, 1, 1);
-			
-			using (Cairo.Context cr = new Cairo.Context(surface)) {			
-				cr.SelectFontFace ("Georgia", Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
-				cr.SetFontSize (20);
-			
-				var textExtents = cr.TextExtents (Text);
-			
-				return new Size (textExtents.Width, textExtents.Height);
-			}
+			//	dc.DrawLine (new Pen (Colors.Red, 2), 
+			//	             new Point (0, Region.ActiveArea.Height), 
+			//	             new Point (Region.ActiveArea.Width, Region.ActiveArea.Height));
 		}		
 	}
 }

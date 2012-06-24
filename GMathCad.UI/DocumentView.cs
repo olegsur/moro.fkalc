@@ -34,8 +34,8 @@ namespace GMathCad.UI
 	{
 		//private List<MathRegion> regions = new List<MathRegion>();
 		
-		private DocumentCursor documentCursor = new DocumentCursor();
-		private Canvas canvas = new Canvas();
+		private DocumentCursor documentCursor = new DocumentCursor ();
+		private Canvas canvas = new Canvas ();
 		
 		public DocumentView ()
 		{		
@@ -48,7 +48,7 @@ namespace GMathCad.UI
 			
 			canvas.AddChild (documentCursor);
 			
-			Background = Colors.White;
+			Background = Brushes.White;
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
@@ -69,7 +69,7 @@ namespace GMathCad.UI
 		
 		private void HandlePreviewKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
 		{
-			ProcessKey(args.Event);
+			ProcessKey (args.Event);
 		}
 		
 		private void ProcessKey (Gdk.EventKey evnt)
@@ -77,16 +77,16 @@ namespace GMathCad.UI
 			if (Keyboard.FocusedElement == canvas) {
 				documentCursor.Visibility = Visibility.Collapsed;
 		
-				var region = new MathRegion();
+				var region = new MathRegion ();
 				
 				canvas.AddChild (region);                				
 				canvas.SetLeft (canvas.GetLeft (documentCursor), region);
 				canvas.SetTop (canvas.GetTop (documentCursor), region);
 				
 				Keyboard.FocusedElement = region;
-		    }		    
+			}		    
 		
-		    Screen.QueueDraw ();
+			Screen.QueueDraw ();
 		}
 	}
 }

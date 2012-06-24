@@ -77,6 +77,16 @@
     <Compile Include="Controls\AdornerDecorator.cs" />
     <Compile Include="Controls\AdornerLayer.cs" />
     <Compile Include="Controls\Adorner.cs" />
+    <Compile Include="Media\DrawingContext.cs" />
+    <Compile Include="Media\CairoContext.cs" />
+    <Compile Include="Common\Antialias.cs" />
+    <Compile Include="Media\Pen.cs" />
+    <Compile Include="Common\Point.cs" />
+    <Compile Include="Media\FormattedText.cs" />
+    <Compile Include="Media\Brush.cs" />
+    <Compile Include="Media\SolidColorBrush.cs" />
+    <Compile Include="Common\Rect.cs" />
+    <Compile Include="Media\Brushes.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

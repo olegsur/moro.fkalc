@@ -1,21 +1,21 @@
-// 
-// TextBlock.cs
-//  
+//
+// DrawingContext.cs
+//
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
-// 
+//
 // Copyright (c) 2012 Oleg Sur
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,37 +23,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 
 namespace GMathCad.UI.Framework
 {
-	public class TextBlock : FrameworkElement
+	public abstract class DrawingContext
 	{
-		public string Text { get; set; }
-		
-		public TextBlock ()
+		public Antialias Antialias { get; set; }
+
+		public DrawingContext ()
 		{
-		}	
-		
-		protected override void OnRender (DrawingContext dc)
-		{	
-			dc.DrawText (new FormattedText (Text) {FontFamily = "Georgia", FontSize = 20}, new Point (0, Height));
 		}
-		
-		protected override Size MeasureOverride (Size availableSize)
-		{
-			var surface = new Cairo.ImageSurface (Cairo.Format.A1, 1, 1);
-			
-			using (Cairo.Context cr = new Cairo.Context(surface)) {			
-				cr.SelectFontFace ("Georgia", Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
-				cr.SetFontSize (20);
-			
-				var textExtents = cr.TextExtents (Text);
-			
-				return new Size (textExtents.Width, textExtents.Height);
-			}
-		}		
+
+		public abstract void Save ();
+		public abstract void Restore ();
+
+		public abstract void Translate (double x, double y);
+
+		public abstract void Stroke ();	
+
+		public abstract void DrawLine (Pen pen, Point point0, Point point1);
+		public abstract void DrawEllipse (Color color, Pen pen, Point center, double radiusX, double radiusY);
+		public abstract void DrawText (FormattedText formattedText, Point origin);
+		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
 	}
 }
-

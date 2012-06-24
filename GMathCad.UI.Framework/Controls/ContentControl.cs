@@ -69,14 +69,14 @@ namespace GMathCad.UI.Framework
 			Content.Arrange (new Size (Width, Height));
 		}
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dr)
 		{
-			base.OnRender (cr);
+			base.OnRender (dr);
 			
 			if (Content == null || !Content.IsVisible)
 				return;
-			
-			Content.Render (cr);
+
+			Content.Render (dr);
 		}
 		
 		public override Visual HitTest (double x, double y)

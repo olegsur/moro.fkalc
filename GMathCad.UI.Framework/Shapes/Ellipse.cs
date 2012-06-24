@@ -34,25 +34,15 @@ namespace GMathCad.UI.Framework
 		{
 		}
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
-			cr.Save ();			
+			var anialias = dc.Antialias;
 			
-			var anialias = cr.Antialias;
-			
-			cr.Antialias = SnapsToDevicePixels ? Cairo.Antialias.None : anialias;
-						
-			cr.LineWidth = StrokeThickness;
-			cr.Color = new Cairo.Color (Stroke.R, Stroke.G, Stroke.B);
-			
-			cr.Scale (1, Height / Width);
-			
-			cr.Arc (Width / 2, Width / 2, Width / 2 - StrokeThickness / 2, 0, 2 * Math.PI);			
-						
-			cr.Stroke ();
-			
-			cr.Restore ();
-			cr.Antialias = anialias;
+			dc.Antialias = SnapsToDevicePixels ? Antialias.None : anialias;
+
+			dc.DrawEllipse (Colors.Transparent, new Pen (Stroke, StrokeThickness), new Point (Width / 2, Height / 2), Width / 2, Height / 2);
+
+			dc.Antialias = anialias;
 		}
 	}
 }

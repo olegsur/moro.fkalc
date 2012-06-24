@@ -52,11 +52,11 @@ namespace GMathCad.UI.Framework
 			AdornerLayer.Arrange (finalSize);
 		}
 
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
-			base.OnRender (cr);
+			base.OnRender (dc);
 
-			AdornerLayer.Render (cr);
+			AdornerLayer.Render (dc);
 		}
 	}
 }

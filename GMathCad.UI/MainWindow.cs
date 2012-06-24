@@ -31,16 +31,16 @@ using GMathCad.UI.Framework;
 
 public partial class MainWindow: Gtk.Window
 {	
-	private DocumentView rootElement = new DocumentView();
+	private DocumentView rootElement = new DocumentView ();
 	
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
 		
-		var elementHost = new ElementHost(this, rootElement);
+		var elementHost = new ElementHost (this, rootElement);
 		
-		Keyboard.Device.RegisterKeyboardInputProvider(new WidgetKeyboardInputProvider(elementHost));
-		Mouse.Device.RegistedMouseInputProvider(new WidgetMouseInputProvider(elementHost));
+		Keyboard.Device.RegisterKeyboardInputProvider (new WidgetKeyboardInputProvider (elementHost));
+		Mouse.Device.RegistedMouseInputProvider (new WidgetMouseInputProvider (elementHost));
 		
 		GMathCad.UI.Framework.Screen.Current = this;
 	}	
@@ -64,7 +64,7 @@ public partial class MainWindow: Gtk.Window
 			
 			rootElement.Measure (size);
 			rootElement.Arrange (size);
-			rootElement.Render (cr);
+			rootElement.Render (new CairoContext (cr));
 		}		
 	}
 }

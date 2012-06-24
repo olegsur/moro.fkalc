@@ -33,8 +33,8 @@ namespace GMathCad.UI.Framework
 {
 	public class Canvas : Panel<CanvasChild>
 	{		
-		private List<CanvasChild> children = new List<CanvasChild>();
-		public override IEnumerable<CanvasChild> Children { get { return children; }}
+		private List<CanvasChild> children = new List<CanvasChild> ();
+		public override IEnumerable<CanvasChild> Children { get { return children; } }
 		
 		public Canvas ()
 		{		
@@ -115,27 +115,26 @@ namespace GMathCad.UI.Framework
 			}
 		}
 		
-		protected override void OnRender (Cairo.Context cr)
+		protected override void OnRender (DrawingContext dc)
 		{
 			foreach (var child in children.Where(c => c.IsVisible)) {
-				cr.Save ();				
+				dc.Save ();				
+											
+				dc.Translate (child.X, child.Y);
 				
-				var matrix = new Cairo.Matrix (1, 0, 0, 1, child.X, child.Y);				
-				cr.Transform (matrix);
+				child.Render (dc);
 				
-				child.Render (cr);
-				
-				cr.Restore ();
+				dc.Restore ();
 			}
 		}
 		
 		public override Visual HitTest (double x, double y)
 		{
-			var hitTest = children.Where(c => IsVisible).FirstOrDefault (c => c.HitTest (x, y) != null);
+			var hitTest = children.Where (c => IsVisible).FirstOrDefault (c => c.HitTest (x, y) != null);
 			if (hitTest != null) {
 				return hitTest.Content;
 			}
-			return x >= 0 && x <= Width && y >= 0 && y <= Height  ? this : null;
+			return x >= 0 && x <= Width && y >= 0 && y <= Height ? this : null;
 		}
 	}
 }
