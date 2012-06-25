@@ -90,6 +90,7 @@
     <Compile Include="Media\Transformations\Transform.cs" />
     <Compile Include="Media\Transformations\TranslateTransform.cs" />
     <Compile Include="Common\Matrix.cs" />
+    <Compile Include="Media\Transformations\MatrixTransform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -34,12 +34,24 @@ namespace GMathCad.UI.Framework
 		public double Width { get; private set; }
 		public double Height { get; private set; }
 
+		public Size Size { get; private set; }
+
 		public Rect (double x, double y, double width, double height) : this()
 		{
 			X = x;
 			Y = y;
 			Width = width;
 			Height = height;
+
+			Size = new Size (Width, Height);
+		}
+
+		public Rect (Size size) : this (0,0, size.Width, size.Height)
+		{
+		}
+
+		public Rect (Point location, Size size) : this (location.X, location.Y, size.Width, size.Height)
+		{
 		}
 	}
 }

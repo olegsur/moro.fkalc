@@ -111,14 +111,14 @@ namespace GMathCad.UI.Framework
 		protected override void ArrangeOverride (Size finalSize)
 		{
 			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {				
-				child.Arrange (child.DesiredSize);
+				child.Arrange (new Rect (new Point (child.X, child.Y), child.DesiredSize));
 			}
 		}
 		
 		protected override void OnRender (DrawingContext dc)
 		{
 			foreach (var child in children.Where(c => c.IsVisible)) {
-				dc.PushTransform (new TranslateTransform (child.X, child.Y));
+				dc.PushTransform (child.VisualTransform);
 				
 				child.Render (dc);
 				

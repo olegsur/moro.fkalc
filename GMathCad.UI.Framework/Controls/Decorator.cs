@@ -67,7 +67,7 @@ namespace GMathCad.UI.Framework
 			if (Child == null)
 				return;
 				
-			Child.Arrange (Child.DesiredSize);
+			Child.Arrange (new Rect (Child.DesiredSize));
 		}
 		
 		protected override void OnRender (DrawingContext dc)

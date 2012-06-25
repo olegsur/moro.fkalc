@@ -49,7 +49,7 @@ namespace GMathCad.UI.Framework
 		{
 			base.ArrangeOverride (finalSize);
 
-			AdornerLayer.Arrange (finalSize);
+			AdornerLayer.Arrange (new Rect (finalSize));
 		}
 
 		protected override void OnRender (DrawingContext dc)

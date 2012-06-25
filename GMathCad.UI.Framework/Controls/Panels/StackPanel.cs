@@ -130,16 +130,16 @@ namespace GMathCad.UI.Framework
 				if (Orientation == Orientation.Vertical && child.HorizontalAlignment == HorizontalAlignment.Stretch) {
 					width = finalSize.Width;
 				}
-				
-				child.Arrange (new Size (width, height));
-				
+
 				if (Orientation == Orientation.Horizontal) {
 					x += child.Margin.Left;	
-					y = (Height - child.Height) / 2;
+					y = (Height - height) / 2;
 				} else {
-					x = (Width - child.Width) / 2;
+					x = (Width - width) / 2;
 					y += child.Margin.Top;
 				}
+
+				child.Arrange (new Rect (new Point (x, y), new Size (width, height)));
 				
 				child.X = x;
 				child.Y = y;
@@ -154,7 +154,7 @@ namespace GMathCad.UI.Framework
 		protected override void OnRender (DrawingContext dc)
 		{
 			foreach (var child in children.Where(c => c.IsVisible)) {				
-				dc.PushTransform (new TranslateTransform (child.X, child.Y));
+				dc.PushTransform (child.VisualTransform);
 				
 				child.Render (dc);
 				

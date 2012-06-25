@@ -43,17 +43,15 @@ namespace GMathCad.UI
 		public MathRegion ()
 		{			
 			root.AddArea (activeArea);
-			
+
+
 			border = new Border ()
 			{
-				Child = new AdornerDecorator()
-				{
-					Child = root
-				},
+				Child = root,
 				BorderColor = Colors.Bisque
 			};	
-			
-			Content = border;
+									
+			Content = new AdornerDecorator () {Child = border };
 
 			AdornerLayer.GetAdornerLayer (root).Add (new CursorLines (this));
 			

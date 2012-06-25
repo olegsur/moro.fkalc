@@ -25,15 +25,19 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GMathCad.UI.Framework
 {
 	public class Visual
 	{
 		public Visual VisaulParent { get; private set; }
+		public Transform VisualTransform { get; protected set; }
 		
 		public Visual ()
 		{
+			VisualTransform = new TranslateTransform (0, 0);
 		}
 		
 		public virtual Visual HitTest (double x, double y)
@@ -49,6 +53,37 @@ namespace GMathCad.UI.Framework
 		protected void RemoveVisualChild (Visual visual)
 		{
 			visual.VisaulParent = null;
+		}
+
+		public Point PointToScreen (Point point)
+		{
+			var result = point;
+			foreach (var visual in GetVisualBranch(this)) {
+				result = visual.VisualTransform.TransformPoint (result);
+			}
+
+			return result;
+		}
+
+		public Point PointFromScreen (Point point)
+		{
+			var result = point;
+			foreach (var visual in GetVisualBranch(this).Reverse()) {
+				result = visual.VisualTransform.Inverse.TransformPoint (result);
+			}
+
+			return result;
+		}
+
+		private IEnumerable<Visual> GetVisualBranch (Visual visual)
+		{
+			yield return visual;
+			
+			if (visual.VisaulParent != null) {
+				foreach (var parent in GetVisualBranch(visual.VisaulParent)) {
+					yield return parent;
+				}
+			}
 		}
 	}
 }

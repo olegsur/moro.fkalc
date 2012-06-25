@@ -45,6 +45,31 @@ namespace GMathCad.UI.Framework
 			OffsetX = offsetX;
 			OffsetY = offsetY;
 		}
+
+		public Point Transform (Point point)
+		{
+			return new Point (M11 * point.X + M12 * point.Y + OffsetX, M21 * point.X + M22 * point.Y + OffsetY);
+		}
+
+		public Matrix Inverse ()
+		{
+			var determinant = Determinant ();
+
+			var a11 = M22 / determinant;
+			var a12 = - M12 / determinant;
+			var a22 = M11 / determinant;
+			var a21 = - M21 / determinant;
+
+			var offsetX = -(a11 * OffsetX + a12 * OffsetY);
+			var offsetY = -(a21 * OffsetX + a22 * OffsetY);
+
+			return new Matrix (a11, a12, a21, a22, offsetX, offsetY);
+		}
+
+		private double Determinant ()
+		{
+			return M11 * M22 - M12 * M21;
+		}
 	}
 }
 

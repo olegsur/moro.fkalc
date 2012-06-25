@@ -34,6 +34,17 @@ namespace GMathCad.UI.Framework
 		public Transform ()
 		{
 		}
+
+		public Point TransformPoint (Point point)
+		{
+			return Value.Transform (point);
+		}
+
+		public Transform Inverse {
+			get {
+				return new MatrixTransform (Value.Inverse ());
+			}
+		}
 	}
 }
 

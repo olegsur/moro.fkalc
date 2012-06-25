@@ -68,9 +68,9 @@ namespace GMathCad.UI.Framework
 			DesiredSize = MeasureCore (availableSize);
 		}
 		
-		public void Arrange (Size finalSize)
+		public void Arrange (Rect finalRect)
 		{
-			ArrangeCore (finalSize);
+			ArrangeCore (finalRect);
 		}
 		
 		protected virtual Size MeasureCore (Size availableSize)
@@ -78,8 +78,9 @@ namespace GMathCad.UI.Framework
 			return new Size (0, 0);
 		}
 		
-		protected virtual void ArrangeCore (Size finalSize)
+		protected virtual void ArrangeCore (Rect finalRect)
 		{			
+			VisualTransform = new TranslateTransform (finalRect.X, finalRect.Y);
 		}
 		
 		protected virtual void OnRender (DrawingContext dr)

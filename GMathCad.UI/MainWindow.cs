@@ -63,7 +63,7 @@ public partial class MainWindow: Gtk.Window
 			var size = new Size (width, height);
 			
 			rootElement.Measure (size);
-			rootElement.Arrange (size);
+			rootElement.Arrange (new Rect (size));
 			rootElement.Render (new CairoContext (cr));
 		}		
 	}

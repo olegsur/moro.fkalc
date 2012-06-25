@@ -66,7 +66,7 @@ namespace GMathCad.UI.Framework
 			if (Content == null || Content.Visibility == Visibility.Collapsed)
 				return;
 			
-			Content.Arrange (new Size (Width, Height));
+			Content.Arrange (new Rect (new Size (Width, Height)));
 		}
 		
 		protected override void OnRender (DrawingContext dr)

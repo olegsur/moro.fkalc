@@ -40,9 +40,13 @@ namespace GMathCad.UI
 
 		protected override void OnRender (DrawingContext dc)
 		{
-			//	dc.DrawLine (new Pen (Colors.Red, 2), 
-			//	             new Point (0, Region.ActiveArea.Height), 
-			//	             new Point (Region.ActiveArea.Width, Region.ActiveArea.Height));
+			var startPoint = Region.ActiveArea.PointToScreen (new Point (0, Region.ActiveArea.Height + 2));
+			startPoint = Region.PointFromScreen (startPoint);
+
+			var endPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width, Region.ActiveArea.Height + 2));
+			endPoint = Region.PointFromScreen (endPoint);
+
+			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
 		}		
 	}
 }

@@ -69,7 +69,7 @@ namespace GMathCad.UI.Framework
 		protected override void ArrangeOverride (Size finalSize)
 		{
 			foreach (var adorner in adorners) {
-				adorner.Arrange (finalSize);
+				adorner.Arrange (new Rect (finalSize));
 			}
 		}
 

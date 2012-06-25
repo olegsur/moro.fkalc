@@ -46,7 +46,7 @@ namespace GMathCad.UI.Framework
 
 			dc.DrawRectangle (null, new Pen (BorderColor, 1), new Rect (0, 0, Width, Height));
 
-			dc.PushTransform (new TranslateTransform (Padding.Left, Padding.Top));			
+			dc.PushTransform (Child.VisualTransform);	
 			
 			Child.Render (dc);
 			
@@ -64,6 +64,14 @@ namespace GMathCad.UI.Framework
 			var height = Child.DesiredSize.Height + Padding.Top + Padding.Bottom;
 			
 			return new Size (width, height);
+		}
+
+		protected override void ArrangeOverride (Size finalSize)
+		{
+			if (Child == null)
+				return;
+
+			Child.Arrange (new Rect (new Point (Padding.Left, Padding.Top), Child.DesiredSize));
 		}
 	}
 }
