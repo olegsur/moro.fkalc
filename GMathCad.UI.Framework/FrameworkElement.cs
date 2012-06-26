@@ -35,9 +35,17 @@ namespace GMathCad.UI.Framework
 		
 		public double? HeightRequest { get; set; }
 		public double? WidthRequest { get; set; }
+
+		private readonly DependencyProperty<object> dataContext;
+
+		public object DataContext { 
+			get { return dataContext.Value;} 
+			set { dataContext.Value = value; }
+		}
 		
 		public FrameworkElement ()
-		{			
+		{	
+			dataContext = BuildProperty<object> ("DataContext");
 		}
 		
 		protected override Size MeasureCore (Size availableSize)

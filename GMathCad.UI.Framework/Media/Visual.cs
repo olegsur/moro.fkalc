@@ -30,7 +30,7 @@ using System.Linq;
 
 namespace GMathCad.UI.Framework
 {
-	public class Visual
+	public class Visual : DependencyObject
 	{
 		public Visual VisaulParent { get; private set; }
 		public Transform VisualTransform { get; protected set; }
