@@ -56,8 +56,8 @@ namespace GMathCad.UI
 				SnapsToDevicePixels = true
 			};
 			
-			canvas.AddChild (line1);
-			canvas.AddChild (line2);
+			canvas.Children.Add (line1);
+			canvas.Children.Add (line2);
 			
 			canvas.SetTop (5, line1);
 			canvas.SetLeft (5, line2);

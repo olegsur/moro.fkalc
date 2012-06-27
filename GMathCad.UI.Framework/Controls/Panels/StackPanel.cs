@@ -27,80 +27,94 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace GMathCad.UI.Framework
 {
-	public class StackPanel : Panel<StackPanelChild>
+	public class StackPanel : Panel
 	{	
 		private List<StackPanelChild> children = new List<StackPanelChild> ();
-		public override IEnumerable<StackPanelChild> Children { get { return children; } }
+		protected IEnumerable<StackPanelChild> InternalChildren { get { return children; } }
 		
 		public Orientation Orientation { get; set; }
 		
 		public StackPanel ()
 		{
+			base.Children.CollectionChanged += HandleCollectionChanged;
+
 			Orientation = Orientation.Vertical;
 		}		
-		
-		public override void AddChild (UIElement uielement)
+
+		public Thickness GetMargin (UIElement element)
 		{
-			var child = new StackPanelChild (uielement);
-			
-			AddVisualChild (child);			
-			children.Add (child);
+			return children.First (c => c.Content == element).Margin; 		
 		}
-		
-		public override void RemoveChild (UIElement uielement)
-		{
-			var child = children.FirstOrDefault (c => c.Content == uielement);	
-			
-			if (child == null)
-				return;
-			
-			RemoveVisualChild (child);			
-			children.Remove (child);
-		}
-		
-		public int GetPosition (UIElement uielement)
-		{
-			return children.FindIndex (c => c.Content == uielement);
-		}
-		
-		public void SetPosition (int position, UIElement uielement)
-		{
-			var oldIndex = children.FindIndex (c => c.Content == uielement);
-			
-			if (oldIndex == -1)
-				return;
-			
-			var child = children.ElementAt (oldIndex);
-			children.RemoveAt (oldIndex);
-			children.Insert (position, child);			
-		}
-		
+
 		public void SetMargin (Thickness margin, UIElement element)
 		{
-			var el = children.FirstOrDefault (c => c.Content == element);
-			
-			if (el == null)
-				return;
-			
-			el.Margin = margin;
+			children.First (c => c.Content == element).Margin = margin;
 		}
-		
+
+		public HorizontalAlignment GetHorizontalAlignment (UIElement element)
+		{
+			return children.First (c => c.Content == element).HorizontalAlignment;
+		}
+
 		public void SetHorizontalAlignment (HorizontalAlignment alignment, UIElement element)
 		{
-			var el = children.FirstOrDefault (c => c.Content == element);
+			children.First (c => c.Content == element).HorizontalAlignment = alignment;
+		}
+
+		private void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Add) {
+				var index = e.NewStartingIndex;
+
+				foreach (var uielement in e.NewItems.Cast<UIElement>()) {
+					var child = new StackPanelChild (uielement);
 			
-			if (el == null)
-				return;
+					AddVisualChild (child);
+					children.Insert (index, child);
+
+					index++;
+				}
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Remove) {
+				var index = e.OldStartingIndex;
+				foreach (var uielement in e.OldItems.Cast<UIElement>()) {
+					var child = children [index];
 			
-			el.HorizontalAlignment = alignment;
+					RemoveVisualChild (child);			
+					children.Remove (child);
+
+					index++;
+				}
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Replace) {
+				var index = e.NewStartingIndex;
+
+				foreach (var uielement in e.NewItems.Cast<UIElement>()) {
+					var child = new StackPanelChild (uielement);
+			
+					RemoveVisualChild (children [index]);
+
+					AddVisualChild (child);
+					children [index] = child;
+
+					index++;
+				}
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Reset) {
+				children.Clear ();
+			}
 		}
 						
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			foreach (var child in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
+			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {
 				child.Measure (availableSize);
 			}
 			

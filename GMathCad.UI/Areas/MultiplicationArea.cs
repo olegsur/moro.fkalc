@@ -45,7 +45,7 @@ namespace GMathCad.UI
 				StrokeThickness = 2
 			};
 						
-			canvas.AddChild (ellipse);	
+			canvas.Children.Add (ellipse);	
 			
 			
 			Content = canvas;

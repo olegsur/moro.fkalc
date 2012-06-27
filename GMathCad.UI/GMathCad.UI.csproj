@@ -71,7 +71,6 @@
     <Compile Include="Areas\TextArea.cs" />
     <Compile Include="Areas\HBoxArea.cs" />
     <Compile Include="Areas\Area.cs" />
-    <Compile Include="Areas\VBoxArea.cs" />
     <Compile Include="Areas\ContainerArea.cs" />
     <Compile Include="Areas\DivideArea.cs" />
     <Compile Include="Areas\PlusArea.cs" />
@@ -89,10 +88,13 @@
     <Compile Include="Input\MultiplicationProcessor.cs" />
     <Compile Include="Areas\BaseLineCalculator.cs" />
     <Compile Include="CursorLines.cs" />
+    <Compile Include="Tokens\ContainerToken.cs" />
+    <Compile Include="Tokens\TextToken.cs" />
+    <Compile Include="Tokens\Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="Framework\GMathCad.UI.Framework.csproj">
+    <ProjectReference Include="..\GMathCad.UI.Framework\GMathCad.UI.Framework.csproj">
       <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
       <Name>GMathCad.UI.Framework</Name>
     </ProjectReference>
@@ -101,6 +103,7 @@
     <Folder Include="Areas\" />
     <Folder Include="Actions\" />
     <Folder Include="Input\" />
+    <Folder Include="Tokens\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -27,22 +27,32 @@
 using System;
 using GMathCad.UI.Framework;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace GMathCad.UI
 {
 	public class HBoxArea : ContainerArea
 	{
 		private HStackPanel panel = new HStackPanel ();  
-		
+		private ItemsControl itemsControl;
+
+		private ObservableCollection<Area> areas = new ObservableCollection<Area> ();
+
 		public HBoxArea ()
 		{
-			Content = panel;
+			itemsControl = new ItemsControl ()
+			{
+				ItemsPanel = panel
+			};
+
+			Content = itemsControl;
+			itemsControl.ItemsSource = areas;
 		}
 		
 		public void AddArea (Area area)
 		{
-			panel.AddChild (area);			
-			
+			areas.Add (area);
+
 			area.Parent = this;	
 			
 			panel.SetMargin (new Thickness (2), area);
@@ -50,9 +60,14 @@ namespace GMathCad.UI
 		
 		public override void Replace (Area oldArea, Area newArea)
 		{
-			var container = panel.Children.First (c => c.Content == oldArea);			
-			container.Content = newArea;
-			
+			var index = areas.IndexOf (oldArea);
+			if (index == -1)
+				return;
+
+			areas.RemoveAt (index);
+			areas.Insert (index, newArea);
+			panel.SetMargin (new Thickness (2), newArea);
+
 			oldArea.Parent = null;
 			newArea.Parent = this;
 		}
@@ -66,13 +81,13 @@ namespace GMathCad.UI
 			
 			protected override Size MeasureOverride (Size availableSize)
 			{
-				foreach (var child in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
+				foreach (var child in InternalChildren.Where(c => c.Visibility != Visibility.Collapsed)) {
 					child.Measure (availableSize);
 				}
 				
-				var width = Children.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				var heightTop = Children.Max (c => BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Top);			
-				var heightBottom = Children.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Bottom); 
+				var width = InternalChildren.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				var heightTop = InternalChildren.Max (c => BaseLineCalculator.GetDesiredBaseLine (((Area)c.Content)) + c.Margin.Top);			
+				var heightBottom = InternalChildren.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine (((Area)c.Content)) + c.Margin.Bottom); 
 						
 				return new Size (width, heightTop + heightBottom);
 			}
@@ -81,11 +96,14 @@ namespace GMathCad.UI
 			{
 				base.ArrangeOverride (finalSize);
 				
-				var baseLine = Children.Where (c => c.Visibility != Visibility.Collapsed)
-					.Max (c => BaseLineCalculator.GetDesiredBaseLine(((Area)c.Content)) + c.Margin.Top);
+				var baseLine = InternalChildren.Where (c => c.Visibility != Visibility.Collapsed)
+					.Max (c => BaseLineCalculator.GetDesiredBaseLine (((Area)c.Content)) + c.Margin.Top);
 								
-				foreach (var child in Children.Where(c => c.Visibility != Visibility.Collapsed)) {
-					child.Y = baseLine - BaseLineCalculator.GetDesiredBaseLine(((Area)child.Content));					
+				foreach (var child in InternalChildren.Where(c => c.Visibility != Visibility.Collapsed)) {
+					child.Y = baseLine - BaseLineCalculator.GetDesiredBaseLine (((Area)child.Content));
+
+					//rearrange child
+					child.Arrange (new Rect (new Point (child.X, child.Y), new Size (child.Width, child.Height)));										
 				}	
 			}
 		}

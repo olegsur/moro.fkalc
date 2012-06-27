@@ -32,18 +32,24 @@ namespace GMathCad.UI
 	public class MathRegion : UserControl
 	{
 		private HBoxArea root = new HBoxArea ();
-		private TextArea activeArea = new TextArea ();
+		private TextArea activeArea;
 		private Border border;
 		
 		public TextArea ActiveArea { 
 			get { return activeArea; } 
-			set { activeArea = value; }
+			set {
+				if (activeArea == value)
+					return;
+
+				activeArea = value; 
+				activeArea.DataContext = new TextToken ();
+			}
 		}
 		
 		public MathRegion ()
-		{			
+		{
+			ActiveArea = new TextArea ();
 			root.AddArea (activeArea);
-
 
 			border = new Border ()
 			{

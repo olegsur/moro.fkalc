@@ -40,14 +40,31 @@ namespace GMathCad.UI
 
 		protected override void OnRender (DrawingContext dc)
 		{
-			var startPoint = Region.ActiveArea.PointToScreen (new Point (0, Region.ActiveArea.Height + 2));
+			DrawVLine (dc);
+			DrawHLine (dc);
+		}	
+
+		private void DrawVLine (DrawingContext dc)
+		{
+			var startPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width + 2, -2));
 			startPoint = Region.PointFromScreen (startPoint);
 
-			var endPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width, Region.ActiveArea.Height + 2));
+			var endPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width + 2, Region.ActiveArea.Height + 2));
 			endPoint = Region.PointFromScreen (endPoint);
 
 			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
-		}		
+		}
+
+		private void DrawHLine (DrawingContext dc)
+		{
+			var startPoint = Region.ActiveArea.PointToScreen (new Point (0, Region.ActiveArea.Height + 2));
+			startPoint = Region.PointFromScreen (startPoint);
+
+			var endPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width + 3, Region.ActiveArea.Height + 2));
+			endPoint = Region.PointFromScreen (endPoint);
+
+			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
+		}
 	}
 }
 

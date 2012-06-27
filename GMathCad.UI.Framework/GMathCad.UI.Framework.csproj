@@ -97,6 +97,8 @@
     <Compile Include="DependencyObject.cs" />
     <Compile Include="Data\DPropertyBindingStrategy.cs" />
     <Compile Include="DPropertyValueChangedEventArgs.cs" />
+    <Compile Include="Controls\ItemsControl.cs" />
+    <Compile Include="Common\ObservableCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

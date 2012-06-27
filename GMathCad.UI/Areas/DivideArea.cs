@@ -32,7 +32,7 @@ namespace GMathCad.UI
 {
 	public class DivideArea : ContainerArea
 	{
-		private StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
+		private StackPanel panel = new StackPanel () { Orientation = Orientation.Vertical };
 		
 		private Area dividend;
 		private Area divisor;				
@@ -50,9 +50,9 @@ namespace GMathCad.UI
 				StrokeThickness = 2
 			};
 			
-			panel.AddChild (dividend);
-			panel.AddChild (line);			
-			panel.AddChild (divisor);
+			panel.Children.Add (dividend);
+			panel.Children.Add (line);			
+			panel.Children.Add (divisor);
 			
 			panel.SetMargin (new Thickness (5, 0, 5, 5), dividend);
 			panel.SetMargin (new Thickness (5, 5, 5, 0), divisor);
@@ -87,9 +87,19 @@ namespace GMathCad.UI
 		
 		public override void Replace (Area oldArea, Area newArea)
 		{
-			var container = panel.Children.First (c => c.Content == oldArea);			
-			container.Content = newArea;
-			
+			var index = panel.Children.IndexOf (oldArea);
+			if (index == -1)
+				return;
+
+			var margin = panel.GetMargin (oldArea);
+			var hAlignment = panel.GetHorizontalAlignment (oldArea);
+
+			panel.Children.RemoveAt (index);
+			panel.Children.Insert (index, newArea);
+
+			panel.SetMargin (margin, newArea);
+			panel.SetHorizontalAlignment (hAlignment, newArea);
+
 			oldArea.Parent = null;
 			newArea.Parent = this;
 		}

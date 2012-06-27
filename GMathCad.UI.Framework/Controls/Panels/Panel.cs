@@ -30,16 +30,14 @@ using System.Linq;
 
 namespace GMathCad.UI.Framework
 {
-	public abstract class Panel<TChild> : FrameworkElement
+	public abstract class Panel : FrameworkElement
 	{
-		public abstract IEnumerable<TChild> Children { get; }		
+		public ObservableCollection<UIElement> Children { get; private set; }
 		
 		public Panel ()
 		{	
+			Children = new ObservableCollection<UIElement> ();
 		}		
-		
-		public abstract void AddChild (UIElement uielement);
-		public abstract void RemoveChild (UIElement uielement);
 	}
 }
 

@@ -28,37 +28,19 @@ using System;
 using System.Collections.Generic;
 using Cairo;
 using System.Linq;
+using System.Collections.Specialized;
 
 namespace GMathCad.UI.Framework
 {
-	public class Canvas : Panel<CanvasChild>
+	public class Canvas : Panel
 	{		
 		private List<CanvasChild> children = new List<CanvasChild> ();
-		public override IEnumerable<CanvasChild> Children { get { return children; } }
 		
 		public Canvas ()
 		{		
+			base.Children.CollectionChanged += HandleCollectionChanged;
 		}
-		
-		public override void AddChild (UIElement uielement)
-		{
-			var child = new CanvasChild (uielement);
 			
-			AddVisualChild (child);
-			children.Add (child);
-		}
-		
-		public override void RemoveChild (UIElement uielement)
-		{
-			var child = children.FirstOrDefault (c => c.Content == uielement);			
-			
-			if (child == null)
-				return;
-			
-			RemoveVisualChild (child);			
-			children.Remove (child);
-		}
-				
 		public double GetLeft (UIElement element)
 		{
 			var el = children.FirstOrDefault (c => c.Content == element);
@@ -97,6 +79,53 @@ namespace GMathCad.UI.Framework
 				return;
 			
 			el.Y = top;
+		}
+
+		private void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Add) {
+				var index = e.NewStartingIndex;
+
+				foreach (var uielement in e.NewItems.Cast<UIElement>()) {
+					var child = new CanvasChild (uielement);
+			
+					AddVisualChild (child);
+					children.Insert (index, child);
+
+					index++;
+				}
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Remove) {
+				var index = e.OldStartingIndex;
+				foreach (var uielement in e.OldItems.Cast<UIElement>()) {
+					var child = children [index];
+			
+					RemoveVisualChild (child);			
+					children.Remove (child);
+
+					index++;
+				}
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Replace) {
+				var index = e.NewStartingIndex;
+
+				foreach (var uielement in e.NewItems.Cast<UIElement>()) {
+					var child = new CanvasChild (uielement);
+			
+					RemoveVisualChild (children [index]);
+
+					AddVisualChild (child);
+					children [index] = child;
+
+					index++;
+				}
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Reset) {
+				children.Clear ();
+			}
 		}
 				
 		protected override Size MeasureOverride (Size availableSize)

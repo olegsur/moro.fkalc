@@ -38,5 +38,17 @@ namespace GMathCad.UI.Framework
 			NewValue = newValue;
 		}
 	}
+
+	public class DPropertyValueChangedEventArgs<T> : EventArgs
+	{
+		public T OldValue { get; private set; }
+		public T NewValue { get; private set; }
+
+		public DPropertyValueChangedEventArgs (T oldValue, T newValue)
+		{
+			OldValue = oldValue;
+			NewValue = newValue;
+		}
+	}
 }
 

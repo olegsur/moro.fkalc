@@ -38,14 +38,26 @@ namespace GMathCad.UI
 		public TextArea ()
 		{
 			Content = textBlock;
-			textBlock.Text = "▪";			
+			textBlock.Text = "▪";
+
+			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
 		}
-		
+				
 		public void Append (char c)
 		{
 			text += c;
 			
 			textBlock.Text = text;
+		}
+
+		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)
+		{
+			if (e.NewValue is DependencyObject == false)
+				return;
+
+			var source = e.NewValue as DependencyObject;
+
+			BindingOperations.SetBinding (source.GetProperty ("Text"), textBlock.GetProperty ("Text"));
 		}
 	}
 }

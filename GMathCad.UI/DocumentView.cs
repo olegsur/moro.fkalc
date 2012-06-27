@@ -46,7 +46,7 @@ namespace GMathCad.UI
 			
 			Content = canvas;
 			
-			canvas.AddChild (documentCursor);
+			canvas.Children.Add (documentCursor);
 			
 			Background = Brushes.White;
 		}
@@ -79,7 +79,7 @@ namespace GMathCad.UI
 		
 				var region = new MathRegion ();
 				
-				canvas.AddChild (region);                				
+				canvas.Children.Add (region);                				
 				canvas.SetLeft (canvas.GetLeft (documentCursor), region);
 				canvas.SetTop (canvas.GetTop (documentCursor), region);
 				

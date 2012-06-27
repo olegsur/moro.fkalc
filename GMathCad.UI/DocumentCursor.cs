@@ -54,8 +54,8 @@ namespace GMathCad.UI
 				Stroke = Colors.Red
 			};
 			
-			canvas.AddChild (line1);
-			canvas.AddChild (line2);
+			canvas.Children.Add (line1);
+			canvas.Children.Add (line2);
 			
 			canvas.SetTop (4, line1);
 			canvas.SetLeft (4, line2);

@@ -36,6 +36,8 @@ namespace GMathCad.UI.Framework
 			remove{ dependencyPropertyValueChangedHandler -= value; }
 		}
 
+		public event EventHandler<DPropertyValueChangedEventArgs<T>> DependencyPropertyValueChanged;
+
 		private T value;
 
 		public DependencyProperty ()
@@ -58,8 +60,11 @@ namespace GMathCad.UI.Framework
 			}
 		}
 
-		private void RaiseDependencyPropertyValueChanged (object oldValue, object newValue)
+		private void RaiseDependencyPropertyValueChanged (T oldValue, T newValue)
 		{
+			if (DependencyPropertyValueChanged != null) {
+				DependencyPropertyValueChanged (this, new DPropertyValueChangedEventArgs<T> (oldValue, newValue));
+			}
 			if (dependencyPropertyValueChangedHandler != null) {
 				dependencyPropertyValueChangedHandler (this, new DPropertyValueChangedEventArgs (oldValue, newValue));
 			}
