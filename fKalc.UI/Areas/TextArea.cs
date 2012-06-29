@@ -30,9 +30,7 @@ using GMathCad.UI.Framework;
 namespace GMathCad.UI
 {
 	public class TextArea : Area
-	{
-		private string text = string.Empty;
-		
+	{				
 		private TextBlock textBlock = new TextBlock ();
 		
 		public TextArea ()
@@ -43,13 +41,6 @@ namespace GMathCad.UI
 			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
 		}
 				
-		public void Append (char c)
-		{
-			text += c;
-			
-			textBlock.Text = text;
-		}
-
 		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)
 		{
 			if (e.NewValue is DependencyObject == false)

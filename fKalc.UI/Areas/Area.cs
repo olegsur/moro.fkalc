@@ -31,8 +31,6 @@ namespace GMathCad.UI
 {
 	public class Area : UserControl
 	{
-		public ContainerArea Parent { get; set; }
-		
 		public Area ()
 		{
 			//BorderColor = Colors.Lime;

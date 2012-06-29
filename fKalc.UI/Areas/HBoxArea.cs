@@ -31,12 +31,10 @@ using System.Collections.Generic;
 
 namespace GMathCad.UI
 {
-	public class HBoxArea : ContainerArea
+	public class HBoxArea : Area
 	{
 		private HStackPanel panel = new HStackPanel ();  
 		private ItemsControl itemsControl;
-
-		private ObservableCollection<Area> areas = new ObservableCollection<Area> ();
 
 		public HBoxArea ()
 		{
@@ -66,30 +64,7 @@ namespace GMathCad.UI
 		{
 			return new TokenAreaConverter ().Convert (token) as UIElement;
 		}
-		
-		public void AddArea (Area area)
-		{
-			areas.Add (area);
 
-			area.Parent = this;	
-			
-			panel.SetMargin (new Thickness (2), area);
-		}
-		
-		public override void Replace (Area oldArea, Area newArea)
-		{
-			var index = areas.IndexOf (oldArea);
-			if (index == -1)
-				return;
-
-			areas.RemoveAt (index);
-			areas.Insert (index, newArea);
-			panel.SetMargin (new Thickness (2), newArea);
-
-			oldArea.Parent = null;
-			newArea.Parent = this;
-		}
-		
 		private class HStackPanel : StackPanel
 		{
 			public HStackPanel ()
