@@ -8,7 +8,7 @@
     <ProjectGuid>{89883CC4-E276-40ED-802F-260F61A610C1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>GMathCad.UI.Framework</RootNamespace>
-    <AssemblyName>GMathCad.UI.Framework</AssemblyName>
+    <AssemblyName>fKalc.UI.Framework</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

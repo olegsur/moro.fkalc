@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{44E2A5D4-9CC0-4CF4-8FD8-7856C1624DEE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GMathCad.UI</RootNamespace>
-    <AssemblyName>GMathCad.UI</AssemblyName>
+    <RootNamespace>fKalc.UI</RootNamespace>
+    <AssemblyName>fKalc.UI</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,9 +101,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\GMathCad.UI.Framework\GMathCad.UI.Framework.csproj">
+    <ProjectReference Include="..\GMathCad.UI.Framework\fKalc.UI.Framework.csproj">
       <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
-      <Name>GMathCad.UI.Framework</Name>
+      <Name>fKalc.UI.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
