@@ -27,11 +27,13 @@ using System;
 
 namespace GMathCad.UI
 {
-	public abstract class ContainerToken
+	public abstract class ContainerToken : Token
 	{
 		public ContainerToken ()
 		{
 		}
+
+		public abstract void Replace (Token oldArea, Token newArea);
 	}
 }
 

@@ -31,35 +31,29 @@ namespace GMathCad.UI
 {
 	public class MathRegion : UserControl
 	{
-		private HBoxArea root = new HBoxArea ();
-		private TextArea activeArea;
 		private Border border;
 		
-		public TextArea ActiveArea { 
-			get { return activeArea; } 
-			set {
-				if (activeArea == value)
-					return;
+		public TextToken ActiveToken { get; set; }	
 
-				activeArea = value; 
-				activeArea.DataContext = new TextToken ();
-			}
-		}
+		private HBoxToken root = new HBoxToken ();
 		
 		public MathRegion ()
 		{
-			ActiveArea = new TextArea ();
-			root.AddArea (activeArea);
+			ActiveToken = new TextToken ();
+			var rootVisual = new HBoxArea ();
+			rootVisual.DataContext = root;
+
+			root.Add (ActiveToken);
 
 			border = new Border ()
 			{
-				Child = root,
+				Child = rootVisual,
 				BorderColor = Colors.Bisque
 			};	
 									
 			Content = new AdornerDecorator () {Child = border };
 
-			AdornerLayer.GetAdornerLayer (root).Add (new CursorLines (this));
+			AdornerLayer.GetAdornerLayer (rootVisual).Add (new CursorLines (this));
 			
 			MouseEnterEvent += HandleMouseEnterEvent;
 			MouseLeaveEvent += HandleMouseLeaveEvent;

@@ -38,7 +38,7 @@ namespace GMathCad.UI
 			Region = region;
 		}	
 
-		protected override void OnRender (DrawingContext dc)
+/*		protected override void OnRender (DrawingContext dc)
 		{
 			DrawVLine (dc);
 			DrawHLine (dc);
@@ -64,7 +64,7 @@ namespace GMathCad.UI
 			endPoint = Region.PointFromScreen (endPoint);
 
 			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
-		}
+		} */
 	}
 }
 

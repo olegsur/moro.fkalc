@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// TokenAreaConverter.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,19 +24,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using GMathCad.UI.Framework;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public static class BindingOperations
+	public class TokenAreaConverter : IValueConverter
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
+		public TokenAreaConverter ()
 		{
-			new DPropertyBindingStrategy (source, target);
 		}
 
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
+		public object Convert (object value)
 		{
-			new DPropertyBindingStrategy (source, target, converter);
+			Area result = null;
+
+			if (value is TextToken) 
+				result = new TextArea ();				
+
+			if (value is PlusToken)
+				result = new PlusArea ();
+
+			if (value is MinusToken)
+				result = new MinusArea ();
+
+			if (value is MultiplicationToken)
+				result = new MultiplicationArea ();
+
+			if (value is FractionToken)
+				result = new DivideArea ();
+
+			if (value is HBoxToken)
+				result = new HBoxArea ();
+
+			result.DataContext = value;
+
+			return result;
+		}
+
+		public object ConvertBack (object value)
+		{
+			throw new System.NotImplementedException ();
 		}
 	}
 }

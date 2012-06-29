@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// DataTemplate.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,16 +27,18 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public static class BindingOperations
+	public class DataTemplate
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
+		private Func<object, UIElement> factory;
+
+		public DataTemplate (Func<object, UIElement> factory)
 		{
-			new DPropertyBindingStrategy (source, target);
+			this.factory = factory;
 		}
 
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
+		public UIElement LoadContent (object data)
 		{
-			new DPropertyBindingStrategy (source, target, converter);
+			return factory (data);
 		}
 	}
 }

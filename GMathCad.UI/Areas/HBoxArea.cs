@@ -46,7 +46,25 @@ namespace GMathCad.UI
 			};
 
 			Content = itemsControl;
-			itemsControl.ItemsSource = areas;
+
+			itemsControl.ItemTemplate = new DataTemplate (Factory);
+
+			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
+		}
+
+		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)
+		{
+			if (e.NewValue is DependencyObject == false)
+				return;
+
+			var source = e.NewValue as DependencyObject;
+
+			BindingOperations.SetBinding (source.GetProperty ("Tokens"), itemsControl.GetProperty ("ItemsSource"));
+		}
+
+		private UIElement Factory (object token)
+		{
+			return new TokenAreaConverter ().Convert (token) as UIElement;
 		}
 		
 		public void AddArea (Area area)
@@ -85,9 +103,9 @@ namespace GMathCad.UI
 					child.Measure (availableSize);
 				}
 				
-				var width = InternalChildren.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				var heightTop = InternalChildren.Max (c => BaseLineCalculator.GetDesiredBaseLine (((Area)c.Content)) + c.Margin.Top);			
-				var heightBottom = InternalChildren.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine (((Area)c.Content)) + c.Margin.Bottom); 
+				var width = InternalChildren.Any () ? InternalChildren.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right) : 0;
+				var heightTop = InternalChildren.Any () ? InternalChildren.Max (c => BaseLineCalculator.GetDesiredBaseLine (GetArea (c)) + c.Margin.Top) : 0;			
+				var heightBottom = InternalChildren.Any () ? InternalChildren.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine (GetArea (c)) + c.Margin.Bottom) : 0; 
 						
 				return new Size (width, heightTop + heightBottom);
 			}
@@ -95,16 +113,24 @@ namespace GMathCad.UI
 			protected override void ArrangeOverride (Size finalSize)
 			{
 				base.ArrangeOverride (finalSize);
+
+				if (!InternalChildren.Where (c => c.Visibility != Visibility.Collapsed).Any ())
+					return;
 				
 				var baseLine = InternalChildren.Where (c => c.Visibility != Visibility.Collapsed)
-					.Max (c => BaseLineCalculator.GetDesiredBaseLine (((Area)c.Content)) + c.Margin.Top);
+					.Max (c => BaseLineCalculator.GetDesiredBaseLine (GetArea (c)) + c.Margin.Top);
 								
 				foreach (var child in InternalChildren.Where(c => c.Visibility != Visibility.Collapsed)) {
-					child.Y = baseLine - BaseLineCalculator.GetDesiredBaseLine (((Area)child.Content));
+					child.Y = baseLine - BaseLineCalculator.GetDesiredBaseLine (GetArea (child));
 
 					//rearrange child
 					child.Arrange (new Rect (new Point (child.X, child.Y), new Size (child.Width, child.Height)));										
 				}	
+			}
+
+			private Area GetArea (UIElement uielement)
+			{
+				return AreaHelper.GetArea (uielement);
 			}
 		}
 	}

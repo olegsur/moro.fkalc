@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// AreaHelper.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,19 +24,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using GMathCad.UI.Framework;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public static class BindingOperations
+	public static class AreaHelper
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
+		public static Area GetArea (UIElement uielement)
 		{
-			new DPropertyBindingStrategy (source, target);
-		}
+			if (uielement is Area)
+				return uielement as Area;
 
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
-		{
-			new DPropertyBindingStrategy (source, target, converter);
+			if (uielement is ContentControl)
+				return GetArea ((uielement as ContentControl).Content);
+
+			if (uielement is Decorator)
+				return GetArea ((uielement as Decorator).Child);
+
+			throw new Exception ("Area not found");
 		}
 	}
 }

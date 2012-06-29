@@ -27,6 +27,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 
 namespace GMathCad.UI.Framework
 {
@@ -40,12 +41,18 @@ namespace GMathCad.UI.Framework
 			set { itemsSource.Value = value; }
 		}
 
+		public DataTemplate ItemTemplate { get; set; }
+
+		private List<ItemVisual> items = new List<ItemVisual> ();
+
 		public ItemsControl ()
 		{
 			ItemsPanel = new StackPanel ();
 			itemsSource = BuildProperty<IEnumerable> ("ItemsSource");
 
 			itemsSource.DependencyPropertyValueChanged += ItemsSourceChanged;
+
+			ItemTemplate = new DataTemplate (o => o is UIElement ? o as UIElement : new TextBlock () {Text = o.ToString ()});
 		}
 
 		public StackPanel ItemsPanel { 
@@ -71,8 +78,10 @@ namespace GMathCad.UI.Framework
 			itemsPanel.Children.Clear ();
 
 			foreach (var o in e.NewValue) {
-				var child = o is UIElement ? o as UIElement : new TextBlock () {Text = o.ToString ()};
+				var child = ItemTemplate.LoadContent (o);
 				itemsPanel.Children.Add (child);
+
+				items.Add (new ItemVisual () { Item = o, Visual = child });
 			}
 
 			if (e.NewValue is INotifyCollectionChanged) {
@@ -87,14 +96,20 @@ namespace GMathCad.UI.Framework
 			switch (e.Action) {
 			case NotifyCollectionChangedAction.Add:
 				var index = e.NewStartingIndex;
-				foreach (var child in e.NewItems.OfType<UIElement>()) {
+				foreach (var o in e.NewItems) {
+					var child = ItemTemplate.LoadContent (o);
 					itemsPanel.Children.Insert (index, child);
+
+					items.Add (new ItemVisual () { Item = o, Visual = child });
 					index++;
 				}
 				break;
 			case NotifyCollectionChangedAction.Remove:
-				foreach (var child in e.OldItems.OfType<UIElement>()) {
-					itemsPanel.Children.Remove (child);
+				foreach (var o in e.OldItems) {
+					var item = items.First (i => i.Item == o);
+
+					itemsPanel.Children.Remove (item.Visual);
+					items.Remove (item);
 				}
 				break;
 			case NotifyCollectionChangedAction.Reset:
@@ -121,6 +136,13 @@ namespace GMathCad.UI.Framework
 		{
 			itemsPanel.Render (dc);
 		}
+
+		private class ItemVisual
+		{
+			public object Item { get; set; }
+			public UIElement Visual { get; set; }
+		}
+
 	}
 }
 

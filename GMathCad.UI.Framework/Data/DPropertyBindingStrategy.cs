@@ -32,11 +32,19 @@ namespace GMathCad.UI.Framework
 		private bool updating = false;
 		private IDependencyProperty Source { get; set; }
 		private IDependencyProperty Target { get; set; }
+		private IValueConverter Converter { get; set; }
 
-		public DPropertyBindingStrategy (IDependencyProperty source, IDependencyProperty target)
+		public DPropertyBindingStrategy (IDependencyProperty source, IDependencyProperty target) : this(source, target, new EmptyConverter())
+		{
+		}
+
+		public DPropertyBindingStrategy (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
 		{
 			Source = source;
 			Target = target;
+			Converter = converter;
+
+			Target.Value = Converter.Convert (Source.Value);
 
 			source.DependencyPropertyValueChanged += HandleSourceValueChanged;
 			target.DependencyPropertyValueChanged += HandleTargetValueChanged;
@@ -49,7 +57,7 @@ namespace GMathCad.UI.Framework
 
 			updating = true;
 
-			Target.Value = e.NewValue;
+			Target.Value = Converter.Convert (e.NewValue);
 
 			updating = false;
 		}
@@ -61,10 +69,24 @@ namespace GMathCad.UI.Framework
 
 			updating = true;
 
-			Source.Value = e.NewValue;
+			Source.Value = Converter.ConvertBack (e.NewValue);
 
 			updating = false;
 		}
+
+		private class EmptyConverter : IValueConverter
+		{
+			public object Convert (object value)
+			{
+				return value;
+			}
+
+			public object ConvertBack (object value)
+			{
+				return value;
+			}
+		}
+
 	}
 }
 

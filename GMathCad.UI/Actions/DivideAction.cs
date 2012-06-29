@@ -39,17 +39,17 @@ namespace GMathCad.UI
 		
 		public void Execute ()
 		{
-			var parent = Region.ActiveArea.Parent;
-			var dividend = Region.ActiveArea;
-			var divisor = new TextArea ();
+			var parent = Region.ActiveToken.Parent;
+			var dividend = Region.ActiveToken;
+			var divisor = new TextToken ();
 				
-			var divideArea = new DivideArea ();			
+			var fraction = new FractionToken ();			
 
-			parent.Replace (Region.ActiveArea, divideArea);
-			divideArea.Dividend = dividend;
-			divideArea.Divisor = divisor;
+			parent.Replace (Region.ActiveToken, fraction);
+			fraction.Dividend = dividend;
+			fraction.Divisor = divisor;
 				
-			Region.ActiveArea = divisor;
+			Region.ActiveToken = divisor;
 		}
 	}
 }

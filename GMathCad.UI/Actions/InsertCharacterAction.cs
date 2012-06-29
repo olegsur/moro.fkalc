@@ -44,7 +44,7 @@ namespace GMathCad.UI
 		{
 			var name = Gdk.Keyval.Name (Key);
 			
-			Region.ActiveArea.Append (name[0]);	
+			Region.ActiveToken.Text += name [0];	
 		}
 	}
 }

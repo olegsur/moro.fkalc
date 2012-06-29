@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// HBoxToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,20 +23,42 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 
-namespace GMathCad.UI.Framework
+using System;
+using GMathCad.UI.Framework;
+
+namespace GMathCad.UI
 {
-	public static class BindingOperations
+	public class HBoxToken : ContainerToken
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
+		private readonly DependencyProperty<ObservableCollection<Token>> tokens;
+
+		public ObservableCollection<Token> Tokens { get { return tokens.Value; } }
+
+		public HBoxToken ()
 		{
-			new DPropertyBindingStrategy (source, target);
+			tokens = BuildProperty<ObservableCollection<Token>> ("Tokens");
+			tokens.Value = new ObservableCollection<Token> ();
 		}
 
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
+		public void Add (Token token)
 		{
-			new DPropertyBindingStrategy (source, target, converter);
+			Tokens.Add (token);
+
+			token.Parent = this;	
+		}
+
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			var index = Tokens.IndexOf (oldToken);
+			if (index == -1)
+				return;
+
+			Tokens.RemoveAt (index);
+			Tokens.Insert (index, newToken);
+
+			oldToken.Parent = null;
+			newToken.Parent = this;
 		}
 	}
 }

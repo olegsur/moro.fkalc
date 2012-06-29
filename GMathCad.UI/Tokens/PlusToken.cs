@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// PlusToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,18 +25,12 @@
 // THE SOFTWARE.
 using System;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public static class BindingOperations
+	public class PlusToken : Token
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
+		public PlusToken ()
 		{
-			new DPropertyBindingStrategy (source, target);
-		}
-
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
-		{
-			new DPropertyBindingStrategy (source, target, converter);
 		}
 	}
 }

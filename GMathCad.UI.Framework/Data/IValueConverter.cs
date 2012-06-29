@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// IValueConverter.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,17 +27,10 @@ using System;
 
 namespace GMathCad.UI.Framework
 {
-	public static class BindingOperations
+	public interface IValueConverter
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
-		{
-			new DPropertyBindingStrategy (source, target);
-		}
-
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
-		{
-			new DPropertyBindingStrategy (source, target, converter);
-		}
+		object Convert (object value);
+		object ConvertBack (object value);
 	}
 }
 

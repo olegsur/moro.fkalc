@@ -31,7 +31,7 @@ namespace GMathCad.UI
 		public static double GetDesiredBaseLine (Area area)
 		{
 			if (area is DivideArea)
-				return (area as DivideArea).Dividend.DesiredSize.Height + 6;
+				return AreaHelper.GetArea ((area as DivideArea).Dividend).DesiredSize.Height + 6;
 			
 			return area.DesiredSize.Height / 2;	
 		}
@@ -39,7 +39,7 @@ namespace GMathCad.UI
 		public static double GetBaseLine (Area area)
 		{
 			if (area is DivideArea)
-				return (area as DivideArea).Dividend.Height + 6;
+				return AreaHelper.GetArea ((area as DivideArea).Dividend).Height + 6;
 			
 			return area.Height / 2;
 		}

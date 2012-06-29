@@ -29,27 +29,27 @@ namespace GMathCad.UI.Framework
 {
 	public class ContentControl : Control
 	{
-		private UIElement content;
+		private readonly DependencyProperty<UIElement> content;
+		public UIElement Content { 
+			get { return content.Value;} 
+			set { content.Value = value; }
+		}
 		
 		public ContentControl ()
-		{			
+		{		
+			content = BuildProperty<UIElement> ("Content");
+			content.DependencyPropertyValueChanged += HandleContentChanged;
 		}
-		
-		public UIElement Content { 
-			get { return content; }
-			set {
-				if (content == value)
-					return;
+
+		private void HandleContentChanged (object sender, DPropertyValueChangedEventArgs<UIElement> e)
+		{				
+			if (e.OldValue != null)
+				RemoveVisualChild (e.OldValue);
 				
-				if (content != null)
-					RemoveVisualChild (content);
-				
-				if (value != null)
-					AddVisualChild (value);
-				
-				content = value;					
-			}
-		}
+			if (e.NewValue != null)
+				AddVisualChild (e.NewValue);
+		}		
+
 		
 		protected override Size MeasureOverride (Size availableSize)
 		{

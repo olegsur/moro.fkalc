@@ -99,6 +99,8 @@
     <Compile Include="DPropertyValueChangedEventArgs.cs" />
     <Compile Include="Controls\ItemsControl.cs" />
     <Compile Include="Common\ObservableCollection.cs" />
+    <Compile Include="Templates\DataTemplate.cs" />
+    <Compile Include="Data\IValueConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -106,5 +108,6 @@
     <Folder Include="Controls\Panels\" />
     <Folder Include="Media\Transformations\" />
     <Folder Include="Data\" />
+    <Folder Include="Templates\" />
   </ItemGroup>
 </Project>

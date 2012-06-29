@@ -91,6 +91,13 @@
     <Compile Include="Tokens\ContainerToken.cs" />
     <Compile Include="Tokens\TextToken.cs" />
     <Compile Include="Tokens\Token.cs" />
+    <Compile Include="Tokens\HBoxToken.cs" />
+    <Compile Include="Tokens\FractionToken.cs" />
+    <Compile Include="Tokens\PlusToken.cs" />
+    <Compile Include="Tokens\MinusToken.cs" />
+    <Compile Include="Tokens\MultiplicationToken.cs" />
+    <Compile Include="Areas\AreaHelper.cs" />
+    <Compile Include="Areas\TokenAreaConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

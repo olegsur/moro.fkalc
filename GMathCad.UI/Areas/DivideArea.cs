@@ -30,79 +30,47 @@ using System.Linq;
 
 namespace GMathCad.UI
 {
-	public class DivideArea : ContainerArea
+	public class DivideArea : Area
 	{
 		private StackPanel panel = new StackPanel () { Orientation = Orientation.Vertical };
 		
-		private Area dividend;
-		private Area divisor;				
+		public ContentControl Dividend { get; private set; }
+		public ContentControl Divisor { get; private set; }
 		
 		public DivideArea ()
 		{
 			Content = panel;		
 			
-			dividend = new TextArea ();
-			divisor = new TextArea ();
+			Dividend = new ContentControl () {Content = new TextArea()};
+			Divisor = new ContentControl () {Content = new TextArea()};
 			
 			var line = new Line ()
 			{
-				HeightRequest = 1,
+				HeightRequest = 2,
 				StrokeThickness = 2
 			};
 			
-			panel.Children.Add (dividend);
+			panel.Children.Add (Dividend);
 			panel.Children.Add (line);			
-			panel.Children.Add (divisor);
+			panel.Children.Add (Divisor);
 			
-			panel.SetMargin (new Thickness (5, 0, 5, 5), dividend);
-			panel.SetMargin (new Thickness (5, 5, 5, 0), divisor);
+			panel.SetMargin (new Thickness (5, 0, 5, 5), Dividend);
+			panel.SetMargin (new Thickness (5, 5, 5, 0), Divisor);
 			
 			panel.SetHorizontalAlignment (HorizontalAlignment.Stretch, line);
-			
-			dividend.Parent = this;
-			divisor.Parent = this;			
+
+			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
 		}
-					
-		public Area Dividend { 
-			get { return dividend;} 
-			set {
-				if (dividend == value)
-					return;
-								
-				Replace (dividend, value);
-				dividend = value;
-			}
-		}
-		
-		public Area Divisor { 
-			get { return divisor;} 
-			set {
-				if (divisor == value)
-					return;
-				
-				Replace (divisor, value);				
-				divisor = value;				
-			}
-		}
-		
-		public override void Replace (Area oldArea, Area newArea)
+
+		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)
 		{
-			var index = panel.Children.IndexOf (oldArea);
-			if (index == -1)
+			if (e.NewValue is DependencyObject == false)
 				return;
 
-			var margin = panel.GetMargin (oldArea);
-			var hAlignment = panel.GetHorizontalAlignment (oldArea);
+			var source = e.NewValue as DependencyObject;
 
-			panel.Children.RemoveAt (index);
-			panel.Children.Insert (index, newArea);
-
-			panel.SetMargin (margin, newArea);
-			panel.SetHorizontalAlignment (hAlignment, newArea);
-
-			oldArea.Parent = null;
-			newArea.Parent = this;
-		}
-		
+			BindingOperations.SetBinding (source.GetProperty ("Dividend"), Dividend.GetProperty ("Content"), new TokenAreaConverter ());
+			BindingOperations.SetBinding (source.GetProperty ("Divisor"), Divisor.GetProperty ("Content"), new TokenAreaConverter ());
+		}	
 	}
 }

@@ -39,29 +39,29 @@ namespace GMathCad.UI
 		
 		public void Execute ()
 		{
-			var operation = new PlusArea ();			
+			var operation = new PlusToken ();			
 				
-			var right = new TextArea ();
+			var right = new TextToken ();
 				
-			if (Region.ActiveArea.Parent is HBoxArea) {				
-				var parent = Region.ActiveArea.Parent as HBoxArea;	
-				
-				parent.AddArea (operation);	
-				parent.AddArea (right);
+			if (Region.ActiveToken.Parent is HBoxToken) {				
+				var parent = Region.ActiveToken.Parent as HBoxToken;	
+
+				parent.Add (operation);	
+				parent.Add (right);
 			} else {				
-				var parent = Region.ActiveArea.Parent;
+				var parent = Region.ActiveToken.Parent;
 				
-				var container = new HBoxArea ();				
-				var area = Region.ActiveArea;
+				var container = new HBoxToken ();				
+				var token = Region.ActiveToken;
 				
-				parent.Replace(area, container);
+				parent.Replace (token, container);
 				
-				container.AddArea (area);
-				container.AddArea (operation);
-				container.AddArea (right);
+				container.Add (token);
+				container.Add (operation);
+				container.Add (right);
 			}
 				
-			Region.ActiveArea = right;
+			Region.ActiveToken = right;
 		}
 	}
 }

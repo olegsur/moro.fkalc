@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// FractionToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,19 +24,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using GMathCad.UI.Framework;
 
-namespace GMathCad.UI.Framework
+namespace GMathCad.UI
 {
-	public static class BindingOperations
+	public class FractionToken : ContainerToken
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target)
-		{
-			new DPropertyBindingStrategy (source, target);
+		private readonly DependencyProperty<Token> dividend;
+		private readonly DependencyProperty<Token> divisor;
+
+		public Token Dividend { 
+			get { return dividend.Value; } 
+			set{ dividend.Value = value; }
 		}
 
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
+		public Token Divisor { 
+			get { return divisor.Value; } 
+			set{ divisor.Value = value; }
+		}
+
+		public FractionToken ()
 		{
-			new DPropertyBindingStrategy (source, target, converter);
+			dividend = BuildProperty<Token> ("Dividend");
+			dividend.DependencyPropertyValueChanged += HandleValueChanged;
+
+			divisor = BuildProperty<Token> ("Divisor");
+			divisor.DependencyPropertyValueChanged += HandleValueChanged;
+
+			Dividend = new TextToken ();
+			Divisor = new TextToken ();					
+		}
+
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+				
+		public override void Replace (Token oldArea, Token newArea)
+		{
+			if (oldArea == Dividend)
+				Dividend = newArea;
+
+			if (oldArea == Divisor)
+				Divisor = newArea;
 		}
 	}
 }
