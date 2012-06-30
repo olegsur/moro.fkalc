@@ -26,8 +26,8 @@
 
 using System;
 using Gtk;
-using GMathCad.UI;
-using GMathCad.UI.Framework;
+using fKalc.UI;
+using fKalc.UI.Framework;
 
 public partial class MainWindow: Gtk.Window
 {	
@@ -42,7 +42,7 @@ public partial class MainWindow: Gtk.Window
 		Keyboard.Device.RegisterKeyboardInputProvider (new WidgetKeyboardInputProvider (elementHost));
 		Mouse.Device.RegistedMouseInputProvider (new WidgetMouseInputProvider (elementHost));
 		
-		GMathCad.UI.Framework.Screen.Current = this;
+		fKalc.UI.Framework.Screen.Current = this;
 	}	
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)

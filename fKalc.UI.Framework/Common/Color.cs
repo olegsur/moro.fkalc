@@ -26,7 +26,7 @@
 
 using System;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public struct Color
 	{

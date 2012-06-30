@@ -27,7 +27,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public class AdornerLayer : FrameworkElement
 	{

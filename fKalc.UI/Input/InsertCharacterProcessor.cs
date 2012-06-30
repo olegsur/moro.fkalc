@@ -26,7 +26,7 @@
 
 using System;
 
-namespace GMathCad.UI
+namespace fKalc.UI
 {
 	public class InsertCharacterProcessor
 	{

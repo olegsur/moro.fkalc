@@ -30,7 +30,7 @@ using Cairo;
 using System.Linq;
 using System.Collections.Specialized;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public class Canvas : Panel
 	{		

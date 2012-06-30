@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public class DependencyProperty<T> : IDependencyProperty
 	{

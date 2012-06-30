@@ -26,9 +26,9 @@
 
 using System;
 using System.Collections.Generic;
-using GMathCad.UI.Framework;
+using fKalc.UI.Framework;
 
-namespace GMathCad.UI
+namespace fKalc.UI
 {
 	public class DocumentView : UserControl
 	{

@@ -24,9 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using GMathCad.UI.Framework;
+using fKalc.UI.Framework;
 
-namespace GMathCad.UI
+namespace fKalc.UI
 {
 	public static class AreaHelper
 	{

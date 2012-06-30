@@ -28,7 +28,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public class ObservableCollection<T> : Collection<T>, INotifyCollectionChanged
 	{

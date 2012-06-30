@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public enum HorizontalAlignment
 	{

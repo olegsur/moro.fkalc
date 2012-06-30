@@ -26,7 +26,7 @@
 
 using Gtk;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public interface IKeyboardInputProvider
 	{

@@ -29,7 +29,7 @@ using Gtk;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GMathCad.UI.Framework
+namespace fKalc.UI.Framework
 {
 	public class MouseDevice
 	{

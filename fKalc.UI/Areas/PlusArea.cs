@@ -25,9 +25,9 @@
 // THE SOFTWARE.
 
 using System;
-using GMathCad.UI.Framework;
+using fKalc.UI.Framework;
 
-namespace GMathCad.UI
+namespace fKalc.UI
 {
 	public class PlusArea : Area
 	{

@@ -27,7 +27,7 @@
 using System;
 using Gtk;
 
-namespace GMathCad.UI
+namespace fKalc.UI
 {
 	class MainClass
 	{
