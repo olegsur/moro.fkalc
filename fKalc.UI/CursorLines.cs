@@ -26,6 +26,7 @@
 
 using System;
 using fKalc.UI.Framework;
+using System.Linq;
 
 namespace fKalc.UI
 {
@@ -38,7 +39,7 @@ namespace fKalc.UI
 			Region = region;
 		}	
 
-/*		protected override void OnRender (DrawingContext dc)
+		protected override void OnRender (DrawingContext dc)
 		{
 			DrawVLine (dc);
 			DrawHLine (dc);
@@ -46,10 +47,14 @@ namespace fKalc.UI
 
 		private void DrawVLine (DrawingContext dc)
 		{
-			var startPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width + 2, -2));
+			var activeArea = GetArea (Region.ActiveToken, Region);
+			if (activeArea == null)
+				return;
+
+			var startPoint = activeArea.PointToScreen (new Point (activeArea.Width + 2, -2));
 			startPoint = Region.PointFromScreen (startPoint);
 
-			var endPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width + 2, Region.ActiveArea.Height + 2));
+			var endPoint = activeArea.PointToScreen (new Point (activeArea.Width + 2, activeArea.Height + 2));
 			endPoint = Region.PointFromScreen (endPoint);
 
 			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
@@ -57,14 +62,38 @@ namespace fKalc.UI
 
 		private void DrawHLine (DrawingContext dc)
 		{
-			var startPoint = Region.ActiveArea.PointToScreen (new Point (0, Region.ActiveArea.Height + 2));
+			var activeArea = GetArea (Region.ActiveToken, Region);
+			if (activeArea == null)
+				return;
+
+			var startPoint = activeArea.PointToScreen (new Point (0, activeArea.Height + 2));
 			startPoint = Region.PointFromScreen (startPoint);
 
-			var endPoint = Region.ActiveArea.PointToScreen (new Point (Region.ActiveArea.Width + 3, Region.ActiveArea.Height + 2));
+			var endPoint = activeArea.PointToScreen (new Point (activeArea.Width + 3, activeArea.Height + 2));
 			endPoint = Region.PointFromScreen (endPoint);
 
 			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
-		} */
+		} 
+
+		private Area GetArea (Token token, UIElement element)
+		{
+			if (element is FrameworkElement && (element as FrameworkElement).DataContext == token)
+				return element as Area;
+
+			if (element is ContentControl) 
+				return GetArea (token, (element as ContentControl).Content);
+
+			if (element is Decorator)
+				return GetArea (token, (element as Decorator).Child);
+
+			if (element is Panel)
+				return (element as Panel).Children.Select (child => GetArea (token, child)).FirstOrDefault (area => area != null);
+
+			if (element is ItemsControl)
+				return (element as ItemsControl).ItemsPanel.Children.Select (child => GetArea (token, child)).FirstOrDefault (area => area != null);
+
+			return null;
+		}
 	}
 }
 
