@@ -1,5 +1,5 @@
 //
-// ResultAction.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,33 +23,30 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.Linq;
-using fkalc.Tokens;
-using fkalc.Core;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace fkalc.UI
-{
-	public class ResultAction
-	{
-		private MathRegion Region { get; set; }
-		
-		public ResultAction (MathRegion region)
-		{
-			Region = region;
-		}
-		
-		public void Execute ()
-		{
-			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
-				return;
+// Information about this assembly is defined by the following attributes. 
+// Change them to the values specific to your project.
 
-			var result = new ResultToken ();			
+[assembly: AssemblyTitle("fkalc.Core")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Oleg Sur")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
-			Region.Root.Add (result);
+// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
+// The form "{Major}.{Minor}.*" will automatically update the build and revision,
+// and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-			new Evaluator ().Evaluate (Region.Root);
-		}
-	}
-}
+[assembly: AssemblyVersion("1.0.*")]
+
+// The following attributes are used to specify the signing key for the assembly, 
+// if desired. See the Mono documentation for more information about signing.
+
+//[assembly: AssemblyDelaySign(false)]
+//[assembly: AssemblyKeyFile("")]
 

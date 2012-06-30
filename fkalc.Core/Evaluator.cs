@@ -1,5 +1,5 @@
 //
-// ResultAction.cs
+// Evaluator.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -26,29 +26,23 @@
 using System;
 using System.Linq;
 using fkalc.Tokens;
-using fkalc.Core;
 
-namespace fkalc.UI
+namespace fkalc.Core
 {
-	public class ResultAction
+	public class Evaluator
 	{
-		private MathRegion Region { get; set; }
-		
-		public ResultAction (MathRegion region)
+		public Evaluator ()
 		{
-			Region = region;
 		}
-		
-		public void Execute ()
+
+		public void Evaluate (HBoxToken token)
 		{
-			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
+			var resultToken = token.Tokens.OfType<ResultToken> ().FirstOrDefault ();
+
+			if (resultToken == null)
 				return;
 
-			var result = new ResultToken ();			
-
-			Region.Root.Add (result);
-
-			new Evaluator ().Evaluate (Region.Root);
+			resultToken.Child = new TextToken () {Text = "5"};
 		}
 	}
 }

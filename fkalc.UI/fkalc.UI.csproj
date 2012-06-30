@@ -103,12 +103,15 @@
       <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
       <Name>fkalc.Tokens</Name>
     </ProjectReference>
+    <ProjectReference Include="..\fkalc.Core\fkalc.Core.csproj">
+      <Project>{11ECCE85-EC24-4912-8F45-33BAB6AD4251}</Project>
+      <Name>fkalc.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\" />
     <Folder Include="Actions\" />
     <Folder Include="Input\" />
-    <Folder Include="Tokens\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
