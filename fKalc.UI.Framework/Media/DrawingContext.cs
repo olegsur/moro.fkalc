@@ -29,7 +29,7 @@ namespace fKalc.UI.Framework
 {
 	public abstract class DrawingContext
 	{
-		public Antialias Antialias { get; set; }
+		public abstract Antialias Antialias { get; set; }
 
 		public DrawingContext ()
 		{

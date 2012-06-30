@@ -30,7 +30,9 @@ namespace fKalc.UI.Framework
 	public enum Antialias
 	{
 		Default,
-		None
+		None,
+		Gray,
+		Subpixel
 	}
 }
 

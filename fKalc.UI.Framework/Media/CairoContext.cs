@@ -114,6 +114,45 @@ namespace fKalc.UI.Framework
 		{
 			cr.Restore ();
 		}
+
+		public override Antialias Antialias {
+			get {
+				switch (cr.Antialias) {
+				case Cairo.Antialias.Default:
+					return Antialias.Default;
+				case Cairo.Antialias.None:
+					return Antialias.None;
+				case Cairo.Antialias.Gray:
+					return Antialias.Gray;
+				case Cairo.Antialias.Subpixel:
+					return Antialias.Subpixel;
+				default:
+					return Antialias.Default;
+				}
+
+			}
+			set {
+				switch (value) {
+				case Antialias.Default:
+					cr.Antialias = Cairo.Antialias.Default;
+					break;
+				case Antialias.None:
+					cr.Antialias = Cairo.Antialias.None;
+					break;
+				case Antialias.Gray:
+					cr.Antialias = Cairo.Antialias.Gray;
+					break;
+				case Antialias.Subpixel:
+					cr.Antialias = Cairo.Antialias.Subpixel;
+					break;
+				default:
+					cr.Antialias = Cairo.Antialias.Default;
+					break;
+				}
+			}
+		}
+
+
 	}
 }
 
