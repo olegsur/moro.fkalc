@@ -62,7 +62,10 @@ namespace fKalc.UI
 
 		private UIElement Factory (object token)
 		{
-			return new TokenAreaConverter ().Convert (token) as UIElement;
+			var result = new TokenAreaConverter ().Convert (token) as Area;
+			result.Margin = new Thickness (2);
+
+			return result;
 		}
 
 		private class HStackPanel : StackPanel

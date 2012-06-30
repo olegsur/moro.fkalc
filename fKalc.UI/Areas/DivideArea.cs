@@ -41,23 +41,28 @@ namespace fKalc.UI
 		{
 			Content = panel;		
 			
-			Dividend = new ContentControl () {Content = new TextArea()};
-			Divisor = new ContentControl () {Content = new TextArea()};
+			Dividend = new ContentControl () 
+			{
+				Content = new TextArea(),
+				Margin = new Thickness (5, 0, 5, 5)
+			};
+
+			Divisor = new ContentControl () 
+			{
+				Content = new TextArea(),
+				Margin = new Thickness (5, 5, 5, 0)
+			};
 			
 			var line = new Line ()
 			{
 				HeightRequest = 2,
-				StrokeThickness = 2
+				StrokeThickness = 2,
+				HorizontalAlignment = HorizontalAlignment.Stretch
 			};
 			
 			panel.Children.Add (Dividend);
 			panel.Children.Add (line);			
 			panel.Children.Add (Divisor);
-			
-			panel.SetMargin (new Thickness (5, 0, 5, 5), Dividend);
-			panel.SetMargin (new Thickness (5, 5, 5, 0), Divisor);
-			
-			panel.SetHorizontalAlignment (HorizontalAlignment.Stretch, line);
 
 			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
 		}

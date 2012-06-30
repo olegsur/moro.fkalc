@@ -37,15 +37,32 @@ namespace fKalc.UI.Framework
 		public double? WidthRequest { get; set; }
 
 		private readonly DependencyProperty<object> dataContext;
+		private readonly DependencyProperty<Thickness> margin;
+		private readonly DependencyProperty<HorizontalAlignment> horizontalAlignment;
 
 		public object DataContext { 
 			get { return dataContext.Value;} 
 			set { dataContext.Value = value; }
 		}
+
+		public Thickness Margin { 
+			get { return margin.Value;} 
+			set { margin.Value = value; }
+		}
+
+		public HorizontalAlignment HorizontalAlignment { 
+			get { return horizontalAlignment.Value;} 
+			set { horizontalAlignment.Value = value; }
+		}
 		
 		public FrameworkElement ()
 		{	
 			dataContext = BuildProperty<object> ("DataContext");
+			margin = BuildProperty<Thickness> ("Margin");
+			horizontalAlignment = BuildProperty<HorizontalAlignment> ("HorizontalAlignment");
+
+			Margin = new Thickness (0);
+			HorizontalAlignment = HorizontalAlignment.Left;
 		}
 		
 		protected override Size MeasureCore (Size availableSize)

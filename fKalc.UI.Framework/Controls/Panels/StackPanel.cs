@@ -45,26 +45,6 @@ namespace fKalc.UI.Framework
 			Orientation = Orientation.Vertical;
 		}		
 
-		public Thickness GetMargin (UIElement element)
-		{
-			return children.First (c => c.Content == element).Margin; 		
-		}
-
-		public void SetMargin (Thickness margin, UIElement element)
-		{
-			children.First (c => c.Content == element).Margin = margin;
-		}
-
-		public HorizontalAlignment GetHorizontalAlignment (UIElement element)
-		{
-			return children.First (c => c.Content == element).HorizontalAlignment;
-		}
-
-		public void SetHorizontalAlignment (HorizontalAlignment alignment, UIElement element)
-		{
-			children.First (c => c.Content == element).HorizontalAlignment = alignment;
-		}
-
 		private void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			if (e.Action == NotifyCollectionChangedAction.Add) {

@@ -29,14 +29,14 @@ namespace fKalc.UI.Framework
 {
 	public class StackPanelChild : ContentControl
 	{
-		public Thickness Margin { get; set; }
-		public HorizontalAlignment HorizontalAlignment { get; set; }
-
 		public StackPanelChild (UIElement child)
 		{
 			Content = child;
 			
 			HorizontalAlignment = HorizontalAlignment.Center;
+
+			BindingOperations.SetBinding (child.GetProperty ("Margin"), GetProperty ("Margin"));
+			BindingOperations.SetBinding (child.GetProperty ("HorizontalAlignment"), GetProperty ("HorizontalAlignment"));
 		}
 	}
 }
