@@ -24,25 +24,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+
 namespace fKalc.UI
 {
 	public static class BaseLineCalculator
 	{
-		public static double GetDesiredBaseLine (Area area)
+		public static double GetBaseLine (Area area)
 		{
 			if (area is DivideArea)
 				return AreaHelper.GetArea ((area as DivideArea).Dividend).DesiredSize.Height + 6;
 			
 			return area.DesiredSize.Height / 2;	
 		}
-		
-		public static double GetBaseLine (Area area)
-		{
-			if (area is DivideArea)
-				return AreaHelper.GetArea ((area as DivideArea).Dividend).Height + 6;
-			
-			return area.Height / 2;
-		}
 	}
 }
-

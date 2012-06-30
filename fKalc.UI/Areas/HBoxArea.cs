@@ -79,28 +79,34 @@ namespace fKalc.UI
 				}
 				
 				var width = InternalChildren.Any () ? InternalChildren.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right) : 0;
-				var heightTop = InternalChildren.Any () ? InternalChildren.Max (c => BaseLineCalculator.GetDesiredBaseLine (GetArea (c)) + c.Margin.Top) : 0;			
-				var heightBottom = InternalChildren.Any () ? InternalChildren.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetDesiredBaseLine (GetArea (c)) + c.Margin.Bottom) : 0; 
+				var heightTop = InternalChildren.Any () ? InternalChildren.Max (c => BaseLineCalculator.GetBaseLine (GetArea (c)) + c.Margin.Top) : 0;			
+				var heightBottom = InternalChildren.Any () ? InternalChildren.Max (c => c.DesiredSize.Height - BaseLineCalculator.GetBaseLine (GetArea (c)) + c.Margin.Bottom) : 0; 
 						
 				return new Size (width, heightTop + heightBottom);
 			}
 			
 			protected override void ArrangeOverride (Size finalSize)
 			{
-				base.ArrangeOverride (finalSize);
-
-				if (!InternalChildren.Where (c => c.Visibility != Visibility.Collapsed).Any ())
+				if (!InternalChildren.Any (c => c.Visibility != Visibility.Collapsed))
 					return;
-				
-				var baseLine = InternalChildren.Where (c => c.Visibility != Visibility.Collapsed)
-					.Max (c => BaseLineCalculator.GetDesiredBaseLine (GetArea (c)) + c.Margin.Top);
-								
-				foreach (var child in InternalChildren.Where(c => c.Visibility != Visibility.Collapsed)) {
-					child.Y = baseLine - BaseLineCalculator.GetDesiredBaseLine (GetArea (child));
 
-					//rearrange child
-					child.Arrange (new Rect (new Point (child.X, child.Y), new Size (child.Width, child.Height)));										
-				}	
+				var x = 0d;
+				var y = 0d;
+
+				var baseLine = InternalChildren.Where (c => c.Visibility != Visibility.Collapsed)
+					.Max (c => BaseLineCalculator.GetBaseLine (GetArea (c)) + c.Margin.Top);
+
+				foreach (var child in InternalChildren.Where(c => c.Visibility != Visibility.Collapsed)) {	
+					var width = child.DesiredSize.Width;
+					var height = child.DesiredSize.Height;
+
+					x += child.Margin.Left;	
+					y = baseLine - BaseLineCalculator.GetBaseLine (GetArea (child));
+
+					child.Arrange (new Rect (new Point (x, y), new Size (width, height)));
+				
+					x += child.Width + child.Margin.Right;
+				}
 			}
 
 			private Area GetArea (UIElement uielement)

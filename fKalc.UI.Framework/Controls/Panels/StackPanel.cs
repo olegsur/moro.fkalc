@@ -155,9 +155,6 @@ namespace fKalc.UI.Framework
 
 				child.Arrange (new Rect (new Point (x, y), new Size (width, height)));
 				
-				child.X = x;
-				child.Y = y;
-				
 				if (Orientation == Orientation.Horizontal)				
 					x += child.Width + child.Margin.Right;
 				else
