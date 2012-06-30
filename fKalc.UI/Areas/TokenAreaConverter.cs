@@ -56,6 +56,9 @@ namespace fKalc.UI
 			if (value is HBoxToken)
 				result = new HBoxArea ();
 
+			if (value is ResultToken)
+				result = new ResultArea ();
+
 			result.DataContext = value;
 
 			return result;

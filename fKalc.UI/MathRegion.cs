@@ -36,6 +36,12 @@ namespace fKalc.UI
 		public TextToken ActiveToken { get; set; }	
 
 		private HBoxToken root = new HBoxToken ();
+
+		public HBoxToken Root {
+			get {
+				return root;
+			}
+		}
 		
 		public MathRegion ()
 		{
@@ -63,6 +69,7 @@ namespace fKalc.UI
 			new PlusProcessor (this);
 			new MinusProcessor (this);
 			new MultiplicationProcessor (this);
+			new ResultProcessor (this);
 			
 		}
 

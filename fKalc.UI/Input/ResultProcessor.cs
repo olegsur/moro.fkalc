@@ -1,5 +1,5 @@
 //
-// ContainerToken.cs
+// ResultProcessor.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,13 +27,30 @@ using System;
 
 namespace fKalc.UI
 {
-	public abstract class ContainerToken : Token
+	public class ResultProcessor
 	{
-		public ContainerToken ()
+		private MathRegion Region { get; set; }
+		
+		public ResultProcessor (MathRegion region)
 		{
+			Region = region;	
+			Region.KeyPressEvent += HandleKeyPressEvent;
 		}
 
-		public abstract void Replace (Token oldToken, Token newToken);
+		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		{
+			if (!NeedToProcess (args.Event.KeyValue))
+				return;
+			
+			new ResultAction (Region).Execute ();
+		}
+		
+		private bool NeedToProcess (uint keyval)
+		{
+			var name = Gdk.Keyval.Name (keyval);			
+			
+			return name.ToLower () == "equal";	
+		}
 	}
 }
 

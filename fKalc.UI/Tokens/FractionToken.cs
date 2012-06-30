@@ -64,13 +64,13 @@ namespace fKalc.UI
 				e.NewValue.Parent = this;
 		}
 				
-		public override void Replace (Token oldArea, Token newArea)
+		public override void Replace (Token oldToken, Token newToken)
 		{
-			if (oldArea == Dividend)
-				Dividend = newArea;
+			if (oldToken == Dividend)
+				Dividend = newToken;
 
-			if (oldArea == Divisor)
-				Divisor = newArea;
+			if (oldToken == Divisor)
+				Divisor = newToken;
 		}
 	}
 }

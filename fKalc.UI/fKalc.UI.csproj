@@ -97,6 +97,10 @@
     <Compile Include="Tokens\MultiplicationToken.cs" />
     <Compile Include="Areas\AreaHelper.cs" />
     <Compile Include="Areas\TokenAreaConverter.cs" />
+    <Compile Include="Areas\ResultArea.cs" />
+    <Compile Include="Tokens\ResultToken.cs" />
+    <Compile Include="Input\ResultProcessor.cs" />
+    <Compile Include="Actions\ResultAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

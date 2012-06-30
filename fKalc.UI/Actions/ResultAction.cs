@@ -1,5 +1,5 @@
 //
-// ContainerToken.cs
+// ResultAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,16 +24,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Linq;
 
 namespace fKalc.UI
 {
-	public abstract class ContainerToken : Token
+	public class ResultAction
 	{
-		public ContainerToken ()
+		private MathRegion Region { get; set; }
+		
+		public ResultAction (MathRegion region)
 		{
+			Region = region;
 		}
+		
+		public void Execute ()
+		{
+			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
+				return;
 
-		public abstract void Replace (Token oldToken, Token newToken);
+			var result = new ResultToken ();			
+
+			Region.Root.Add (result);
+		}
 	}
 }
 

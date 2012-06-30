@@ -1,5 +1,5 @@
 //
-// ContainerToken.cs
+// ResultToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,16 +24,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using fKalc.UI.Framework;
 
 namespace fKalc.UI
 {
-	public abstract class ContainerToken : Token
+	public class ResultToken : ContainerToken
 	{
-		public ContainerToken ()
-		{
+		private readonly DependencyProperty<Token> child;
+
+		public Token Child { 
+			get { return child.Value; } 
+			set{ child.Value = value; }
 		}
 
-		public abstract void Replace (Token oldToken, Token newToken);
+		public ResultToken ()
+		{
+			child = BuildProperty<Token> ("Child");
+			child.DependencyPropertyValueChanged += HandleValueChanged;
+
+			Child = new TextToken ();
+		}
+
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			Child = newToken;
+		}
 	}
 }
 
