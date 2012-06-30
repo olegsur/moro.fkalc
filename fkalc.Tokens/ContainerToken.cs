@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// ContainerToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,51 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
-using fkalc.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.Tokens
 {
-	public class TokenAreaConverter : IValueConverter
+	public abstract class ContainerToken : Token
 	{
-		public TokenAreaConverter ()
+		public ContainerToken ()
 		{
 		}
 
-		public object Convert (object value)
-		{
-			Area result = null;
-
-			if (value is TextToken) 
-				result = new TextArea ();				
-
-			if (value is PlusToken)
-				result = new PlusArea ();
-
-			if (value is MinusToken)
-				result = new MinusArea ();
-
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new DivideArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
-		}
+		public abstract void Replace (Token oldToken, Token newToken);
 	}
 }
 

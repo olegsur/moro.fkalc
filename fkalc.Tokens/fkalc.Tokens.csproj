@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B196D221-ACC3-42F3-9666-51C5877407CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>fkalc.Tokens</RootNamespace>
+    <AssemblyName>fkalc.Tokens</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ContainerToken.cs" />
+    <Compile Include="FractionToken.cs" />
+    <Compile Include="HBoxToken.cs" />
+    <Compile Include="MinusToken.cs" />
+    <Compile Include="MultiplicationToken.cs" />
+    <Compile Include="PlusToken.cs" />
+    <Compile Include="ResultToken.cs" />
+    <Compile Include="TextToken.cs" />
+    <Compile Include="Token.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\fkalc.UI.Framework\fkalc.UI.Framework.csproj">
+      <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
+      <Name>fkalc.UI.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

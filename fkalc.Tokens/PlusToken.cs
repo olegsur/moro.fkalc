@@ -1,5 +1,5 @@
 //
-// TextToken.cs
+// PlusToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,22 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.Tokens
 {
-	public class TextToken : Token
+	public class PlusToken : Token
 	{
-		private readonly DependencyProperty<string> text;
-
-		public string Text { 
-			get { return text.Value; } 
-			set{ text.Value = value; }
-		}
-
-		public TextToken ()
+		public PlusToken ()
 		{
-			text = BuildProperty<string> ("Text");
 		}
 	}
 }

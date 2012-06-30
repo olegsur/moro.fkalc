@@ -1,5 +1,5 @@
 //
-// ResultToken.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,41 +23,30 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using fkalc.UI.Framework;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace fkalc.UI
-{
-	public class ResultToken : ContainerToken
-	{
-		private readonly DependencyProperty<Token> child;
+// Information about this assembly is defined by the following attributes. 
+// Change them to the values specific to your project.
 
-		public Token Child { 
-			get { return child.Value; } 
-			set{ child.Value = value; }
-		}
+[assembly: AssemblyTitle("fkalc.Tokens")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Oleg Sur")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
-		public ResultToken ()
-		{
-			child = BuildProperty<Token> ("Child");
-			child.DependencyPropertyValueChanged += HandleValueChanged;
+// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
+// The form "{Major}.{Minor}.*" will automatically update the build and revision,
+// and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-			Child = new TextToken ();
-		}
+[assembly: AssemblyVersion("1.0.*")]
 
-		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
-		{
-			if (e.OldValue != null)
-				e.OldValue.Parent = null;
+// The following attributes are used to specify the signing key for the assembly, 
+// if desired. See the Mono documentation for more information about signing.
 
-			if (e.NewValue != null)
-				e.NewValue.Parent = this;
-		}
-
-		public override void Replace (Token oldToken, Token newToken)
-		{
-			Child = newToken;
-		}
-	}
-}
+//[assembly: AssemblyDelaySign(false)]
+//[assembly: AssemblyKeyFile("")]
 

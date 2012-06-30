@@ -87,26 +87,21 @@
     <Compile Include="Input\MultiplicationProcessor.cs" />
     <Compile Include="Areas\BaseLineCalculator.cs" />
     <Compile Include="CursorLines.cs" />
-    <Compile Include="Tokens\ContainerToken.cs" />
-    <Compile Include="Tokens\TextToken.cs" />
-    <Compile Include="Tokens\Token.cs" />
-    <Compile Include="Tokens\HBoxToken.cs" />
-    <Compile Include="Tokens\FractionToken.cs" />
-    <Compile Include="Tokens\PlusToken.cs" />
-    <Compile Include="Tokens\MinusToken.cs" />
-    <Compile Include="Tokens\MultiplicationToken.cs" />
     <Compile Include="Areas\AreaHelper.cs" />
     <Compile Include="Areas\TokenAreaConverter.cs" />
     <Compile Include="Areas\ResultArea.cs" />
-    <Compile Include="Tokens\ResultToken.cs" />
     <Compile Include="Input\ResultProcessor.cs" />
     <Compile Include="Actions\ResultAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\fKalc.UI.Framework\fkalc.UI.Framework.csproj">
+    <ProjectReference Include="..\fkalc.UI.Framework\fkalc.UI.Framework.csproj">
       <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
       <Name>fkalc.UI.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fkalc.Tokens\fkalc.Tokens.csproj">
+      <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
+      <Name>fkalc.Tokens</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 //
-// PlusToken.cs
+// HBoxToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,14 +23,42 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 
-namespace fkalc.UI
+using System;
+using fkalc.UI.Framework;
+
+namespace fkalc.Tokens
 {
-	public class PlusToken : Token
+	public class HBoxToken : ContainerToken
 	{
-		public PlusToken ()
+		private readonly DependencyProperty<ObservableCollection<Token>> tokens;
+
+		public ObservableCollection<Token> Tokens { get { return tokens.Value; } }
+
+		public HBoxToken ()
 		{
+			tokens = BuildProperty<ObservableCollection<Token>> ("Tokens");
+			tokens.Value = new ObservableCollection<Token> ();
+		}
+
+		public void Add (Token token)
+		{
+			Tokens.Add (token);
+
+			token.Parent = this;	
+		}
+
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			var index = Tokens.IndexOf (oldToken);
+			if (index == -1)
+				return;
+
+			Tokens.RemoveAt (index);
+			Tokens.Insert (index, newToken);
+
+			oldToken.Parent = null;
+			newToken.Parent = this;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 //
-// Token.cs
+// TextToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -26,14 +26,20 @@
 using System;
 using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.Tokens
 {
-	public abstract class Token : DependencyObject
+	public class TextToken : Token
 	{
-		public ContainerToken Parent { get; set; }
+		private readonly DependencyProperty<string> text;
 
-		public Token ()
+		public string Text { 
+			get { return text.Value; } 
+			set{ text.Value = value; }
+		}
+
+		public TextToken ()
 		{
+			text = BuildProperty<string> ("Text");
 		}
 	}
 }

@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
+using fkalc.Tokens;
 
 namespace fkalc.UI
 {

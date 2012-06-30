@@ -1,5 +1,5 @@
 //
-// HBoxToken.cs
+// FractionToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,42 +23,54 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.Tokens
 {
-	public class HBoxToken : ContainerToken
+	public class FractionToken : ContainerToken
 	{
-		private readonly DependencyProperty<ObservableCollection<Token>> tokens;
+		private readonly DependencyProperty<Token> dividend;
+		private readonly DependencyProperty<Token> divisor;
 
-		public ObservableCollection<Token> Tokens { get { return tokens.Value; } }
-
-		public HBoxToken ()
-		{
-			tokens = BuildProperty<ObservableCollection<Token>> ("Tokens");
-			tokens.Value = new ObservableCollection<Token> ();
+		public Token Dividend { 
+			get { return dividend.Value; } 
+			set{ dividend.Value = value; }
 		}
 
-		public void Add (Token token)
-		{
-			Tokens.Add (token);
-
-			token.Parent = this;	
+		public Token Divisor { 
+			get { return divisor.Value; } 
+			set{ divisor.Value = value; }
 		}
 
+		public FractionToken ()
+		{
+			dividend = BuildProperty<Token> ("Dividend");
+			dividend.DependencyPropertyValueChanged += HandleValueChanged;
+
+			divisor = BuildProperty<Token> ("Divisor");
+			divisor.DependencyPropertyValueChanged += HandleValueChanged;
+
+			Dividend = new TextToken ();
+			Divisor = new TextToken ();					
+		}
+
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+				
 		public override void Replace (Token oldToken, Token newToken)
 		{
-			var index = Tokens.IndexOf (oldToken);
-			if (index == -1)
-				return;
+			if (oldToken == Dividend)
+				Dividend = newToken;
 
-			Tokens.RemoveAt (index);
-			Tokens.Insert (index, newToken);
-
-			oldToken.Parent = null;
-			newToken.Parent = this;
+			if (oldToken == Divisor)
+				Divisor = newToken;
 		}
 	}
 }

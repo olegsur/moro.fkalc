@@ -1,5 +1,5 @@
 //
-// MultiplicationToken.cs
+// MinusToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.UI
+namespace fkalc.Tokens
 {
-	public class MultiplicationToken : Token
+	public class MinusToken : Token
 	{
-		public MultiplicationToken ()
+		public MinusToken ()
 		{
 		}
 	}
