@@ -26,9 +26,9 @@
 
 using System;
 using System.Collections.Generic;
-using fKalc.UI.Framework;
+using fkalc.UI.Framework;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public class DocumentView : UserControl
 	{

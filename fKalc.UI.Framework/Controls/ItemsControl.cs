@@ -29,7 +29,7 @@ using System.Linq;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class ItemsControl : Control
 	{

@@ -26,7 +26,7 @@
 using System;
 using System.Linq;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public class ResultAction
 	{

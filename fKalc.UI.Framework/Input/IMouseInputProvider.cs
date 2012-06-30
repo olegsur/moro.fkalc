@@ -26,7 +26,7 @@
 
 using Gtk;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public interface IMouseInputProvider
 	{

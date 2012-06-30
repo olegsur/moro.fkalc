@@ -25,10 +25,10 @@
 // THE SOFTWARE.
 
 using System;
-using fKalc.UI.Framework;
+using fkalc.UI.Framework;
 using System.Linq;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public class DivideArea : Area
 	{

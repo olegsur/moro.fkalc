@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public abstract class ContainerToken : Token
 	{

@@ -26,7 +26,7 @@
 
 using System;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class CanvasChild : ContentControl
 	{

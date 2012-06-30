@@ -26,7 +26,7 @@
 
 using System;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public class MultiplicationProcessor
 	{		

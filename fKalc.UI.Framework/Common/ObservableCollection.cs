@@ -28,7 +28,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class ObservableCollection<T> : Collection<T>, INotifyCollectionChanged
 	{

@@ -29,7 +29,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class StackPanel : Panel
 	{	

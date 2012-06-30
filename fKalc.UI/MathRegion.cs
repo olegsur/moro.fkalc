@@ -25,9 +25,9 @@
 // THE SOFTWARE.
 
 using System;
-using fKalc.UI.Framework;
+using fkalc.UI.Framework;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public class MathRegion : UserControl
 	{

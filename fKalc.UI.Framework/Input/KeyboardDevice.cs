@@ -28,7 +28,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class KeyboardDevice
 	{

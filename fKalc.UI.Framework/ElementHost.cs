@@ -27,7 +27,7 @@
 using System;
 using Gtk;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class ElementHost
 	{

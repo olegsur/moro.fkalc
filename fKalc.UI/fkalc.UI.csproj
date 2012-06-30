@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{44E2A5D4-9CC0-4CF4-8FD8-7856C1624DEE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>fKalc.UI</RootNamespace>
-    <AssemblyName>fKalc.UI</AssemblyName>
+    <RootNamespace>fkalc.UI</RootNamespace>
+    <AssemblyName>fkalc.UI</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,9 +104,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\fKalc.UI.Framework\fKalc.UI.Framework.csproj">
+    <ProjectReference Include="..\fKalc.UI.Framework\fkalc.UI.Framework.csproj">
       <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
-      <Name>fKalc.UI.Framework</Name>
+      <Name>fkalc.UI.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

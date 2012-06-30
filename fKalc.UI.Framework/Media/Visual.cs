@@ -28,7 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace fKalc.UI.Framework
+namespace fkalc.UI.Framework
 {
 	public class Visual : DependencyObject
 	{

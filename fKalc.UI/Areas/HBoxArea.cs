@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 
 using System;
-using fKalc.UI.Framework;
+using fkalc.UI.Framework;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace fKalc.UI
+namespace fkalc.UI
 {
 	public class HBoxArea : Area
 	{
