@@ -35,6 +35,24 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Evaluator.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Expressions\Expression.cs" />
+    <Compile Include="Expressions\Const.cs" />
+    <Compile Include="Expressions\BinaryOperation.cs" />
+    <Compile Include="Expressions\Addition.cs" />
+    <Compile Include="Expressions\Subtraction.cs" />
+    <Compile Include="Expressions\Multiplication.cs" />
+    <Compile Include="Expressions\Division.cs" />
+    <Compile Include="CoreTokens\NumberCoreToken.cs" />
+    <Compile Include="CoreTokens\PlusCoreToken.cs" />
+    <Compile Include="CoreTokens\CoreToken.cs" />
+    <Compile Include="CoreTokens\MinusCoreToken.cs" />
+    <Compile Include="CoreTokens\MultiplicationCoreToken.cs" />
+    <Compile Include="CoreTokens\DivisionCoreToken.cs" />
+    <Compile Include="CoreTokens\OpenBracketCoreToken.cs" />
+    <Compile Include="CoreTokens\CloseBracketCoreToken.cs" />
+    <Compile Include="Scaner.cs" />
+    <Compile Include="CoreTokens\SemicolonCoreToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -42,5 +60,9 @@
       <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
       <Name>fkalc.Tokens</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Expressions\" />
+    <Folder Include="CoreTokens\" />
   </ItemGroup>
 </Project>

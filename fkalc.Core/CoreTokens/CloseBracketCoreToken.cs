@@ -1,5 +1,5 @@
 //
-// Evaluator.cs
+// CloseBracketCoreToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,47 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
 
 namespace fkalc.Core
 {
-	public class Evaluator
+	public class CloseBracketCoreToken : CoreToken
 	{
-		public Evaluator ()
+		public CloseBracketCoreToken ()
 		{
-		}
-
-		public void Evaluate (HBoxToken token)
-		{
-			var resultToken = token.Tokens.OfType<ResultToken> ().FirstOrDefault ();
-
-			if (resultToken == null)
-				return;
-
-			var coreTokens = new Scaner ().Scan (token);
-
-			var tree = new Parser (coreTokens).ParseExpression ();
-
-			var result = Evaluate (tree);
-
-			resultToken.Child = new TextToken () {Text = result.ToString()};
-		}
-
-		private double Evaluate (Expression expression)
-		{
-			if (expression is Const)
-				return (expression as Const).Value;
-			if (expression is Addition)
-				return Evaluate ((expression as Addition).Left) + Evaluate ((expression as Addition).Right);
-			if (expression is Subtraction)
-				return Evaluate ((expression as Subtraction).Left) - Evaluate ((expression as Subtraction).Right);
-			if (expression is Multiplication)
-				return Evaluate ((expression as Multiplication).Left) * Evaluate ((expression as Multiplication).Right);
-			if (expression is Division)
-				return Evaluate ((expression as Division).Left) / Evaluate ((expression as Division).Right);
-
-			return 0;
 		}
 	}
 }
