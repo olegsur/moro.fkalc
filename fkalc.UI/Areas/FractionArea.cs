@@ -1,5 +1,5 @@
 // 
-// DivideArea.cs
+// FractionArea.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -30,14 +30,14 @@ using System.Linq;
 
 namespace fkalc.UI
 {
-	public class DivideArea : Area
+	public class FractionArea : Area
 	{
 		private StackPanel panel = new StackPanel () { Orientation = Orientation.Vertical };
 		
 		public ContentControl Dividend { get; private set; }
 		public ContentControl Divisor { get; private set; }
 		
-		public DivideArea ()
+		public FractionArea ()
 		{
 			Content = panel;		
 			

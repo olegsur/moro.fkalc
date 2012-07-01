@@ -52,7 +52,7 @@ namespace fkalc.UI
 				result = new MultiplicationArea ();
 
 			if (value is FractionToken)
-				result = new DivideArea ();
+				result = new FractionArea ();
 
 			if (value is HBoxToken)
 				result = new HBoxArea ();

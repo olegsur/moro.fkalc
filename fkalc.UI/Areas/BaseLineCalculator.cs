@@ -31,8 +31,8 @@ namespace fkalc.UI
 	{
 		public static double GetBaseLine (Area area)
 		{
-			if (area is DivideArea)
-				return AreaHelper.GetArea ((area as DivideArea).Dividend).DesiredSize.Height + 6;
+			if (area is FractionArea)
+				return AreaHelper.GetArea ((area as FractionArea).Dividend).DesiredSize.Height + 6;
 			
 			return area.DesiredSize.Height / 2;	
 		}
