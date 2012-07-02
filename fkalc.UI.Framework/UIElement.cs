@@ -61,8 +61,11 @@ namespace fkalc.UI.Framework
 			
 			Keyboard.PreviewKeyPressEvent += OnPreviewKeyPressEvent;
 			Keyboard.KeyPressEvent += OnKeyPressEvent;
+
+			Keyboard.GotKeyboardFocusEvent += OnGotKeyboardFocusEvent;
+			Keyboard.LostKeyboardFocusEvent += OnLostKeyboardFocusEvent;
 		}
-		
+				
 		public void Measure (Size availableSize)
 		{	
 			DesiredSize = MeasureCore (availableSize);
@@ -98,10 +101,8 @@ namespace fkalc.UI.Framework
 			
 			if (Mouse.Device.TargetElement != this)
 				return;
-			
-			IsFocused = true;
-			
-			Keyboard.FocusedElement = this;
+
+			Keyboard.Focus (this);
 		}
 				
 		protected virtual void OnButtonPressEvent (object o, ButtonPressEventArgs args)
@@ -137,6 +138,18 @@ namespace fkalc.UI.Framework
 		protected virtual void OnMouseLeaveEvent (object sender, EventArgs args)
 		{
 			RaiseMouseLeaveEvent (args);
+		}
+
+		private void OnGotKeyboardFocusEvent (object sender, EventArgs e)
+		{
+			if (Keyboard.FocusedElement == this)
+				IsFocused = true;
+		}
+
+		private void OnLostKeyboardFocusEvent (object sender, EventArgs e)
+		{
+			if (Keyboard.FocusedElement == this)
+				IsFocused = false;
 		}
 		
 		private void RaiseButtonPressEvent (ButtonPressEventArgs args)

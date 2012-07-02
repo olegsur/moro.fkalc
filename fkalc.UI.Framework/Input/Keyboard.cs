@@ -31,29 +31,40 @@ namespace fkalc.UI.Framework
 {
 	public static class Keyboard
 	{
-		public static KeyboardDevice Device {get; private set;}
+		public static KeyboardDevice Device { get; private set; }
 		
 		static Keyboard ()
 		{
 			Device = new KeyboardDevice ();
 		}
 		
-		public static Visual FocusedElement 
-		{
+		public static Visual FocusedElement {
 			get	{ return Device.FocusedElement;	}
-			set { Device.FocusedElement = value; }
 		}
 		
-		public static event KeyPressEventHandler PreviewKeyPressEvent
-		{
+		public static event KeyPressEventHandler PreviewKeyPressEvent {
 			add { Device.PreviewKeyPressEvent += value; }
-			remove {Device.PreviewKeyPressEvent -= value; }
+			remove { Device.PreviewKeyPressEvent -= value; }
 		}	
 		
-		public static event KeyPressEventHandler KeyPressEvent
-		{
+		public static event KeyPressEventHandler KeyPressEvent {
 			add { Device.KeyPressEvent += value; }
-			remove {Device.KeyPressEvent -= value; }
+			remove { Device.KeyPressEvent -= value; }
+		}
+
+		public static event EventHandler GotKeyboardFocusEvent {
+			add { Device.GotKeyboardFocusEvent += value; }
+			remove { Device.GotKeyboardFocusEvent -= value; }
+		}
+
+		public static event EventHandler LostKeyboardFocusEvent {
+			add { Device.LostKeyboardFocusEvent += value; }
+			remove { Device.LostKeyboardFocusEvent -= value; }
+		}
+
+		public static void Focus (Visual visual)
+		{
+			Device.Focus (visual);
 		}
 	}
 }

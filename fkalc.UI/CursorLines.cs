@@ -42,6 +42,9 @@ namespace fkalc.UI
 
 		protected override void OnRender (DrawingContext dc)
 		{
+			if (!Region.IsFocused)
+				return;
+
 			DrawVLine (dc);
 			DrawHLine (dc);
 		}	

@@ -24,19 +24,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using Gtk;
 
 namespace fkalc.UI.Framework
 {
 	public class KeyboardDevice
 	{
-		public Visual FocusedElement { get; set; }
 		public event KeyPressEventHandler PreviewKeyPressEvent;		
 		public event KeyPressEventHandler KeyPressEvent;	
+		public event EventHandler GotKeyboardFocusEvent;
+		public event EventHandler LostKeyboardFocusEvent;
+
+		public Visual FocusedElement { get; private set; }
 		
-		private List<IKeyboardInputProvider> providers = new List<IKeyboardInputProvider>();
+		private List<IKeyboardInputProvider> providers = new List<IKeyboardInputProvider> ();
 		
 		public KeyboardDevice ()
 		{
@@ -45,49 +50,90 @@ namespace fkalc.UI.Framework
 		public void RegisterKeyboardInputProvider (IKeyboardInputProvider provider)
 		{
 			provider.KeyPressEvent += HandleProviderKeyPressEvent;
-			providers.Add(provider);
+			providers.Add (provider);
 		}		
 		
 		public void UnregisterKeyboardInputProvider (IKeyboardInputProvider provider)
 		{
 			provider.KeyPressEvent -= HandleProviderKeyPressEvent;
-			providers.Remove(provider);			
+			providers.Remove (provider);			
+		}
+
+		public void Focus (Visual visual)
+		{
+			if (FocusedElement == visual)
+				return;
+
+			if (FocusedElement != null)
+				RaiseLostKeyboardFocusEvent ();
+
+			FocusedElement = visual;
+
+			if (visual != null)
+				RaiseGotKeyboardFocusEvent ();
 		}
 		
 		private void HandleProviderKeyPressEvent (object o, KeyPressEventArgs args)
 		{
-			if (FocusedElement == null) return;
+			if (FocusedElement == null)
+				return;
 			
-			RaisePreviewKeyPressEvent(args);
-			RaiseKeyPressEvent(args);			
+			RaisePreviewKeyPressEvent (args);
+			RaiseKeyPressEvent (args);			
 		}	
 		
-		private void RaisePreviewKeyPressEvent(KeyPressEventArgs args)
+		private void RaisePreviewKeyPressEvent (KeyPressEventArgs args)
 		{
-			if (PreviewKeyPressEvent == null) return;
+			if (PreviewKeyPressEvent == null)
+				return;
 			
-			foreach(var element in new EventRouteFactory().Build(FocusedElement))
-			{
-				var del = PreviewKeyPressEvent.GetInvocationList().FirstOrDefault(d => d.Target == element);
+			foreach (var element in new EventRouteFactory().Build(FocusedElement)) {
+				var del = PreviewKeyPressEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
 				
-				if (del != null)
-				{
+				if (del != null) {
 					del.DynamicInvoke (this, args);
 				}	
 			}
 		}
 		
-		private void RaiseKeyPressEvent(KeyPressEventArgs args)
+		private void RaiseKeyPressEvent (KeyPressEventArgs args)
 		{
-			if (KeyPressEvent == null) return;
+			if (KeyPressEvent == null)
+				return;
 			
-			foreach(var element in new EventRouteFactory().Build(FocusedElement).Reverse())
-			{
-				var del = KeyPressEvent.GetInvocationList().FirstOrDefault(d => d.Target == element);
+			foreach (var element in new EventRouteFactory().Build(FocusedElement).Reverse()) {
+				var del = KeyPressEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
 				
-				if (del != null)
-				{
+				if (del != null) {
 					del.DynamicInvoke (this, args);
+				}	
+			}
+		}
+
+		private void RaiseGotKeyboardFocusEvent ()
+		{
+			if (GotKeyboardFocusEvent == null)
+				return;
+			
+			foreach (var element in new EventRouteFactory().Build(FocusedElement).Reverse()) {
+				var del = GotKeyboardFocusEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
+				
+				if (del != null) {
+					del.DynamicInvoke (this, EventArgs.Empty);
+				}	
+			}
+		}
+
+		private void RaiseLostKeyboardFocusEvent ()
+		{
+			if (LostKeyboardFocusEvent == null)
+				return;
+			
+			foreach (var element in new EventRouteFactory().Build(FocusedElement).Reverse()) {
+				var del = LostKeyboardFocusEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
+				
+				if (del != null) {
+					del.DynamicInvoke (this, EventArgs.Empty);
 				}	
 			}
 		}

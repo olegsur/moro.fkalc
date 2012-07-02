@@ -42,13 +42,13 @@ namespace fkalc.UI
 			canvas.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
 			canvas.ButtonPressEvent += HandleButtonPressEvent;
 			
-			Keyboard.FocusedElement = this;
-			
 			Content = canvas;
-			
+						
 			canvas.Children.Add (documentCursor);
 			
 			Background = Brushes.White;
+
+			Keyboard.Focus (canvas);
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
@@ -83,7 +83,7 @@ namespace fkalc.UI
 				canvas.SetLeft (canvas.GetLeft (documentCursor), region);
 				canvas.SetTop (canvas.GetTop (documentCursor), region);
 				
-				Keyboard.FocusedElement = region;
+				Keyboard.Focus (region);
 			}		    
 		
 			Screen.QueueDraw ();
