@@ -14,7 +14,7 @@
   <widget class="Gtk.Window" id="MainWindow" design-size="997 679">
     <property name="MemberName" />
     <property name="CanFocus">True</property>
-    <property name="Events">ExposureMask, PointerMotionMask, ButtonPressMask</property>
+    <property name="Events">ExposureMask, PointerMotionMask, ButtonPressMask, KeyPressMask, KeyReleaseMask</property>
     <property name="Title" translatable="yes">MainWindow</property>
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />

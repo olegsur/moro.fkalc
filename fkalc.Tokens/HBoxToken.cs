@@ -60,6 +60,16 @@ namespace fkalc.Tokens
 			oldToken.Parent = null;
 			newToken.Parent = this;
 		}
+
+		public override Token Left (Token token)
+		{
+			var index = Tokens.IndexOf (token);
+
+			if (index > 0)
+				return Tokens [index - 1];
+
+			return Left ();
+		}
 	}
 }
 

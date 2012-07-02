@@ -34,13 +34,18 @@ namespace fkalc.UI.Framework
 		
 		public WidgetKeyboardInputProvider (ElementHost elementHost)
 		{
-			elementHost.Host.KeyPressEvent += (o, args) => RaiseKeyPressEventHandler (args);
+			elementHost.Host.KeyPressEvent += HandleKeyPressEvent;
 		}
-		
+
+		[GLib.ConnectBefore] 
+		private void HandleKeyPressEvent (object o, KeyPressEventArgs args)
+		{
+			RaiseKeyPressEventHandler (args);
+		}
+
 		private void RaiseKeyPressEventHandler (KeyPressEventArgs args)
 		{
-			if (KeyPressEvent != null)
-			{
+			if (KeyPressEvent != null) {
 				KeyPressEvent (this, args);
 			}
 		}

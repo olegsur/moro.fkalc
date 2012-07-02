@@ -72,7 +72,7 @@ namespace fkalc.UI.Framework
 			if (visual != null)
 				RaiseGotKeyboardFocusEvent ();
 		}
-		
+
 		private void HandleProviderKeyPressEvent (object o, KeyPressEventArgs args)
 		{
 			if (FocusedElement == null)

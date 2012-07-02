@@ -51,14 +51,27 @@ namespace fkalc.UI
 
 		private void DrawVLine (DrawingContext dc)
 		{
-			var activeArea = GetArea (Region.ActiveToken, Region);
+			var activeArea = GetArea (Region.Selection.SelectedToken, Region);
 			if (activeArea == null)
 				return;
 
-			var startPoint = activeArea.PointToScreen (new Point (activeArea.Width + 2, -2));
+			var width = Region.Selection.Type == SelectionType.Left ? -2 : activeArea.Width + 2;
+
+			if (Region.Selection.SelectedToken is TextToken) {
+				var textToken = Region.Selection.SelectedToken as TextToken;
+
+				if (!string.IsNullOrEmpty (textToken.Text) && Region.Selection.Position != 0) {
+					var ft = new FormattedText (textToken.Text.Substring (0, Region.Selection.Position), textToken.FontFamily, textToken.FontSize);
+
+					width = ft.Width + 2;
+				} else
+					width = 0;
+			}
+
+			var startPoint = activeArea.PointToScreen (new Point (width, -2));
 			startPoint = Region.PointFromScreen (startPoint);
 
-			var endPoint = activeArea.PointToScreen (new Point (activeArea.Width + 2, activeArea.Height + 2));
+			var endPoint = activeArea.PointToScreen (new Point (width, activeArea.Height + 2));
 			endPoint = Region.PointFromScreen (endPoint);
 
 			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
@@ -66,11 +79,11 @@ namespace fkalc.UI
 
 		private void DrawHLine (DrawingContext dc)
 		{
-			var activeArea = GetArea (Region.ActiveToken, Region);
+			var activeArea = GetArea (Region.Selection.SelectedToken, Region);
 			if (activeArea == null)
 				return;
 
-			var startPoint = activeArea.PointToScreen (new Point (0, activeArea.Height + 2));
+			var startPoint = activeArea.PointToScreen (new Point (-1, activeArea.Height + 2));
 			startPoint = Region.PointFromScreen (startPoint);
 
 			var endPoint = activeArea.PointToScreen (new Point (activeArea.Width + 3, activeArea.Height + 2));

@@ -29,17 +29,34 @@ using fkalc.UI.Framework;
 namespace fkalc.Tokens
 {
 	public class TextToken : Token
-	{
+	{		
 		private readonly DependencyProperty<string> text;
+		private readonly DependencyProperty<string> fontFamily;
+		private readonly DependencyProperty<double> fontSize;
 
 		public string Text { 
-			get { return text.Value; } 
-			set{ text.Value = value; }
+			get { return text.Value;} 
+			set { text.Value = value; }
 		}
 
+		public string FontFamily { 
+			get { return fontFamily.Value;} 
+			set { fontFamily.Value = value; }
+		}
+
+		public double FontSize { 
+			get { return fontSize.Value;} 
+			set { fontSize.Value = value; }
+		}
+		
 		public TextToken ()
 		{
 			text = BuildProperty<string> ("Text");
+			fontFamily = BuildProperty<string> ("FontFamily");
+			fontSize = BuildProperty<double> ("FontSize");
+
+			FontFamily = "Georgia";
+			FontSize = 20;
 		}
 	}
 }

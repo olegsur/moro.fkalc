@@ -58,6 +58,13 @@ namespace fkalc.Tokens
 		{
 			Child = newToken;
 		}
+		#region implemented abstract members of fkalc.Tokens.ContainerToken
+		public override Token Left (Token token)
+		{
+			throw new System.NotImplementedException ();
+		}
+		#endregion
+
 	}
 }
 

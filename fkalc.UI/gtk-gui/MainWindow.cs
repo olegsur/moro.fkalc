@@ -8,7 +8,7 @@ public partial class MainWindow
 		global::Stetic.Gui.Initialize (this);
 		// Widget MainWindow
 		this.CanFocus = true;
-		this.Events = ((global::Gdk.EventMask)(262));
+		this.Events = ((global::Gdk.EventMask)(3334));
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));

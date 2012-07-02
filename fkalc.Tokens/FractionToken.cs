@@ -72,6 +72,14 @@ namespace fkalc.Tokens
 			if (oldToken == Divisor)
 				Divisor = newToken;
 		}
+
+		public override Token Left (Token token)
+		{
+			if (token == Dividend)
+				return this;
+
+			return Dividend;
+		}
 	}
 }
 

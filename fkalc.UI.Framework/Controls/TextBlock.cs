@@ -31,34 +31,41 @@ namespace fkalc.UI.Framework
 	public class TextBlock : FrameworkElement
 	{
 		private readonly DependencyProperty<string> text;
+		private readonly DependencyProperty<string> fontFamily;
+		private readonly DependencyProperty<double> fontSize;
 
 		public string Text { 
 			get { return text.Value;} 
 			set { text.Value = value; }
 		}
+
+		public string FontFamily { 
+			get { return fontFamily.Value;} 
+			set { fontFamily.Value = value; }
+		}
+
+		public double FontSize { 
+			get { return fontSize.Value;} 
+			set { fontSize.Value = value; }
+		}
 		
 		public TextBlock ()
 		{
 			text = BuildProperty<string> ("Text");
+			fontFamily = BuildProperty<string> ("FontFamily");
+			fontSize = BuildProperty<double> ("FontSize");
 		}	
 		
 		protected override void OnRender (DrawingContext dc)
 		{	
-			dc.DrawText (new FormattedText (Text) {FontFamily = "Georgia", FontSize = 20}, new Point (0, Height));
+			dc.DrawText (new FormattedText (Text, FontFamily, FontSize), new Point (0, Height));
 		}
 		
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			var surface = new Cairo.ImageSurface (Cairo.Format.A1, 1, 1);
-			
-			using (Cairo.Context cr = new Cairo.Context(surface)) {			
-				cr.SelectFontFace ("Georgia", Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
-				cr.SetFontSize (20);
-			
-				var textExtents = cr.TextExtents (Text);
-			
-				return new Size (textExtents.Width, textExtents.Height);
-			}
+			var formatedText = new FormattedText (Text, FontFamily, FontSize);
+
+			return new Size (formatedText.Width, formatedText.Height);
 		}		
 	}
 }

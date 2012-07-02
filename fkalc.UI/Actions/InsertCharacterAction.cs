@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using fkalc.Tokens;
 
 namespace fkalc.UI
 {
@@ -43,8 +44,17 @@ namespace fkalc.UI
 		public void Execute ()
 		{
 			var name = Gdk.Keyval.Name (Key);
+
+			if (Region.Selection.SelectedToken is TextToken) {
+				var textToken = Region.Selection.SelectedToken as TextToken;
 			
-			Region.ActiveToken.Text += name [0];	
+				if (string.IsNullOrEmpty (textToken.Text))
+					textToken.Text += name [0];
+				else 
+					textToken.Text = textToken.Text.Insert (Region.Selection.Position, name [0].ToString ());
+
+				Region.Selection.Position++;
+			}				
 		}
 	}
 }

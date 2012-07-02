@@ -34,6 +34,7 @@ namespace fkalc.Tokens
 		}
 
 		public abstract void Replace (Token oldToken, Token newToken);
+		public abstract Token Left (Token token);
 	}
 }
 

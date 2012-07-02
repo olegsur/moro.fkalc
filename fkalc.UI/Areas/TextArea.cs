@@ -37,6 +37,8 @@ namespace fkalc.UI
 		{
 			Content = textBlock;
 			textBlock.Text = "▪";
+			textBlock.FontFamily = "Georgia";
+			textBlock.FontSize = 20;
 
 			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
 		}
@@ -49,6 +51,8 @@ namespace fkalc.UI
 			var source = e.NewValue as DependencyObject;
 
 			BindingOperations.SetBinding (source.GetProperty ("Text"), textBlock.GetProperty ("Text"));
+			BindingOperations.SetBinding (source.GetProperty ("FontFamily"), textBlock.GetProperty ("FontFamily"));
+			BindingOperations.SetBinding (source.GetProperty ("FontSize"), textBlock.GetProperty ("FontSize"));
 		}
 	}
 }

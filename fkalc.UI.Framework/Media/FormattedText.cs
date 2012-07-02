@@ -30,12 +30,35 @@ namespace fkalc.UI.Framework
 	public class FormattedText
 	{
 		public string Text { get; private set; }
-		public string FontFamily { get; set; }
+		public string FontFamily { get; private set; }
 		public double FontSize { get; set; }
+		public double Width { get; private set; }
+		public double Height { get; private set; }
 
-		public FormattedText (string text)
+		public FormattedText (string text, string fontFamily, double fontSize)
 		{
 			Text = text;
+			FontFamily = fontFamily;
+			FontSize = fontSize;
+
+			var size = Measure ();
+
+			Width = size.Width;
+			Height = size.Height;
+		}
+
+		private Size Measure ()
+		{
+			var surface = new Cairo.ImageSurface (Cairo.Format.A1, 1, 1);
+			
+			using (Cairo.Context cr = new Cairo.Context(surface)) {			
+				cr.SelectFontFace ("Georgia", Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
+				cr.SetFontSize (20);
+			
+				var textExtents = cr.TextExtents (Text);
+			
+				return new Size (textExtents.Width, textExtents.Height);
+			}
 		}
 	}
 }

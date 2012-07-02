@@ -92,6 +92,9 @@
     <Compile Include="Input\ResultProcessor.cs" />
     <Compile Include="Actions\ResultAction.cs" />
     <Compile Include="Areas\FractionArea.cs" />
+    <Compile Include="Selection.cs" />
+    <Compile Include="Input\LeftProcessor.cs" />
+    <Compile Include="Actions\LeftAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

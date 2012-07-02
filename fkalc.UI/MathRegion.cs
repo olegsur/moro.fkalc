@@ -33,10 +33,9 @@ namespace fkalc.UI
 	public class MathRegion : UserControl
 	{
 		private Border border;
-		
-		public TextToken ActiveToken { get; set; }	
 
 		private HBoxToken root = new HBoxToken ();
+		public Selection Selection { get; private set; }
 
 		public HBoxToken Root {
 			get {
@@ -46,11 +45,11 @@ namespace fkalc.UI
 		
 		public MathRegion ()
 		{
-			ActiveToken = new TextToken ();
+			var activeToken = new TextToken ();
 			var rootVisual = new HBoxArea ();
 			rootVisual.DataContext = root;
 
-			root.Add (ActiveToken);
+			root.Add (activeToken);
 
 			border = new Border ()
 			{
@@ -71,7 +70,10 @@ namespace fkalc.UI
 			new MinusProcessor (this);
 			new MultiplicationProcessor (this);
 			new ResultProcessor (this);
-			
+			new LeftProcessor (this);
+
+			Selection = new Selection ();
+			Selection.SelectedToken = activeToken;
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)

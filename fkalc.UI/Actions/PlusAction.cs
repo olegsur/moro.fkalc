@@ -44,16 +44,16 @@ namespace fkalc.UI
 				
 			var right = new TextToken ();
 				
-			if (Region.ActiveToken.Parent is HBoxToken) {				
-				var parent = Region.ActiveToken.Parent as HBoxToken;	
+			if (Region.Selection.SelectedToken.Parent is HBoxToken) {				
+				var parent = Region.Selection.SelectedToken.Parent as HBoxToken;	
 
 				parent.Add (operation);	
 				parent.Add (right);
 			} else {				
-				var parent = Region.ActiveToken.Parent;
+				var parent = Region.Selection.SelectedToken.Parent;
 				
 				var container = new HBoxToken ();				
-				var token = Region.ActiveToken;
+				var token = Region.Selection.SelectedToken;
 				
 				parent.Replace (token, container);
 				
@@ -62,7 +62,7 @@ namespace fkalc.UI
 				container.Add (right);
 			}
 				
-			Region.ActiveToken = right;
+			Region.Selection.SelectedToken = right;
 		}
 	}
 }
