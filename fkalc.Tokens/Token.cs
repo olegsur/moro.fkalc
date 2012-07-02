@@ -35,14 +35,6 @@ namespace fkalc.Tokens
 		public Token ()
 		{
 		}
-
-		public Token Left ()
-		{
-			if (Parent != null)
-				return Parent.Left (this);
-
-			return null;
-		}
 	}
 }
 

@@ -1,5 +1,5 @@
 //
-// LeftAction.cs
+// RightAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -30,11 +30,11 @@ using System.Collections.Generic;
 
 namespace fkalc.UI
 {
-	public class LeftAction
+	public class RightAction
 	{
 		private MathRegion Region { get; set; }
 
-		public LeftAction (MathRegion region)
+		public RightAction (MathRegion region)
 		{
 			Region = region;
 		}
@@ -42,26 +42,24 @@ namespace fkalc.UI
 		public void Execute ()
 		{
 			if (Region.Selection.SelectedToken is TextToken) {
-				if (Region.Selection.Position > 0) {
-					Region.Selection.Position--;
+				var textToken = Region.Selection.SelectedToken as TextToken;
+				var lenght = string.IsNullOrEmpty (textToken.Text) ? 0 : textToken.Text.Length;
+
+				if (Region.Selection.Position < lenght) {
+					Region.Selection.Position++;
 					return;
 				}
 
-				Region.Selection.Type = SelectionType.Right;
-			}
+				Region.Selection.Type = SelectionType.Left;
+			}		
 
-			var previos = GetSelectionTree (Region.Root)
-				.TakeWhile (t => !(t.Token == Region.Selection.SelectedToken && t.Type == Region.Selection.Type))
-					.Reverse ().FirstOrDefault ();
+			var next = GetSelectionTree (Region.Root)
+				.SkipWhile (t => !(t.Token == Region.Selection.SelectedToken && t.Type == Region.Selection.Type))
+					.Skip (1).FirstOrDefault ();
 
-			if (previos != null) {
-				Region.Selection.SelectedToken = previos.Token;
-				Region.Selection.Type = previos.Type;
-
-				if (Region.Selection.SelectedToken is TextToken) {
-					var textToken = Region.Selection.SelectedToken as TextToken;
-					Region.Selection.Position = string.IsNullOrEmpty (textToken.Text) ? 0 : textToken.Text.Length;
-				}
+			if (next != null) {
+				Region.Selection.SelectedToken = next.Token;
+				Region.Selection.Type = next.Type;
 			}
 		}
 
@@ -90,7 +88,7 @@ namespace fkalc.UI
 			}
 
 			if (token is TextToken)
-				yield return new SelectionToken (SelectionType.Right, token);
+				yield return new SelectionToken (SelectionType.Left, token);
 
 		}
 
@@ -110,6 +108,7 @@ namespace fkalc.UI
 				Token = token;
 			}
 		}
+
 	}
 }
 

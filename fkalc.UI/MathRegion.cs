@@ -71,6 +71,7 @@ namespace fkalc.UI
 			new MultiplicationProcessor (this);
 			new ResultProcessor (this);
 			new LeftProcessor (this);
+			new RightProcessor (this);
 
 			Selection = new Selection ();
 			Selection.SelectedToken = activeToken;

@@ -1,5 +1,5 @@
 //
-// FractionToken.cs
+// RightProcessor.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,54 +24,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
-using System.Collections.Generic;
 
-namespace fkalc.Tokens
+namespace fkalc.UI
 {
-	public class FractionToken : ContainerToken
+	public class RightProcessor
 	{
-		private readonly DependencyProperty<Token> dividend;
-		private readonly DependencyProperty<Token> divisor;
+		private MathRegion Region { get; set; }
 
-		public Token Dividend { 
-			get { return dividend.Value; } 
-			set{ dividend.Value = value; }
-		}
-
-		public Token Divisor { 
-			get { return divisor.Value; } 
-			set{ divisor.Value = value; }
-		}
-
-		public FractionToken ()
+		public RightProcessor (MathRegion region)
 		{
-			dividend = BuildProperty<Token> ("Dividend");
-			dividend.DependencyPropertyValueChanged += HandleValueChanged;
-
-			divisor = BuildProperty<Token> ("Divisor");
-			divisor.DependencyPropertyValueChanged += HandleValueChanged;
-
-			Dividend = new TextToken ();
-			Divisor = new TextToken ();					
+			Region = region;	
+			Region.KeyPressEvent += HandleKeyPressEvent;
 		}
 
-		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
 		{
-			if (e.OldValue != null)
-				e.OldValue.Parent = null;
-
-			if (e.NewValue != null)
-				e.NewValue.Parent = this;
+			if (!NeedToProcess (args.Event.KeyValue))
+				return;
+			
+			new RightAction (Region).Execute ();
 		}
-				
-		public override void Replace (Token oldToken, Token newToken)
+		
+		private bool NeedToProcess (uint keyval)
 		{
-			if (oldToken == Dividend)
-				Dividend = newToken;
-
-			if (oldToken == Divisor)
-				Divisor = newToken;
+			var name = Gdk.Keyval.Name (keyval);			
+			
+			return name.ToLower () == "right";	
 		}
 	}
 }

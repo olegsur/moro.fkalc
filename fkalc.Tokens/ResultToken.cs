@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
+using System.Collections.Generic;
 
 namespace fkalc.Tokens
 {
@@ -58,13 +59,6 @@ namespace fkalc.Tokens
 		{
 			Child = newToken;
 		}
-		#region implemented abstract members of fkalc.Tokens.ContainerToken
-		public override Token Left (Token token)
-		{
-			throw new System.NotImplementedException ();
-		}
-		#endregion
-
 	}
 }
 

@@ -95,6 +95,8 @@
     <Compile Include="Selection.cs" />
     <Compile Include="Input\LeftProcessor.cs" />
     <Compile Include="Actions\LeftAction.cs" />
+    <Compile Include="Input\RightProcessor.cs" />
+    <Compile Include="Actions\RightAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
