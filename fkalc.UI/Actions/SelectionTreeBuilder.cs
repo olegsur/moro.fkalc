@@ -1,5 +1,5 @@
 //
-// LeftAction.cs
+// SelectionTreeBuilder.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,44 +24,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
 using System.Collections.Generic;
+using fkalc.Tokens;
+using System.Linq;
 
 namespace fkalc.UI
 {
-	public class LeftAction
+	public class SelectionTreeBuilder
 	{
-		private MathRegion Region { get; set; }
+		private SelectionType Type { get; set; }
 
-		public LeftAction (MathRegion region)
+		public SelectionTreeBuilder (SelectionType type)
 		{
-			Region = region;
+			Type = type;
 		}
-		
-		public void Execute ()
-		{
-			if (Region.Selection.SelectedToken is TextToken) {
-				if (Region.Selection.Position > 0) {
-					Region.Selection.Position--;
-					return;
-				}
 
-				Region.Selection.Type = SelectionType.Right;
+		public IEnumerable<SelectionToken> Build (Token token)
+		{
+			if (token is HBoxToken) {
+				var hbox = token as HBoxToken;
+
+				foreach (var child in hbox.Tokens.Where(c => !IsOperator(c))) {
+					foreach (var node in Build(child))
+						yield return node;
+				}
 			}
 
-			var previos = new SelectionTreeBuilder (SelectionType.Right).Build (Region.Root)
-				.TakeWhile (t => !(t.Token == Region.Selection.SelectedToken && t.Type == Region.Selection.Type))
-					.Reverse ().FirstOrDefault ();
+			if (token is FractionToken) {
+				var fraction = token as FractionToken;
 
-			if (previos != null) {
-				Region.Selection.SelectedToken = previos.Token;
-				Region.Selection.Type = previos.Type;
+				yield return new SelectionToken (SelectionType.Left, fraction);
 
-				if (Region.Selection.SelectedToken is TextToken) {
-					var textToken = Region.Selection.SelectedToken as TextToken;
-					Region.Selection.Position = string.IsNullOrEmpty (textToken.Text) ? 0 : textToken.Text.Length;
-				}
+				foreach (var node in Build(fraction.Dividend))
+					yield return node;
+				foreach (var node in Build(fraction.Divisor))
+					yield return node;
+
+				yield return new SelectionToken (SelectionType.Right, fraction);
+			}
+
+			if (token is TextToken)
+				yield return new SelectionToken (Type, token);
+
+		}
+
+		private bool IsOperator (Token token)
+		{
+			return token is PlusToken || token is MinusToken || token is MultiplicationToken;
+		}
+
+		public class SelectionToken
+		{
+			public SelectionType Type { get; set; }
+			public Token Token { get; set; }
+
+			public SelectionToken (SelectionType type, Token token)
+			{
+				Type = type;
+				Token = token;
 			}
 		}
 	}

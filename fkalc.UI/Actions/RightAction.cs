@@ -53,7 +53,7 @@ namespace fkalc.UI
 				Region.Selection.Type = SelectionType.Left;
 			}		
 
-			var next = GetSelectionTree (Region.Root)
+			var next = new SelectionTreeBuilder (SelectionType.Left).Build (Region.Root)
 				.SkipWhile (t => !(t.Token == Region.Selection.SelectedToken && t.Type == Region.Selection.Type))
 					.Skip (1).FirstOrDefault ();
 
@@ -63,51 +63,7 @@ namespace fkalc.UI
 			}
 		}
 
-		private IEnumerable<SelectionToken> GetSelectionTree (Token token)
-		{
-			if (token is HBoxToken) {
-				var hbox = token as HBoxToken;
 
-				foreach (var child in hbox.Tokens.Where(c => !IsOperator(c))) {
-					foreach (var node in GetSelectionTree(child))
-						yield return node;
-				}
-			}
-
-			if (token is FractionToken) {
-				var fraction = token as FractionToken;
-
-				yield return new SelectionToken (SelectionType.Left, fraction);
-
-				foreach (var node in GetSelectionTree(fraction.Dividend))
-					yield return node;
-				foreach (var node in GetSelectionTree(fraction.Divisor))
-					yield return node;
-
-				yield return new SelectionToken (SelectionType.Right, fraction);
-			}
-
-			if (token is TextToken)
-				yield return new SelectionToken (SelectionType.Left, token);
-
-		}
-
-		private bool IsOperator (Token token)
-		{
-			return token is PlusToken || token is MinusToken || token is MultiplicationToken;
-		}
-
-		private class SelectionToken
-		{
-			public SelectionType Type { get; set; }
-			public Token Token { get; set; }
-
-			public SelectionToken (SelectionType type, Token token)
-			{
-				Type = type;
-				Token = token;
-			}
-		}
 
 	}
 }
