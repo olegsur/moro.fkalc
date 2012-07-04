@@ -41,27 +41,7 @@ namespace fkalc.UI
 		{
 			var operation = new MinusToken ();			
 				
-			var right = new TextToken ();
-				
-			if (Region.Selection.SelectedToken.Parent is HBoxToken) {				
-				var parent = Region.Selection.SelectedToken.Parent as HBoxToken;	
-				
-				parent.Add (operation);	
-				parent.Add (right);
-			} else {				
-				var parent = Region.Selection.SelectedToken.Parent;
-				
-				var container = new HBoxToken ();				
-				var token = Region.Selection.SelectedToken;
-				
-				parent.Replace (token, container);
-				
-				container.Add (token);
-				container.Add (operation);
-				container.Add (right);
-			}
-				
-			Region.Selection.SelectedToken = right;
+			new InsertHBinaryOperation (Region, operation).Execute ();
 		}
 	}
 }

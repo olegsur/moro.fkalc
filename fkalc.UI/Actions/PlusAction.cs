@@ -41,82 +41,8 @@ namespace fkalc.UI
 		public void Execute ()
 		{
 			var operation = new PlusToken ();			
-				
-			var right = new TextToken ();
 
-			if (Region.Selection.SelectedToken is TextToken) {
-				var textToken = Region.Selection.SelectedToken as TextToken;
-
-				if (textToken.Parent is HBoxToken) {
-					var parent = Region.Selection.SelectedToken.Parent as HBoxToken;
-
-					var l = GetLeftString (textToken.Text);
-					var left = new TextToken ();
-					if (!string.IsNullOrEmpty (l))
-						left.Text = l;
-
-					var r = GetRightString (textToken.Text);
-					if (!string.IsNullOrEmpty (r))
-						right.Text = r;
-
-					var index = parent.Tokens.IndexOf (textToken);
-
-					parent.Tokens [index] = left;
-					parent.Tokens.Insert (index + 1, operation);	
-					parent.Tokens.Insert (index + 2, right);
-
-				} else {
-					var parent = Region.Selection.SelectedToken.Parent;
-				
-					var container = new HBoxToken ();
-					parent.Replace (textToken, container);
-
-					var left = new TextToken ()
-					{
-						Text = textToken.Text.Substring(0, Region.Selection.Position)
-					};
-
-					container.Add (left);
-					container.Add (operation);
-					container.Add (right);
-				}
-			} else if (Region.Selection.SelectedToken.Parent is HBoxToken) {				
-				var parent = Region.Selection.SelectedToken.Parent as HBoxToken;	
-
-				parent.Add (operation);	
-				parent.Add (right);
-
-				//parent.Insert ();
-			} else {				
-				var parent = Region.Selection.SelectedToken.Parent;
-				
-				var container = new HBoxToken ();				
-				var token = Region.Selection.SelectedToken;
-				
-				parent.Replace (token, container);
-				
-				container.Add (token);
-				container.Add (operation);
-				container.Add (right);
-			}
-				
-			Region.Selection.SelectedToken = right;
-		}
-
-		private string GetLeftString (string text)
-		{
-			if (string.IsNullOrEmpty (text))
-				return null;
-
-			return text.Substring (0, Region.Selection.Position);
-		}
-
-		private string GetRightString (string text)
-		{
-			if (string.IsNullOrEmpty (text))
-				return null;
-
-			return text.Substring (Region.Selection.Position, text.Length - Region.Selection.Position);
+			new InsertHBinaryOperation (Region, operation).Execute ();				
 		}
 	}
 }
