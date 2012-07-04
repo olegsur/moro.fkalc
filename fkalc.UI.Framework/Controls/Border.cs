@@ -38,21 +38,7 @@ namespace fkalc.UI.Framework
 			BorderColor = Colors.Black;
 			Padding = new Thickness (5);
 		}
-		
-		protected override void OnRender (DrawingContext dc)
-		{		
-			if (Child == null)
-				return;
 
-			dc.DrawRectangle (null, new Pen (BorderColor, 1), new Rect (0, 0, Width, Height));
-
-			dc.PushTransform (Child.VisualTransform);	
-			
-			Child.Render (dc);
-			
-			dc.Pop ();
-		}
-		
 		protected override Size MeasureOverride (Size availableSize)
 		{
 			if (Child == null)
@@ -72,6 +58,14 @@ namespace fkalc.UI.Framework
 				return;
 
 			Child.Arrange (new Rect (new Point (Padding.Left, Padding.Top), Child.DesiredSize));
+		}
+
+		protected override void OnRender (DrawingContext dc)
+		{		
+			if (Child == null)
+				return;
+
+			dc.DrawRectangle (null, new Pen (BorderColor, 1), new Rect (0, 0, Width, Height));
 		}
 	}
 }

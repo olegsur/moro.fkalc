@@ -92,22 +92,21 @@ namespace fkalc.UI
 			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
 		} 
 
-		private Area GetArea (Token token, UIElement element)
+		private Area GetArea (Token token, UIElement uielement)
 		{
-			if (element is FrameworkElement && (element as FrameworkElement).DataContext == token)
-				return element as Area;
+			if (uielement == null)
+				return null;
 
-			if (element is ContentControl) 
-				return GetArea (token, (element as ContentControl).Content);
+			if (uielement is FrameworkElement && (uielement as FrameworkElement).DataContext == token)
+				return uielement as Area;
 
-			if (element is Decorator)
-				return GetArea (token, (element as Decorator).Child);
+			
+			for (int i = 0; i < uielement.VisualChildrenCount; i++) {
+				var child = GetArea (token, uielement.GetVisualChild (i) as UIElement);
 
-			if (element is Panel)
-				return (element as Panel).Children.Select (child => GetArea (token, child)).FirstOrDefault (area => area != null);
-
-			if (element is ItemsControl)
-				return (element as ItemsControl).ItemsPanel.Children.Select (child => GetArea (token, child)).FirstOrDefault (area => area != null);
+				if (child != null)
+					return child;
+			}
 
 			return null;
 		}

@@ -143,16 +143,10 @@ namespace fkalc.UI.Framework
 				child.Arrange (new Rect (new Point (child.X, child.Y), child.DesiredSize));
 			}
 		}
-		
-		protected override void OnRender (DrawingContext dc)
+
+		public override Visual GetVisualChild (int index)
 		{
-			foreach (var child in children.Where(c => c.IsVisible)) {
-				dc.PushTransform (child.VisualTransform);
-				
-				child.Render (dc);
-				
-				dc.Pop ();
-			}
+			return children [index];
 		}
 		
 		public override Visual HitTest (double x, double y)

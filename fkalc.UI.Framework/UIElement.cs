@@ -83,7 +83,27 @@ namespace fkalc.UI.Framework
 		{
 			ArrangeCore (finalRect);
 		}
-		
+
+		public void Render (DrawingContext dc)
+		{
+			OnRender (dc);
+
+			for (int i = 0; i < VisualChildrenCount; i++) {
+				var child = GetVisualChild (i);
+				if (child is UIElement) {
+					var uielement = child as UIElement;
+
+					if (uielement.IsVisible) {
+						dc.PushTransform (uielement.VisualTransform);
+
+						uielement.Render (dc);
+
+						dc.Pop ();
+					}
+				}
+			}
+		}
+				
 		protected virtual Size MeasureCore (Size availableSize)
 		{		
 			return new Size (0, 0);
@@ -93,14 +113,9 @@ namespace fkalc.UI.Framework
 		{			
 			VisualTransform = new TranslateTransform (finalRect.X, finalRect.Y);
 		}
-		
+
 		protected virtual void OnRender (DrawingContext dc)
 		{			
-		}
-		
-		public void Render (DrawingContext dr)
-		{
-			OnRender (dr);
 		}
 		
 		private void HandlePreviewButtonPressEvent (object o, ButtonPressEventArgs args)

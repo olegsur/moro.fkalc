@@ -125,15 +125,9 @@ namespace fkalc.UI.Framework
 			}
 		}
 
-		protected override void OnRender (DrawingContext dc)
+		public override Visual GetVisualChild (int index)
 		{
-			foreach (var child in children.Where(c => c.IsVisible)) {				
-				dc.PushTransform (child.VisualTransform);
-				
-				child.Render (dc);
-				
-				dc.Pop ();
-			}
+			return children [index];
 		}
 	}
 }

@@ -69,14 +69,15 @@ namespace fkalc.UI.Framework
 			Content.Arrange (new Rect (new Size (Width, Height)));
 		}
 		
-		protected override void OnRender (DrawingContext dr)
-		{
-			base.OnRender (dr);
-			
-			if (Content == null || !Content.IsVisible)
-				return;
+		public override int VisualChildrenCount {
+			get {
+				return Content == null ? 0 : 1;
+			}
+		}
 
-			Content.Render (dr);
+		public override Visual GetVisualChild (int index)
+		{
+			return Content;
 		}
 		
 		public override Visual HitTest (double x, double y)

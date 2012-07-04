@@ -34,10 +34,19 @@ namespace fkalc.UI.Framework
 	{
 		public Visual VisaulParent { get; private set; }
 		public Transform VisualTransform { get; protected set; }
-		
+
+		private int visualChildrenCount;
+
 		public Visual ()
 		{
 			VisualTransform = new TranslateTransform (0, 0);
+			visualChildrenCount = 0;
+		}
+
+		public virtual int VisualChildrenCount { get { return visualChildrenCount; } }
+		public virtual Visual GetVisualChild (int index)
+		{
+			return null;
 		}
 		
 		public virtual Visual HitTest (double x, double y)

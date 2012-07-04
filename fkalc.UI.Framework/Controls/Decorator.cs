@@ -77,6 +77,17 @@ namespace fkalc.UI.Framework
 			
 			Child.Render (dc);
 		}
+
+		public override int VisualChildrenCount {
+			get {
+				return Child == null ? 0 : 1;
+			}
+		}
+
+		public override Visual GetVisualChild (int index)
+		{
+			return Child;
+		}
 	}
 }
 

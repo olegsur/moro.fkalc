@@ -32,16 +32,20 @@ namespace fkalc.UI
 	{
 		public static Area GetArea (UIElement uielement)
 		{
+			if (uielement == null)
+				return null;
+
 			if (uielement is Area)
 				return uielement as Area;
 
-			if (uielement is ContentControl)
-				return GetArea ((uielement as ContentControl).Content);
+			for (int i = 0; i < uielement.VisualChildrenCount; i++) {
+				var child = GetArea (uielement.GetVisualChild (i) as UIElement);
 
-			if (uielement is Decorator)
-				return GetArea ((uielement as Decorator).Child);
+				if (child != null)
+					return child;
+			}
 
-			throw new Exception ("Area not found");
+			return null;
 		}
 	}
 }

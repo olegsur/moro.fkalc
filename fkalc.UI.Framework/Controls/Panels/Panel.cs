@@ -38,6 +38,17 @@ namespace fkalc.UI.Framework
 		{	
 			Children = new ObservableCollection<UIElement> ();
 		}		
+
+		public override int VisualChildrenCount {
+			get {
+				return Children.Count;
+			}
+		}
+
+		public override Visual GetVisualChild (int index)
+		{
+			return Children [0];
+		}
 	}
 }
 

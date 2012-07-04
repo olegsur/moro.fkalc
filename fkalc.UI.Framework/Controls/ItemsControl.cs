@@ -143,9 +143,15 @@ namespace fkalc.UI.Framework
 			ItemsPanel.Arrange (new Rect (finalSize));
 		}
 
-		protected override void OnRender (DrawingContext dc)
+		public override int VisualChildrenCount {
+			get {
+				return 1;
+			}
+		}
+
+		public override Visual GetVisualChild (int index)
 		{
-			itemsPanel.Render (dc);
+			return itemsPanel;
 		}
 
 		private class ItemVisual
