@@ -26,6 +26,7 @@
 
 using System;
 using fkalc.Tokens;
+using System.Text.RegularExpressions;
 
 namespace fkalc.UI
 {
@@ -45,16 +46,28 @@ namespace fkalc.UI
 		{
 			var name = Gdk.Keyval.Name (Key);
 
-			if (Region.Selection.SelectedToken is TextToken) {
-				var textToken = Region.Selection.SelectedToken as TextToken;
-			
-				if (string.IsNullOrEmpty (textToken.Text))
-					textToken.Text += name [0];
-				else 
-					textToken.Text = textToken.Text.Insert (Region.Selection.Position, name [0].ToString ());
+			if (Region.Selection.SelectedToken is TextToken == false) {
+				var operation = new MultiplicationToken ();			
+				
+				new InsertHBinaryOperation (Region, operation).Execute ();
+			}
 
-				Region.Selection.Position++;
-			}				
+			var textToken = Region.Selection.SelectedToken as TextToken;
+
+			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Regex.IsMatch (name, @"\D")) {
+				var operation = new MultiplicationToken ();			
+				
+				new InsertHBinaryOperation (Region, operation).Execute ();
+			}
+
+			textToken = Region.Selection.SelectedToken as TextToken;
+			
+			if (string.IsNullOrEmpty (textToken.Text))
+				textToken.Text += name [0];
+			else 
+				textToken.Text = textToken.Text.Insert (Region.Selection.Position, name [0].ToString ());
+
+			Region.Selection.Position++;
 		}
 	}
 }
