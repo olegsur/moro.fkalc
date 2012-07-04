@@ -112,6 +112,17 @@ namespace fkalc.UI.Framework
 					items.Remove (item);
 				}
 				break;
+			case NotifyCollectionChangedAction.Replace:
+				var i = e.NewStartingIndex;
+				foreach (var o in e.NewItems) {
+					var child = ItemTemplate.LoadContent (o);
+
+					itemsPanel.Children[i] = child;
+
+					items[i] = new ItemVisual () { Item = o, Visual = child };
+					i++;
+				}
+				break;
 			case NotifyCollectionChangedAction.Reset:
 				itemsPanel.Children.Clear ();
 				break;

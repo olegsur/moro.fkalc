@@ -27,6 +27,8 @@
 using System;
 using fkalc.UI.Framework;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace fkalc.Tokens
 {
@@ -40,13 +42,14 @@ namespace fkalc.Tokens
 		{
 			tokens = BuildProperty<ObservableCollection<Token>> ("Tokens");
 			tokens.Value = new ObservableCollection<Token> ();
+
+			Tokens.CollectionChanged += HandleCollectionChanged;
 		}
+
 
 		public void Add (Token token)
 		{
 			Tokens.Add (token);
-
-			token.Parent = this;	
 		}
 
 		public override void Replace (Token oldToken, Token newToken)
@@ -57,9 +60,38 @@ namespace fkalc.Tokens
 
 			Tokens.RemoveAt (index);
 			Tokens.Insert (index, newToken);
+		}
 
-			oldToken.Parent = null;
-			newToken.Parent = this;
+		private void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			switch (e.Action) {
+			case NotifyCollectionChangedAction.Add:
+				foreach (var token in e.NewItems.Cast<Token>()) {
+					token.Parent = this;
+				}
+				break;
+			case NotifyCollectionChangedAction.Remove:
+				foreach (var token in e.OldItems.Cast<Token>()) {
+					token.Parent = null;
+				}
+				break;
+			case NotifyCollectionChangedAction.Replace:
+				foreach (var token in e.OldItems.Cast<Token>()) {
+					token.Parent = null;
+				}
+				foreach (var token in e.NewItems.Cast<Token>()) {
+					token.Parent = this;
+				}
+				break;
+			case NotifyCollectionChangedAction.Reset:
+				foreach (var token in e.OldItems.Cast<Token>()) {
+					token.Parent = this;
+				}
+				break;
+			default:
+				break;
+			}
+
 		}
 	}
 }
