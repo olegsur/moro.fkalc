@@ -1,21 +1,21 @@
-// 
-// Canvas.cs
-//  
+//
+// Grid.cs
+//
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
-// 
+//
 // Copyright (c) 2012 Oleg Sur
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,62 +23,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
-using Cairo;
-using System.Linq;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace fkalc.UI.Framework
 {
-	public class Canvas : Panel
-	{		
-		private List<CanvasChild> children = new List<CanvasChild> ();
-		
-		public Canvas ()
-		{		
+	public class Grid : Panel
+	{
+		private List<GridChild> children = new List<GridChild> ();
+
+		public Grid ()
+		{
 			Children.CollectionChanged += HandleCollectionChanged;
-		}
-			
-		public double GetLeft (UIElement element)
-		{
-			var el = children.FirstOrDefault (c => c.Content == element);
-			
-			if (el == null)
-				return 0;
-			
-			return el.X;
-		}
-		
-		public void SetLeft (double left, UIElement element)
-		{
-			var el = children.FirstOrDefault (c => c.Content == element);
-			
-			if (el == null)
-				return;
-			
-			el.X = left;
-		}
-		
-		public double GetTop (UIElement element)
-		{
-			var el = children.FirstOrDefault (c => c.Content == element);
-			
-			if (el == null)
-				return 0;
-			
-			return el.Y;
-		}
-		
-		public void SetTop (double top, UIElement element)
-		{
-			var el = children.FirstOrDefault (c => c.Content == element);
-			
-			if (el == null)
-				return;
-			
-			el.Y = top;
 		}
 
 		private void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -87,7 +45,7 @@ namespace fkalc.UI.Framework
 				var index = e.NewStartingIndex;
 
 				foreach (var uielement in e.NewItems.Cast<UIElement>()) {
-					var child = new CanvasChild (uielement);
+					var child = new GridChild (uielement);
 			
 					AddVisualChild (child);
 					children.Insert (index, child);
@@ -112,7 +70,7 @@ namespace fkalc.UI.Framework
 				var index = e.NewStartingIndex;
 
 				foreach (var uielement in e.NewItems.Cast<UIElement>()) {
-					var child = new CanvasChild (uielement);
+					var child = new GridChild (uielement);
 			
 					RemoveVisualChild (children [index]);
 
@@ -127,26 +85,49 @@ namespace fkalc.UI.Framework
 				children.Clear ();
 			}
 		}
-				
+
 		protected override Size MeasureOverride (Size availableSize)
 		{
+			var col = children.Where (c => c.Visibility != Visibility.Collapsed);
+
 			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {
 				child.Measure (availableSize);
-			}			
+			}
+
+			var height = col.Any () ? col.GroupBy (c => c.Row).Sum (row => row.Max (c => c.DesiredSize.Height)) : 0;
+			var width = col.Any () ? col.GroupBy (c => c.Column).Sum (column => column.Max (c => c.DesiredSize.Width)) : 0;
 			
-			return new Size (0, 0);
+			return new Size (width, height);
 		}
-		
+
 		protected override void ArrangeOverride (Size finalSize)
 		{
-			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {				
-				child.Arrange (new Rect (new Point (child.X, child.Y), child.DesiredSize));
+			var x = 0d;
+			var y = 0d;
+
+			var col = children.Where (c => c.Visibility != Visibility.Collapsed);
+
+			var heights = col.GroupBy (c => c.Row).OrderBy (g => g.Key)
+				.ToDictionary (row => row.Key, row => row.Max (c => c.DesiredSize.Height)); 
+
+			var widths = col.GroupBy (c => c.Column).OrderBy (g => g.Key)
+				.ToDictionary (column => column.Key, column => column.Max (c => c.DesiredSize.Width)); 
+
+			foreach (var height in heights) {
+				x = 0;
+				foreach (var width in widths) {
+					var child = col.First (c => c.Row == height.Key && c.Column == width.Key);
+					child.Arrange (new Rect (x, y, width.Value, height.Value));
+
+					x += width.Value;
+				}
+				y += height.Value;
 			}
 		}
-		
+
 		protected override void OnRender (DrawingContext dc)
 		{
-			foreach (var child in children.Where(c => c.IsVisible)) {
+			foreach (var child in children.Where(c => c.IsVisible)) {				
 				dc.PushTransform (child.VisualTransform);
 				
 				child.Render (dc);
@@ -154,14 +135,6 @@ namespace fkalc.UI.Framework
 				dc.Pop ();
 			}
 		}
-		
-		public override Visual HitTest (double x, double y)
-		{
-			var hitTest = children.Where (c => IsVisible).FirstOrDefault (c => c.HitTest (x, y) != null);
-			if (hitTest != null) {
-				return hitTest.Content;
-			}
-			return x >= 0 && x <= Width && y >= 0 && y <= Height ? this : null;
-		}
 	}
 }
+

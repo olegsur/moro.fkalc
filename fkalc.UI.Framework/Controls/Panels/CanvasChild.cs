@@ -36,6 +36,8 @@ namespace fkalc.UI.Framework
 		public CanvasChild (UIElement child)
 		{
 			Content = child;
+
+			BindingOperations.SetBinding (child.GetProperty ("Visibility"), GetProperty ("Visibility"));
 		}
 			
 		public override Visual HitTest (double x, double y)

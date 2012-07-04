@@ -38,18 +38,26 @@ namespace fkalc.UI.Framework
 		public event EventHandler MouseLeaveEvent;
 		public event KeyPressEventHandler PreviewKeyPressEvent;
 		public event KeyPressEventHandler KeyPressEvent;
+
+		private readonly DependencyProperty<Visibility> visibility;
 		
 		public Size DesiredSize { get; set; }
 
 		public bool IsFocused { get; set; }
-		
-		public Visibility Visibility { get; set; }
+
+		public Visibility Visibility { 
+			get { return visibility.Value;} 
+			set { visibility.Value = value; }
+		}
+
 		public bool IsVisible { get { return Visibility == Visibility.Visible; } }
 		
 		public bool SnapsToDevicePixels { get; set; }
 		
 		public UIElement ()
 		{
+			visibility = BuildProperty<Visibility> ("Visibility");
+
 			Mouse.PreviewButtonPressEvent += HandlePreviewButtonPressEvent;
 			Mouse.ButtonPressEvent += OnButtonPressEvent;
 			

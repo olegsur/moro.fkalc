@@ -32,15 +32,40 @@ namespace fkalc.UI
 	public class TextArea : Area
 	{				
 		private TextBlock textBlock = new TextBlock ();
+		private Rectangle rectangle = new Rectangle ();
 		
 		public TextArea ()
 		{
-			Content = textBlock;
-			textBlock.Text = "▪";
 			textBlock.FontFamily = "Georgia";
 			textBlock.FontSize = 20;
+			textBlock.Visibility = Visibility.Collapsed;
+
+			rectangle.HeightRequest = 12;
+			rectangle.WidthRequest = 12;
+			//rectangle.Fill = Brushes.Black;
+			rectangle.SnapsToDevicePixels = true;
+
+			var grid = new Grid ();
+			grid.Children.Add (textBlock);
+			grid.Children.Add (rectangle);
+
+			Content = grid;
 
 			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
+			textBlock.GetProperty ("Text").DependencyPropertyValueChanged += TextChanged;
+		}
+
+		private void TextChanged (object sender, DPropertyValueChangedEventArgs e)
+		{
+			var str = e.NewValue as string;
+
+			if (string.IsNullOrEmpty (str)) {
+				rectangle.Visibility = Visibility.Visible;
+				textBlock.Visibility = Visibility.Collapsed;
+			} else {
+				rectangle.Visibility = Visibility.Collapsed;
+				textBlock.Visibility = Visibility.Visible;
+			}
 		}
 				
 		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)

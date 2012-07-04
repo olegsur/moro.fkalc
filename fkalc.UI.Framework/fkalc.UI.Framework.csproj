@@ -106,6 +106,8 @@
     <Compile Include="Templates\DataTemplate.cs" />
     <Compile Include="Data\IValueConverter.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
+    <Compile Include="Controls\Panels\Grid.cs" />
+    <Compile Include="Controls\Panels\GridChild.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
