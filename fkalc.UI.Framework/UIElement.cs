@@ -86,7 +86,7 @@ namespace fkalc.UI.Framework
 			VisualTransform = new TranslateTransform (finalRect.X, finalRect.Y);
 		}
 		
-		protected virtual void OnRender (DrawingContext dr)
+		protected virtual void OnRender (DrawingContext dc)
 		{			
 		}
 		

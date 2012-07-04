@@ -32,11 +32,13 @@ namespace fkalc.UI.Framework
 	{
 		public double StrokeThickness { get; set; }
 		public Color Stroke { get; set; }
+		public Brush Fill { get; set; }
 		
 		public Shape ()
 		{
 			StrokeThickness = 1;
 			Stroke = Colors.Black;
+			Fill = Brushes.Transparent;
 		}
 	}
 }

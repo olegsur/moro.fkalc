@@ -1,5 +1,5 @@
 //
-// RightAction.cs
+// Rectangle.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,43 +24,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
-using System.Collections.Generic;
 
-namespace fkalc.UI
+namespace fkalc.UI.Framework
 {
-	public class RightAction
+	public class Rectangle : Shape
 	{
-		private MathRegion Region { get; set; }
-
-		public RightAction (MathRegion region)
+		public Rectangle ()
 		{
-			Region = region;
 		}
-		
-		public void Execute ()
+
+		protected override void OnRender (DrawingContext dc)
 		{
-			if (Region.Selection.SelectedToken is TextToken) {
-				var textToken = Region.Selection.SelectedToken as TextToken;
-				var lenght = string.IsNullOrEmpty (textToken.Text) ? 0 : textToken.Text.Length;
+			var anialias = dc.Antialias;
+			
+			dc.Antialias = SnapsToDevicePixels ? Antialias.None : anialias;
 
-				if (Region.Selection.Position < lenght) {
-					Region.Selection.Position++;
-					return;
-				}
+			var rect = new Rect (StrokeThickness / 2, StrokeThickness / 2, 
+			                     Width - StrokeThickness / 2, Height - StrokeThickness / 2);
 
-				Region.Selection.Type = SelectionType.Left;
-			}		
+			dc.DrawRectangle (Fill, new Pen (Stroke, StrokeThickness), rect);
 
-			var next = new SelectionTreeBuilder (SelectionType.Left).Build (Region.Root)
-				.SkipWhile (t => !(t.Token == Region.Selection.SelectedToken && t.Type == Region.Selection.Type))
-					.Skip (1).FirstOrDefault ();
-
-			if (next != null) {
-				Region.Selection.SelectedToken = next.Token;
-				Region.Selection.Type = next.Type;
-			}
+			dc.Antialias = anialias;
 		}
 	}
 }

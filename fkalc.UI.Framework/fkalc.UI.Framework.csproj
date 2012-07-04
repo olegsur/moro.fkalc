@@ -105,6 +105,7 @@
     <Compile Include="Common\ObservableCollection.cs" />
     <Compile Include="Templates\DataTemplate.cs" />
     <Compile Include="Data\IValueConverter.cs" />
+    <Compile Include="Shapes\Rectangle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
