@@ -40,7 +40,7 @@ namespace fkalc.UI.Framework
 			
 			dc.Antialias = SnapsToDevicePixels ? Antialias.None : anialias;
 
-			dc.DrawEllipse (Colors.Transparent, new Pen (Stroke, StrokeThickness), new Point (Width / 2, Height / 2), Width / 2, Height / 2);
+			dc.DrawEllipse (Fill, new Pen (Stroke, StrokeThickness), new Point (Width / 2, Height / 2), Width / 2, Height / 2);
 
 			dc.Antialias = anialias;
 		}

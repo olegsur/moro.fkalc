@@ -51,18 +51,31 @@ namespace fkalc.UI.Framework
 			cr.Restore ();
 		}
 
-		public override void DrawEllipse (Color color, Pen pen, Point center, double radiusX, double radiusY)
+		public override void DrawEllipse (Brush brush, Pen pen, Point center, double radiusX, double radiusY)
 		{
-			cr.Save ();			
-			
-			cr.Color = new Cairo.Color (pen.Color.R, pen.Color.G, pen.Color.B, pen.Color.Alfa);				
-			cr.LineWidth = pen.Thickness;
+			cr.Save ();		
 
 			cr.Translate (center.X, center.Y);
 			cr.Scale (1, radiusY / radiusX);
+
+			if (brush != null) {
+				if (brush is SolidColorBrush) {
+					var b = brush as SolidColorBrush;
+					cr.Color = new Cairo.Color (b.Color.R, b.Color.G, b.Color.B, b.Color.Alfa);	
+					cr.Arc (0, 0, radiusX - pen.Thickness / 2, 0, 2 * Math.PI);			
 			
-			cr.Arc (0, 0, radiusX - pen.Thickness / 2, 0, 2 * Math.PI);			
-						
+					cr.Fill ();
+				}
+			}
+
+			if (pen != null) {
+				cr.Color = new Cairo.Color (pen.Color.R, pen.Color.G, pen.Color.B, pen.Color.Alfa);	
+				cr.LineWidth = pen.Thickness;
+				cr.Arc (0, 0, radiusX - pen.Thickness / 2, 0, 2 * Math.PI);				
+			
+				cr.Stroke ();
+			}
+									
 			cr.Stroke ();
 			
 			cr.Restore ();

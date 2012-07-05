@@ -36,13 +36,12 @@ namespace fkalc.UI
 		
 		public TextArea ()
 		{
-			textBlock.FontFamily = "Georgia";
+			textBlock.FontFamily = "Arial";
 			textBlock.FontSize = 20;
 			textBlock.Visibility = Visibility.Collapsed;
 
 			rectangle.HeightRequest = 12;
 			rectangle.WidthRequest = 12;
-			//rectangle.Fill = Brushes.Black;
 			rectangle.SnapsToDevicePixels = true;
 
 			var grid = new Grid ();

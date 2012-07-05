@@ -60,6 +60,9 @@ namespace fkalc.UI
 			if (value is ResultToken)
 				result = new ResultArea ();
 
+			if (value is AssignmentToken)
+				result = new AssignmentArea ();
+
 			result.DataContext = value;
 
 			return result;

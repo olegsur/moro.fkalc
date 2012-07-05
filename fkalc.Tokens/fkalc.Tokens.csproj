@@ -43,6 +43,7 @@
     <Compile Include="ResultToken.cs" />
     <Compile Include="TextToken.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="AssignmentToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

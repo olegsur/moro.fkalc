@@ -52,8 +52,8 @@ namespace fkalc.UI.Framework
 			var surface = new Cairo.ImageSurface (Cairo.Format.A1, 1, 1);
 			
 			using (Cairo.Context cr = new Cairo.Context(surface)) {			
-				cr.SelectFontFace ("Georgia", Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
-				cr.SetFontSize (20);
+				cr.SelectFontFace (FontFamily, Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
+				cr.SetFontSize (FontSize);
 			
 				var textExtents = cr.TextExtents (Text);
 			

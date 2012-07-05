@@ -39,7 +39,7 @@ namespace fkalc.UI.Framework
 		public abstract void Pop ();
 
 		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Color color, Pen pen, Point center, double radiusX, double radiusY);
+		public abstract void DrawEllipse (Brush brush, Pen pen, Point center, double radiusX, double radiusY);
 		public abstract void DrawText (FormattedText formattedText, Point origin);
 		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
 	}

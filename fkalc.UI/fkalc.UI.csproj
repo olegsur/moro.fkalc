@@ -99,6 +99,9 @@
     <Compile Include="Actions\RightAction.cs" />
     <Compile Include="Actions\SelectionTreeBuilder.cs" />
     <Compile Include="Actions\InsertHBinaryOperation.cs" />
+    <Compile Include="Input\AssignmentProcessor.cs" />
+    <Compile Include="Actions\AssignmentAction.cs" />
+    <Compile Include="Areas\AssignmentArea.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

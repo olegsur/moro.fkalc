@@ -55,7 +55,7 @@ namespace fkalc.Tokens
 			fontFamily = BuildProperty<string> ("FontFamily");
 			fontSize = BuildProperty<double> ("FontSize");
 
-			FontFamily = "Georgia";
+			FontFamily = "Arial";
 			FontSize = 20;
 		}
 	}

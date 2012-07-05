@@ -72,6 +72,7 @@ namespace fkalc.UI
 			new ResultProcessor (this);
 			new LeftProcessor (this);
 			new RightProcessor (this);
+			new AssignmentProcessor (this);
 
 			Selection = new Selection ();
 			Selection.SelectedToken = activeToken;

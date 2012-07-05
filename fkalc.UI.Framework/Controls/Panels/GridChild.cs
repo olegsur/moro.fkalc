@@ -37,7 +37,8 @@ namespace fkalc.UI.Framework
 			Content = child;
 
 			BindingOperations.SetBinding (child.GetProperty ("Visibility"), GetProperty ("Visibility"));
-		}
+			BindingOperations.SetBinding (child.GetProperty ("Margin"), GetProperty ("Margin"));
+		}	
 	}
 }
 

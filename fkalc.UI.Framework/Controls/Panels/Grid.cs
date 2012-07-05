@@ -39,6 +39,26 @@ namespace fkalc.UI.Framework
 			Children.CollectionChanged += HandleCollectionChanged;
 		}
 
+		public void SetRow (uint row, UIElement element)
+		{
+			var child = children.FirstOrDefault (c => c.Content == element);
+			
+			if (child == null)
+				return;
+			
+			child.Row = row;
+		}
+
+		public void SetColumn (uint column, UIElement element)
+		{
+			var child = children.FirstOrDefault (c => c.Content == element);
+			
+			if (child == null)
+				return;
+			
+			child.Column = column;
+		}
+
 		private void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			if (e.Action == NotifyCollectionChangedAction.Add) {
@@ -94,8 +114,8 @@ namespace fkalc.UI.Framework
 				child.Measure (availableSize);
 			}
 
-			var height = col.Any () ? col.GroupBy (c => c.Row).Sum (row => row.Max (c => c.DesiredSize.Height)) : 0;
-			var width = col.Any () ? col.GroupBy (c => c.Column).Sum (column => column.Max (c => c.DesiredSize.Width)) : 0;
+			var height = col.Any () ? col.GroupBy (c => c.Row).Sum (row => row.Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom)) : 0;
+			var width = col.Any () ? col.GroupBy (c => c.Column).Sum (column => column.Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right)) : 0;
 			
 			return new Size (width, height);
 		}
@@ -108,16 +128,17 @@ namespace fkalc.UI.Framework
 			var col = children.Where (c => c.Visibility != Visibility.Collapsed);
 
 			var heights = col.GroupBy (c => c.Row).OrderBy (g => g.Key)
-				.ToDictionary (row => row.Key, row => row.Max (c => c.DesiredSize.Height)); 
+				.ToDictionary (row => row.Key, row => row.Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom)); 
 
 			var widths = col.GroupBy (c => c.Column).OrderBy (g => g.Key)
-				.ToDictionary (column => column.Key, column => column.Max (c => c.DesiredSize.Width)); 
+				.ToDictionary (column => column.Key, column => column.Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right)); 
 
 			foreach (var height in heights) {
 				x = 0;
 				foreach (var width in widths) {
 					var child = col.First (c => c.Row == height.Key && c.Column == width.Key);
-					child.Arrange (new Rect (x, y, width.Value, height.Value));
+
+					child.Arrange (new Rect (new Point (x + child.Margin.Left, y + child.Margin.Top), child.DesiredSize));
 
 					x += width.Value;
 				}
