@@ -45,6 +45,7 @@
     <Compile Include="MathRegion\Tokens\Token.cs" />
     <Compile Include="Assembly\AssemblyInfo.cs" />
     <Compile Include="MathRegion\MathRegionViewModel.cs" />
+    <Compile Include="DocumentViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

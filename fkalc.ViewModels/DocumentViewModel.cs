@@ -1,5 +1,5 @@
 //
-// MathRegionViewModel.cs
+// DocumentViewModel.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,19 +23,22 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using fkalc.ViewModels.MathRegion.Tokens;
+using fkalc.UI.Framework;
+using fkalc.ViewModels.MathRegion;
 
-namespace fkalc.ViewModels.MathRegion
+namespace fkalc.ViewModels
 {
-	public class MathRegionViewModel
-	{		 
-		public HBoxToken Root { get; private set; }
+	public class DocumentViewModel : DependencyObject
+	{
+		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
 
-		public MathRegionViewModel ()
+		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
+
+		public DocumentViewModel ()
 		{
-			Root = new HBoxToken ();
+			regions = BuildProperty<ObservableCollection<MathRegionViewModel>> ("Regions");
+			regions.Value = new ObservableCollection<MathRegionViewModel> ();
 		}
 	}
 }
