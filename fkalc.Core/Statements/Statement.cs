@@ -1,5 +1,5 @@
 //
-// Evaluator.cs
+// Statement.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,16 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
 
 namespace fkalc.Core
 {
-	public class Evaluator
+	public abstract class Statement
 	{
-		public Evaluator ()
+		public StatementBlock Parent { get; set; }
+
+		public Statement ()
 		{
-		}
+		}	
 	}
 }
 

@@ -40,6 +40,24 @@ namespace fkalc.Core
 			enumerator.MoveNext ();
 		}
 
+		public Statement ParseAssinmentStatement ()
+		{
+			var left = ParseExpression ();
+
+			var opt = enumerator.Current;
+
+			if (opt is AssignmentCoreToken) {
+				enumerator.MoveNext ();
+				var right = ParseExpression ();
+
+				Expect<SemicolonCoreToken> ();
+
+				return new Assignment (left, right);
+			}
+
+			return new StatementExpression (left);
+		}
+
 		public Expression ParseExpression ()
 		{
 			var left = ParseAdditiveExpression ();

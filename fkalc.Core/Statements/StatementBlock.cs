@@ -1,5 +1,5 @@
 //
-// Evaluator.cs
+// StatementBlock.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,15 +24,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
+using System.Collections.Generic;
 
 namespace fkalc.Core
 {
-	public class Evaluator
+	public class StatementBlock : Statement
 	{
-		public Evaluator ()
+		private readonly List<Statement> children = new List<Statement> ();
+
+		public IEnumerable<Statement> Children {
+			get{ return children;}
+		}
+
+		public StatementBlock ()
 		{
+		}
+
+		public void Add (Statement statement)
+		{
+			children.Add (statement);
+
+			statement.Parent = this;
 		}
 	}
 }

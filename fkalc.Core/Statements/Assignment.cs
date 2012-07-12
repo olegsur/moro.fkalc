@@ -1,5 +1,5 @@
 //
-// Evaluator.cs
+// Assignment.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,14 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
 
 namespace fkalc.Core
 {
-	public class Evaluator
+	public class Assignment : Statement
 	{
-		public Evaluator ()
+		public Assignment (Expression left, Expression right)
 		{
 		}
 	}

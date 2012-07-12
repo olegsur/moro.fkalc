@@ -1,5 +1,5 @@
 //
-// Evaluator.cs
+// MathRegionToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,15 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.Tokens;
 
-namespace fkalc.Core
+namespace fkalc.Tokens
 {
-	public class Evaluator
-	{
-		public Evaluator ()
+	public class MathRegionToken
+	{		 
+		public HBoxToken Root { get; private set; }
+
+		public MathRegionToken ()
 		{
+			Root = new HBoxToken ();
 		}
 	}
 }

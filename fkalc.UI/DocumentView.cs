@@ -27,12 +27,13 @@
 using System;
 using System.Collections.Generic;
 using fkalc.UI.Framework;
+using fkalc.Tokens;
 
 namespace fkalc.UI
 {
 	public class DocumentView : UserControl
 	{
-		//private List<MathRegion> regions = new List<MathRegion>();
+		private List<MathRegionToken> mathRegionTokens = new List<MathRegionToken> ();
 		
 		private DocumentCursor documentCursor = new DocumentCursor ();
 		private Canvas canvas = new Canvas ();
@@ -76,8 +77,12 @@ namespace fkalc.UI
 		{
 			if (Keyboard.FocusedElement == canvas) {
 				documentCursor.Visibility = Visibility.Collapsed;
+
+				var token = new MathRegionToken ();
+				mathRegionTokens.Add (token);
 		
 				var region = new MathRegion ();
+				region.DataContext = token;
 				
 				canvas.Children.Add (region);                				
 				canvas.SetLeft (canvas.GetLeft (documentCursor), region);

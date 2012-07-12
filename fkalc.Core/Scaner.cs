@@ -31,11 +31,33 @@ namespace fkalc.Core
 {
 	public class Scaner
 	{
-		public Scaner ()
+		private IEnumerable<MathRegionToken> Tokens { get; set; }
+
+		public Scaner (IEnumerable<MathRegionToken> tokens)
 		{
+			Tokens = tokens;
 		}
 
-		public IEnumerable<CoreToken> Scan (Token token)
+		public IEnumerable<CoreToken> Scan ()
+		{
+			yield return new StartBlockCoreToken ();
+
+			Scan (Tokens);
+
+			yield return new EndBlockCoreToken ();
+		}
+
+		private  IEnumerable<CoreToken> Scan (IEnumerable<MathRegionToken> tokens)
+		{
+			foreach (var mathToken in tokens) {
+				foreach (var coreToken in Scan(mathToken.Root)) {
+					yield return coreToken;
+				}
+				yield return new SemicolonCoreToken ();
+			}
+		}
+
+		private IEnumerable<CoreToken> Scan (Token token)
 		{
 			if (token is TextToken) {
 				var t = token as TextToken;
@@ -77,8 +99,8 @@ namespace fkalc.Core
 						yield return coreToken;
 			}
 
-			if (token is ResultToken) {
-				yield return new SemicolonCoreToken ();
+			if (token is AssignmentToken) {
+				yield return new AssignmentCoreToken ();
 			}
 		}
 	}

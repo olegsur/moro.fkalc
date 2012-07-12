@@ -76,6 +76,13 @@ namespace fkalc.UI
 
 			Selection = new Selection ();
 			Selection.SelectedToken = activeToken;
+
+			GetProperty ("DataContext").DependencyPropertyValueChanged += HandleDataContextChanged;
+		}
+
+		void HandleDataContextChanged (object sender, DPropertyValueChangedEventArgs e)
+		{
+
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)

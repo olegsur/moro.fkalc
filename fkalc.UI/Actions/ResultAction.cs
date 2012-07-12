@@ -48,7 +48,7 @@ namespace fkalc.UI
 
 			Region.Root.Add (result);
 
-			new Evaluator ().Evaluate (Region.Root);
+			//new Engine ().Evaluate (Region.Root);
 		}
 	}
 }

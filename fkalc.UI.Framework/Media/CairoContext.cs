@@ -38,8 +38,6 @@ namespace fkalc.UI.Framework
 
 		public override void DrawLine (Pen pen, Point point0, Point point2)
 		{
-			cr.Save ();	
-
 			cr.Color = new Cairo.Color (pen.Color.R, pen.Color.G, pen.Color.B, pen.Color.Alfa);
 			cr.LineWidth = pen.Thickness;
 
@@ -47,8 +45,6 @@ namespace fkalc.UI.Framework
 			cr.LineTo (point2.X, point2.Y);
 
 			cr.Stroke ();
-
-			cr.Restore ();
 		}
 
 		public override void DrawEllipse (Brush brush, Pen pen, Point center, double radiusX, double radiusY)
@@ -83,6 +79,7 @@ namespace fkalc.UI.Framework
 
 		public override void DrawText (FormattedText formattedText, Point origin)
 		{
+			cr.Color = new Cairo.Color (0, 0, 0);	
 			cr.MoveTo (origin.X, origin.Y);
 			
 			cr.SelectFontFace (formattedText.FontFamily, Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
@@ -93,8 +90,6 @@ namespace fkalc.UI.Framework
 
 		public override void DrawRectangle (Brush brush, Pen pen, Rect rectangle)
 		{
-			cr.Save ();
-
 			if (brush != null) {
 				if (brush is SolidColorBrush) {
 					var b = brush as SolidColorBrush;
@@ -110,9 +105,7 @@ namespace fkalc.UI.Framework
 				cr.Rectangle (rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);			
 			
 				cr.Stroke ();
-			}
-			
-			cr.Restore ();
+			}			
 		}
 
 		public override void PushTransform (Transform transform)
