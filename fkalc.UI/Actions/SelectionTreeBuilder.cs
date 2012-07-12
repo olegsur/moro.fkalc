@@ -25,8 +25,8 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
-using fkalc.Tokens;
 using System.Linq;
+using fkalc.ViewModels;
 
 namespace fkalc.UI
 {

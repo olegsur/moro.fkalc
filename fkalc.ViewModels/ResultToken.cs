@@ -27,7 +27,7 @@ using System;
 using fkalc.UI.Framework;
 using System.Collections.Generic;
 
-namespace fkalc.Tokens
+namespace fkalc.ViewModels
 {
 	public class ResultToken : ContainerToken
 	{

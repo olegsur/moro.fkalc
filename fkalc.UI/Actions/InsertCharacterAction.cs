@@ -25,8 +25,8 @@
 // THE SOFTWARE.
 
 using System;
-using fkalc.Tokens;
 using System.Text.RegularExpressions;
+using fkalc.ViewModels;
 
 namespace fkalc.UI
 {

@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace fkalc.Tokens
+namespace fkalc.ViewModels
 {
 	public class HBoxToken : ContainerToken
 	{

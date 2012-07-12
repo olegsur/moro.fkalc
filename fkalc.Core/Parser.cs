@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
-using fkalc.Tokens;
 using System.Collections.Generic;
 
 namespace fkalc.Core

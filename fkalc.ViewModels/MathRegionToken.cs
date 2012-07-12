@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.Tokens
+namespace fkalc.ViewModels
 {
 	public class MathRegionToken
 	{		 
