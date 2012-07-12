@@ -8,7 +8,7 @@
     <ProjectGuid>{B196D221-ACC3-42F3-9666-51C5877407CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>fkalc.Tokens</RootNamespace>
-    <AssemblyName>fkalc.Tokens</AssemblyName>
+    <AssemblyName>fkalc.ViewModels</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,4 +53,13 @@
       <Name>fkalc.UI.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

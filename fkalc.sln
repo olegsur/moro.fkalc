@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fkalc.UI", "fkalc.UI\fkalc.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fkalc.UI.Framework", "fkalc.UI.Framework\fkalc.UI.Framework.csproj", "{89883CC4-E276-40ED-802F-260F61A610C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fkalc.Tokens", "fkalc.Tokens\fkalc.Tokens.csproj", "{B196D221-ACC3-42F3-9666-51C5877407CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fkalc.ViewModels", "fkalc.ViewModels\fkalc.ViewModels.csproj", "{B196D221-ACC3-42F3-9666-51C5877407CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fkalc.Core", "fkalc.Core\fkalc.Core.csproj", "{11ECCE85-EC24-4912-8F45-33BAB6AD4251}"
 EndProject
