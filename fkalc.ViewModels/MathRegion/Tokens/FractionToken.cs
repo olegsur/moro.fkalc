@@ -1,5 +1,5 @@
 //
-// Token.cs
+// FractionToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,15 +25,53 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
+using System.Collections.Generic;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
-	public abstract class Token : DependencyObject
+	public class FractionToken : ContainerToken
 	{
-		public ContainerToken Parent { get; set; }
+		private readonly DependencyProperty<Token> dividend;
+		private readonly DependencyProperty<Token> divisor;
 
-		public Token ()
+		public Token Dividend { 
+			get { return dividend.Value; } 
+			set{ dividend.Value = value; }
+		}
+
+		public Token Divisor { 
+			get { return divisor.Value; } 
+			set{ divisor.Value = value; }
+		}
+
+		public FractionToken ()
 		{
+			dividend = BuildProperty<Token> ("Dividend");
+			dividend.DependencyPropertyValueChanged += HandleValueChanged;
+
+			divisor = BuildProperty<Token> ("Divisor");
+			divisor.DependencyPropertyValueChanged += HandleValueChanged;
+
+			Dividend = new TextToken ();
+			Divisor = new TextToken ();					
+		}
+
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+				
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			if (oldToken == Dividend)
+				Dividend = newToken;
+
+			if (oldToken == Divisor)
+				Divisor = newToken;
 		}
 	}
 }

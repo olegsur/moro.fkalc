@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
 	public class MinusToken : Token
 	{

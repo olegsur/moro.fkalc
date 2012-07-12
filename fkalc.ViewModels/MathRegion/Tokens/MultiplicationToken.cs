@@ -1,5 +1,5 @@
 //
-// AssignmentToken.cs
+// MultiplicationToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
-	public class AssignmentToken : Token
+	public class MultiplicationToken : Token
 	{
-		public AssignmentToken ()
+		public MultiplicationToken ()
 		{
 		}
 	}

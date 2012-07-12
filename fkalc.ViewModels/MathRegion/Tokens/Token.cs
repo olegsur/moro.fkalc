@@ -1,5 +1,5 @@
 //
-// MultiplicationToken.cs
+// Token.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,12 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using fkalc.UI.Framework;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
-	public class MultiplicationToken : Token
+	public abstract class Token : DependencyObject
 	{
-		public MultiplicationToken ()
+		public ContainerToken Parent { get; set; }
+
+		public Token ()
 		{
 		}
 	}

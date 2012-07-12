@@ -1,5 +1,5 @@
 //
-// FractionToken.cs
+// ResultToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,33 +27,23 @@ using System;
 using fkalc.UI.Framework;
 using System.Collections.Generic;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
-	public class FractionToken : ContainerToken
+	public class ResultToken : ContainerToken
 	{
-		private readonly DependencyProperty<Token> dividend;
-		private readonly DependencyProperty<Token> divisor;
+		private readonly DependencyProperty<Token> child;
 
-		public Token Dividend { 
-			get { return dividend.Value; } 
-			set{ dividend.Value = value; }
+		public Token Child { 
+			get { return child.Value; } 
+			set{ child.Value = value; }
 		}
 
-		public Token Divisor { 
-			get { return divisor.Value; } 
-			set{ divisor.Value = value; }
-		}
-
-		public FractionToken ()
+		public ResultToken ()
 		{
-			dividend = BuildProperty<Token> ("Dividend");
-			dividend.DependencyPropertyValueChanged += HandleValueChanged;
+			child = BuildProperty<Token> ("Child");
+			child.DependencyPropertyValueChanged += HandleValueChanged;
 
-			divisor = BuildProperty<Token> ("Divisor");
-			divisor.DependencyPropertyValueChanged += HandleValueChanged;
-
-			Dividend = new TextToken ();
-			Divisor = new TextToken ();					
+			Child = new TextToken ();
 		}
 
 		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
@@ -64,14 +54,10 @@ namespace fkalc.ViewModels
 			if (e.NewValue != null)
 				e.NewValue.Parent = this;
 		}
-				
+
 		public override void Replace (Token oldToken, Token newToken)
 		{
-			if (oldToken == Dividend)
-				Dividend = newToken;
-
-			if (oldToken == Divisor)
-				Divisor = newToken;
+			Child = newToken;
 		}
 	}
 }

@@ -26,7 +26,7 @@
 using System;
 using fkalc.UI.Framework;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
 	public class TextToken : Token
 	{		

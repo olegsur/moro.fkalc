@@ -27,7 +27,7 @@
 using System;
 using fkalc.UI.Framework;
 using System.Linq;
-using fkalc.ViewModels;
+using fkalc.Tokens.MathRegion.Tokens;
 
 namespace fkalc.UI
 {

@@ -34,17 +34,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ContainerToken.cs" />
-    <Compile Include="FractionToken.cs" />
-    <Compile Include="HBoxToken.cs" />
-    <Compile Include="MinusToken.cs" />
-    <Compile Include="MultiplicationToken.cs" />
-    <Compile Include="PlusToken.cs" />
-    <Compile Include="ResultToken.cs" />
-    <Compile Include="TextToken.cs" />
-    <Compile Include="Token.cs" />
-    <Compile Include="AssignmentToken.cs" />
-    <Compile Include="MathRegionToken.cs" />
+    <Compile Include="MathRegion\MathRegionToken.cs" />
+    <Compile Include="MathRegion\Tokens\AssignmentToken.cs" />
+    <Compile Include="MathRegion\Tokens\ContainerToken.cs" />
+    <Compile Include="MathRegion\Tokens\FractionToken.cs" />
+    <Compile Include="MathRegion\Tokens\HBoxToken.cs" />
+    <Compile Include="MathRegion\Tokens\MinusToken.cs" />
+    <Compile Include="MathRegion\Tokens\MultiplicationToken.cs" />
+    <Compile Include="MathRegion\Tokens\PlusToken.cs" />
+    <Compile Include="MathRegion\Tokens\ResultToken.cs" />
+    <Compile Include="MathRegion\Tokens\TextToken.cs" />
+    <Compile Include="MathRegion\Tokens\Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -62,4 +62,8 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="MathRegion\" />
+    <Folder Include="MathRegion\Tokens\" />
+  </ItemGroup>
 </Project>

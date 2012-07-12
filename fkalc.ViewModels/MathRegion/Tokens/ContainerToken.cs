@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
 	public abstract class ContainerToken : Token
 	{

@@ -1,5 +1,5 @@
 //
-// PlusToken.cs
+// asd.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion
 {
-	public class PlusToken : Token
+	public class asd
 	{
-		public PlusToken ()
+		public asd ()
 		{
 		}
 	}

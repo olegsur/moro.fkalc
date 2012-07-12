@@ -1,5 +1,5 @@
 //
-// ResultToken.cs
+// AssignmentToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,40 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
-using System.Collections.Generic;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
-	public class ResultToken : ContainerToken
+	public class AssignmentToken : Token
 	{
-		private readonly DependencyProperty<Token> child;
-
-		public Token Child { 
-			get { return child.Value; } 
-			set{ child.Value = value; }
-		}
-
-		public ResultToken ()
+		public AssignmentToken ()
 		{
-			child = BuildProperty<Token> ("Child");
-			child.DependencyPropertyValueChanged += HandleValueChanged;
-
-			Child = new TextToken ();
-		}
-
-		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
-		{
-			if (e.OldValue != null)
-				e.OldValue.Parent = null;
-
-			if (e.NewValue != null)
-				e.NewValue.Parent = this;
-		}
-
-		public override void Replace (Token oldToken, Token newToken)
-		{
-			Child = newToken;
 		}
 	}
 }

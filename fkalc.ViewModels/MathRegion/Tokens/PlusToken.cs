@@ -1,5 +1,5 @@
 //
-// MathRegionToken.cs
+// PlusToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,15 +25,12 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.ViewModels
+namespace fkalc.Tokens.MathRegion.Tokens
 {
-	public class MathRegionToken
-	{		 
-		public HBoxToken Root { get; private set; }
-
-		public MathRegionToken ()
+	public class PlusToken : Token
+	{
+		public PlusToken ()
 		{
-			Root = new HBoxToken ();
 		}
 	}
 }
