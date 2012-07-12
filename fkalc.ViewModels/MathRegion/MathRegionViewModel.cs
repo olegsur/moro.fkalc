@@ -28,11 +28,11 @@ using fkalc.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.ViewModels.MathRegion
 {
-	public class MathRegionToken
+	public class MathRegionViewModel
 	{		 
 		public HBoxToken Root { get; private set; }
 
-		public MathRegionToken ()
+		public MathRegionViewModel ()
 		{
 			Root = new HBoxToken ();
 		}

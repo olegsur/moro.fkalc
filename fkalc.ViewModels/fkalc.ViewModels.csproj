@@ -33,7 +33,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MathRegion\MathRegionToken.cs" />
     <Compile Include="MathRegion\Tokens\AssignmentToken.cs" />
     <Compile Include="MathRegion\Tokens\ContainerToken.cs" />
     <Compile Include="MathRegion\Tokens\FractionToken.cs" />
@@ -45,6 +44,7 @@
     <Compile Include="MathRegion\Tokens\TextToken.cs" />
     <Compile Include="MathRegion\Tokens\Token.cs" />
     <Compile Include="Assembly\AssemblyInfo.cs" />
+    <Compile Include="MathRegion\MathRegionViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

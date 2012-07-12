@@ -32,9 +32,9 @@ namespace fkalc.Core
 {
 	public class Scaner
 	{
-		private IEnumerable<MathRegionToken> Tokens { get; set; }
+		private IEnumerable<MathRegionViewModel> Tokens { get; set; }
 
-		public Scaner (IEnumerable<MathRegionToken> tokens)
+		public Scaner (IEnumerable<MathRegionViewModel> tokens)
 		{
 			Tokens = tokens;
 		}
@@ -48,7 +48,7 @@ namespace fkalc.Core
 			yield return new EndBlockCoreToken ();
 		}
 
-		private  IEnumerable<CoreToken> Scan (IEnumerable<MathRegionToken> tokens)
+		private  IEnumerable<CoreToken> Scan (IEnumerable<MathRegionViewModel> tokens)
 		{
 			foreach (var mathToken in tokens) {
 				foreach (var coreToken in Scan(mathToken.Root)) {

@@ -33,7 +33,7 @@ namespace fkalc.UI
 {
 	public class DocumentView : UserControl
 	{
-		private List<MathRegionToken> mathRegionTokens = new List<MathRegionToken> ();
+		private List<MathRegionViewModel> mathRegionTokens = new List<MathRegionViewModel> ();
 		
 		private DocumentCursor documentCursor = new DocumentCursor ();
 		private Canvas canvas = new Canvas ();
@@ -78,7 +78,7 @@ namespace fkalc.UI
 			if (Keyboard.FocusedElement == canvas) {
 				documentCursor.Visibility = Visibility.Collapsed;
 
-				var token = new MathRegionToken ();
+				var token = new MathRegionViewModel ();
 				mathRegionTokens.Add (token);
 		
 				var region = new MathRegion ();

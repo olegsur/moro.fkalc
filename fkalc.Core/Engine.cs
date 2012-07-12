@@ -36,7 +36,7 @@ namespace fkalc.Core
 		{
 		}
 
-		public void Evaluate (IEnumerable<MathRegionToken> tokens)
+		public void Evaluate (IEnumerable<MathRegionViewModel> tokens)
 		{
 			var coreTokens = new Scaner (tokens).Scan ();
 
