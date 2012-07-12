@@ -27,7 +27,7 @@ using System;
 using fkalc.UI.Framework;
 using System.Collections.Generic;
 
-namespace fkalc.Tokens.MathRegion.Tokens
+namespace fkalc.ViewModels.MathRegion.Tokens
 {
 	public class ResultToken : ContainerToken
 	{

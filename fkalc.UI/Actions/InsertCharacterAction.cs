@@ -26,7 +26,7 @@
 
 using System;
 using System.Text.RegularExpressions;
-using fkalc.Tokens.MathRegion.Tokens;
+using fkalc.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI
 {

@@ -24,9 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.Tokens.MathRegion.Tokens;
+using fkalc.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.Tokens.MathRegion
+namespace fkalc.ViewModels.MathRegion
 {
 	public class MathRegionToken
 	{		 

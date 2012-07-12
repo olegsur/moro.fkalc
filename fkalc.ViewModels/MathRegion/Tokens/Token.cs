@@ -26,7 +26,7 @@
 using System;
 using fkalc.UI.Framework;
 
-namespace fkalc.Tokens.MathRegion.Tokens
+namespace fkalc.ViewModels.MathRegion.Tokens
 {
 	public abstract class Token : DependencyObject
 	{

@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B196D221-ACC3-42F3-9666-51C5877407CA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>fkalc.Tokens</RootNamespace>
+    <RootNamespace>fkalc.ViewModels</RootNamespace>
     <AssemblyName>fkalc.ViewModels</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,7 +33,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MathRegion\MathRegionToken.cs" />
     <Compile Include="MathRegion\Tokens\AssignmentToken.cs" />
     <Compile Include="MathRegion\Tokens\ContainerToken.cs" />
@@ -45,6 +44,7 @@
     <Compile Include="MathRegion\Tokens\ResultToken.cs" />
     <Compile Include="MathRegion\Tokens\TextToken.cs" />
     <Compile Include="MathRegion\Tokens\Token.cs" />
+    <Compile Include="Assembly\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -65,5 +65,6 @@
   <ItemGroup>
     <Folder Include="MathRegion\" />
     <Folder Include="MathRegion\Tokens\" />
+    <Folder Include="Assembly\" />
   </ItemGroup>
 </Project>
