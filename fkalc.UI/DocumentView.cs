@@ -38,19 +38,22 @@ namespace fkalc.UI
 		
 		private DocumentCursor documentCursor = new DocumentCursor ();
 		private Canvas canvas = new Canvas ();
+		private ItemsControl itemsControl = new ItemsControl ();
 		
 		public DocumentView ()
 		{		
-			canvas.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
-			canvas.ButtonPressEvent += HandleButtonPressEvent;
+			itemsControl.ItemsPanel = canvas;
+
+			this.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
+			this.ButtonPressEvent += HandleButtonPressEvent;
 			
-			Content = canvas;
+			Content = itemsControl;
 						
 			canvas.Children.Add (documentCursor);
 			
 			Background = Brushes.White;
 
-			Keyboard.Focus (canvas);
+			Keyboard.Focus (itemsControl);
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)

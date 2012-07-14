@@ -148,14 +148,5 @@ namespace fkalc.UI.Framework
 		{
 			return children [index];
 		}
-		
-		public override Visual HitTest (double x, double y)
-		{
-			var hitTest = children.Where (c => IsVisible).FirstOrDefault (c => c.HitTest (x, y) != null);
-			if (hitTest != null) {
-				return hitTest.Content;
-			}
-			return x >= 0 && x <= Width && y >= 0 && y <= Height ? this : null;
-		}
 	}
 }

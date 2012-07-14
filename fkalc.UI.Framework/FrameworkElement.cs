@@ -94,5 +94,12 @@ namespace fkalc.UI.Framework
 		protected virtual void ArrangeOverride (Size finalSize)
 		{	
 		}
+
+		public override Visual HitTest (Point point)
+		{
+			return IsVisible 
+				&& point.X >= 0 && point.X <= Width 
+				&& point.Y >= 0 && point.Y <= Height ? this : null;
+		}
 	}
 }

@@ -108,6 +108,9 @@
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="Controls\Panels\Grid.cs" />
     <Compile Include="Controls\Panels\GridChild.cs" />
+    <Compile Include="Controls\Selector.cs" />
+    <Compile Include="Controls\TabControl.cs" />
+    <Compile Include="Media\VisualTreeHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

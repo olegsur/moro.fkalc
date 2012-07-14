@@ -99,15 +99,14 @@ namespace fkalc.UI
 			Screen.QueueDraw ();
 		}
 		
-		public override Visual HitTest (double x, double y)
-		{
-			if (x >= 0 && x <= Width &&
-				y >= 0 && y <= Height) {
-				return this;
-			}
-			
-			return null;
-		}
-		
+//		public override Visual HitTest (double x, double y)
+//		{
+//			if (x >= 0 && x <= Width &&
+//				y >= 0 && y <= Height) {
+//				return this;
+//			}
+//			
+//			return null;
+//		}		
 	}
 }

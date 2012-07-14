@@ -117,7 +117,7 @@ namespace fkalc.UI.Framework
 		protected virtual void OnRender (DrawingContext dc)
 		{			
 		}
-		
+				
 		private void HandlePreviewButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
 			//if (IsFocused) return;

@@ -23,6 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace fkalc.UI.Framework
 {
 	public class ItemsControl : Control
 	{
-		public StackPanel itemsPanel;
+		public Panel itemsPanel;
 
 		private readonly DependencyProperty<IEnumerable> itemsSource;
 		public IEnumerable ItemsSource { 
@@ -55,7 +56,7 @@ namespace fkalc.UI.Framework
 			ItemTemplate = new DataTemplate (o => o is UIElement ? o as UIElement : new TextBlock () {Text = o.ToString ()});
 		}
 
-		public StackPanel ItemsPanel { 
+		public Panel ItemsPanel { 
 			get { return itemsPanel; }
 			set { 
 				if (itemsPanel == value)

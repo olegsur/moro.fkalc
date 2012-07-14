@@ -79,13 +79,5 @@ namespace fkalc.UI.Framework
 		{
 			return Content;
 		}
-		
-		public override Visual HitTest (double x, double y)
-		{
-			if (Content == null || !Content.IsVisible)
-				return null;
-			
-			return Content.HitTest (x, y);
-		}
 	}
 }

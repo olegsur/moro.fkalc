@@ -49,8 +49,8 @@ namespace fkalc.UI.Framework
 			return null;
 		}
 		
-		public virtual Visual HitTest (double x, double y)
-		{			
+		public virtual Visual HitTest (Point point)
+		{	
 			return null;
 		}
 		
