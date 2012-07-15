@@ -63,12 +63,17 @@ namespace fkalc.UI.Framework
 			private set {
 				if (targetElement == value)
 					return;
-				
-				RaiseMouseLeaveEvent ();
+
+				var oldTree = VisualTreeHelper.GetVisualBranch (targetElement);
+				var newTree = VisualTreeHelper.GetVisualBranch (value);
+
+				foreach (var element in oldTree.Except(newTree))
+					RaiseMouseLeaveEvent (element);
 				
 				targetElement = value;
-				
-				RaiseMouseEnterEvent ();				
+
+				foreach (var element in newTree.Except(oldTree))
+					RaiseMouseEnterEvent (element);				
 			}			
 		}		
 		
@@ -137,20 +142,20 @@ namespace fkalc.UI.Framework
 			MotionNotifyEvent.RaiseEvent (TargetElement, args);
 		}
 		
-		private void RaiseMouseEnterEvent ()
+		private void RaiseMouseEnterEvent (Visual visual)
 		{
-			if (TargetElement == null)
+			if (visual == null)
 				return;
 
-			MouseEnterEvent.RaiseEvent (TargetElement, EventArgs.Empty);
+			MouseEnterEvent.RaiseEvent (visual, EventArgs.Empty);
 		}
 		
-		private void RaiseMouseLeaveEvent ()
+		private void RaiseMouseLeaveEvent (Visual visual)
 		{
-			if (TargetElement == null)
+			if (visual == null)
 				return;
-			
-			MouseLeaveEvent.RaiseEvent (TargetElement, EventArgs.Empty);
+
+			MouseLeaveEvent.RaiseEvent (visual, EventArgs.Empty);
 		}
 	}
 }
