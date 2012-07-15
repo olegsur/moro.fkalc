@@ -42,6 +42,8 @@ namespace fkalc.UI
 		
 		public DocumentView ()
 		{		
+			Focusable = true;
+
 			itemsControl.ItemsPanel = canvas;
 
 			this.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
@@ -53,7 +55,7 @@ namespace fkalc.UI
 			
 			Background = Brushes.White;
 
-			Keyboard.Focus (itemsControl);
+			Keyboard.Focus (this);
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
@@ -79,7 +81,7 @@ namespace fkalc.UI
 		
 		private void ProcessKey (Gdk.EventKey evnt)
 		{
-			if (Keyboard.FocusedElement == canvas) {
+			if (Keyboard.FocusedElement == this) {
 				documentCursor.Visibility = Visibility.Collapsed;
 
 				var token = new MathRegionViewModel ();

@@ -45,6 +45,8 @@ namespace fkalc.UI
 		
 		public MathRegion ()
 		{
+			Focusable = true;
+
 			var activeToken = new TextToken ();
 			var rootVisual = new HBoxArea ();
 			rootVisual.DataContext = root;

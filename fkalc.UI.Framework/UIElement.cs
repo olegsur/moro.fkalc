@@ -40,6 +40,7 @@ namespace fkalc.UI.Framework
 		public event KeyPressEventHandler KeyPressEvent;
 
 		private readonly DependencyProperty<Visibility> visibility;
+		private readonly DependencyProperty<bool> focusable;
 		
 		public Size DesiredSize { get; set; }
 
@@ -53,13 +54,21 @@ namespace fkalc.UI.Framework
 		public bool IsVisible { get { return Visibility == Visibility.Visible; } }
 		
 		public bool SnapsToDevicePixels { get; set; }
+
+		public bool Focusable { 
+			get { return focusable.Value;} 
+			set { focusable.Value = value; }
+		}
+
+		private bool lookingFocus;
 		
 		public UIElement ()
 		{
 			visibility = BuildProperty<Visibility> ("Visibility");
+			focusable = BuildProperty<bool> ("Focusable");
 
 			Mouse.PreviewButtonPressEvent += HandlePreviewButtonPressEvent;
-			Mouse.ButtonPressEvent += OnButtonPressEvent;
+			Mouse.ButtonPressEvent += HandleButtonPressEvent;
 			
 			Mouse.PreviewMotionNotifyEvent += OnPreviewMotionNotifyEvent;
 			Mouse.MotionNotifyEvent += OnMotionNotifyEvent;
@@ -73,6 +82,7 @@ namespace fkalc.UI.Framework
 			Keyboard.GotKeyboardFocusEvent += OnGotKeyboardFocusEvent;
 			Keyboard.LostKeyboardFocusEvent += OnLostKeyboardFocusEvent;
 		}
+
 				
 		public void Measure (Size availableSize)
 		{	
@@ -120,12 +130,24 @@ namespace fkalc.UI.Framework
 				
 		private void HandlePreviewButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
+			lookingFocus = true;
 			//if (IsFocused) return;
 			
-			if (Mouse.Device.TargetElement != this)
+			if (!Focusable || Mouse.Device.TargetElement != this)
 				return;
 
 			Keyboard.Focus (this);
+		}
+
+		private void HandleButtonPressEvent (object sender, ButtonPressEventArgs e)
+		{
+			if (lookingFocus && Focusable) {
+				Keyboard.Focus (this);
+			}
+
+			lookingFocus = false;
+
+			OnButtonPressEvent (sender, e);	
 		}
 				
 		protected virtual void OnButtonPressEvent (object o, ButtonPressEventArgs args)
@@ -165,6 +187,8 @@ namespace fkalc.UI.Framework
 
 		private void OnGotKeyboardFocusEvent (object sender, EventArgs e)
 		{
+			lookingFocus = false;
+
 			if (Keyboard.FocusedElement == this)
 				IsFocused = true;
 		}
