@@ -42,24 +42,24 @@ namespace fkalc.UI.Framework
 			get	{ return Device.FocusedElement;	}
 		}
 		
-		public static event KeyPressEventHandler PreviewKeyPressEvent {
-			add { Device.PreviewKeyPressEvent += value; }
-			remove { Device.PreviewKeyPressEvent -= value; }
+		public static event EventHandler<KeyPressEventArgs> PreviewKeyPressEvent {
+			add { Device.PreviewKeyPressEvent.Event += value; }
+			remove { Device.PreviewKeyPressEvent.Event -= value; }
 		}	
 		
-		public static event KeyPressEventHandler KeyPressEvent {
-			add { Device.KeyPressEvent += value; }
-			remove { Device.KeyPressEvent -= value; }
+		public static event EventHandler<KeyPressEventArgs> KeyPressEvent {
+			add { Device.KeyPressEvent.Event += value; }
+			remove { Device.KeyPressEvent.Event -= value; }
 		}
 
-		public static event EventHandler GotKeyboardFocusEvent {
-			add { Device.GotKeyboardFocusEvent += value; }
-			remove { Device.GotKeyboardFocusEvent -= value; }
+		public static event EventHandler<EventArgs> GotKeyboardFocusEvent {
+			add { Device.GotKeyboardFocusEvent.Event += value; }
+			remove { Device.GotKeyboardFocusEvent.Event -= value; }
 		}
 
-		public static event EventHandler LostKeyboardFocusEvent {
-			add { Device.LostKeyboardFocusEvent += value; }
-			remove { Device.LostKeyboardFocusEvent -= value; }
+		public static event EventHandler<EventArgs> LostKeyboardFocusEvent {
+			add { Device.LostKeyboardFocusEvent.Event += value; }
+			remove { Device.LostKeyboardFocusEvent.Event -= value; }
 		}
 
 		public static void Focus (Visual visual)

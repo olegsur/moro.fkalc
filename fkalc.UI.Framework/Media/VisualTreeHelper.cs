@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 
 namespace fkalc.UI.Framework
 {
@@ -42,6 +43,17 @@ namespace fkalc.UI.Framework
 			}
 
 			return parent.HitTest (localPoint);
+		}
+
+		public static IEnumerable<Visual> GetVisualBranch (Visual visual)
+		{
+			if (visual == null)
+				yield break;
+
+			yield return visual;
+
+			foreach (var parent in GetVisualBranch(visual.VisaulParent))
+				yield return parent;
 		}
 	}
 }

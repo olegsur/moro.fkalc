@@ -34,10 +34,11 @@ namespace fkalc.UI.Framework
 {
 	public class KeyboardDevice
 	{
-		public event KeyPressEventHandler PreviewKeyPressEvent;		
-		public event KeyPressEventHandler KeyPressEvent;	
-		public event EventHandler GotKeyboardFocusEvent;
-		public event EventHandler LostKeyboardFocusEvent;
+		public RoutedEvent<KeyPressEventArgs> PreviewKeyPressEvent { get; private set; }
+		public RoutedEvent<KeyPressEventArgs> KeyPressEvent { get; private set; }
+
+		public RoutedEvent<EventArgs> GotKeyboardFocusEvent { get; private set; }
+		public RoutedEvent<EventArgs> LostKeyboardFocusEvent { get; private set; }			
 
 		public Visual FocusedElement { get; private set; }
 		
@@ -45,6 +46,11 @@ namespace fkalc.UI.Framework
 		
 		public KeyboardDevice ()
 		{
+			PreviewKeyPressEvent = new TunnelingEvent<KeyPressEventArgs> ();
+			KeyPressEvent = new BubblingEvent<KeyPressEventArgs> (); 
+
+			GotKeyboardFocusEvent = new BubblingEvent<EventArgs> (); 
+			LostKeyboardFocusEvent = new BubblingEvent<EventArgs> (); 
 		}
 		
 		public void RegisterKeyboardInputProvider (IKeyboardInputProvider provider)
@@ -84,58 +90,34 @@ namespace fkalc.UI.Framework
 		
 		private void RaisePreviewKeyPressEvent (KeyPressEventArgs args)
 		{
-			if (PreviewKeyPressEvent == null)
+			if (FocusedElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(FocusedElement)) {
-				var del = PreviewKeyPressEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, args);
-				}	
-			}
+
+			PreviewKeyPressEvent.RaiseEvent (FocusedElement, args);
 		}
 		
 		private void RaiseKeyPressEvent (KeyPressEventArgs args)
 		{
-			if (KeyPressEvent == null)
+			if (FocusedElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(FocusedElement).Reverse()) {
-				var del = KeyPressEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, args);
-				}	
-			}
+
+			KeyPressEvent.RaiseEvent (FocusedElement, args);
 		}
 
 		private void RaiseGotKeyboardFocusEvent ()
 		{
-			if (GotKeyboardFocusEvent == null)
+			if (FocusedElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(FocusedElement).Reverse()) {
-				var del = GotKeyboardFocusEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, EventArgs.Empty);
-				}	
-			}
+
+			GotKeyboardFocusEvent.RaiseEvent (FocusedElement, EventArgs.Empty);
 		}
 
 		private void RaiseLostKeyboardFocusEvent ()
 		{
-			if (LostKeyboardFocusEvent == null)
+			if (FocusedElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(FocusedElement).Reverse()) {
-				var del = LostKeyboardFocusEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, EventArgs.Empty);
-				}	
-			}
+
+			LostKeyboardFocusEvent.RaiseEvent (FocusedElement, EventArgs.Empty);
 		}
 	}
 }

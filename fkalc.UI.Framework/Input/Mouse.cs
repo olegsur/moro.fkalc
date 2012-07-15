@@ -31,47 +31,41 @@ namespace fkalc.UI.Framework
 {
 	public static class Mouse
 	{
-		public static MouseDevice Device {get; private set;}
+		public static MouseDevice Device { get; private set; }
 		
 		static Mouse ()
 		{
 			Device = new MouseDevice ();
 		}
 		
-		public static event ButtonPressEventHandler PreviewButtonPressEvent
-		{
-			add { Device.PreviewButtonPressEvent += value; }
-			remove {Device.PreviewButtonPressEvent -= value; }
+		public static event EventHandler<ButtonPressEventArgs> PreviewButtonPressEvent {
+			add { Device.PreviewButtonPressEvent.Event += value; }
+			remove { Device.PreviewButtonPressEvent.Event -= value; }
 		}
 		
-		public static event ButtonPressEventHandler ButtonPressEvent
-		{
-			add { Device.ButtonPressEvent += value; }
-			remove {Device.ButtonPressEvent -= value; }
+		public static event EventHandler<ButtonPressEventArgs> ButtonPressEvent {
+			add { Device.ButtonPressEvent.Event += value; }
+			remove { Device.ButtonPressEvent.Event -= value; }
 		}
 		
-		public static event MotionNotifyEventHandler PreviewMotionNotifyEvent
-		{
-			add { Device.PreviewMotionNotifyEvent += value; }
-			remove {Device.PreviewMotionNotifyEvent -= value; }
+		public static event EventHandler<MotionNotifyEventArgs> PreviewMotionNotifyEvent {
+			add { Device.PreviewMotionNotifyEvent.Event += value; }
+			remove { Device.PreviewMotionNotifyEvent.Event -= value; }
 		}
 		
-		public static event MotionNotifyEventHandler MotionNotifyEvent
-		{
-			add { Device.MotionNotifyEvent += value; }
-			remove {Device.MotionNotifyEvent -= value; }
+		public static event EventHandler<MotionNotifyEventArgs> MotionNotifyEvent {
+			add { Device.MotionNotifyEvent.Event += value; }
+			remove { Device.MotionNotifyEvent.Event -= value; }
 		}
 		
-		public static event EventHandler MouseEnterEvent
-		{
-			add { Device.MouseEnterEvent += value; }
-			remove {Device.MouseEnterEvent -= value; }
+		public static event EventHandler<EventArgs> MouseEnterEvent {
+			add { Device.MouseEnterEvent.Event += value; }
+			remove { Device.MouseEnterEvent.Event -= value; }
 		}
 		
-		public static event EventHandler MouseLeaveEvent
-		{
-			add { Device.MouseLeaveEvent += value; }
-			remove {Device.MouseLeaveEvent -= value; }
+		public static event EventHandler<EventArgs> MouseLeaveEvent {
+			add { Device.MouseLeaveEvent.Event += value; }
+			remove { Device.MouseLeaveEvent.Event -= value; }
 		}
 	}
 }

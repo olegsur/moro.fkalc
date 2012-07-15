@@ -63,7 +63,6 @@
     <Compile Include="Input\MouseDevice.cs" />
     <Compile Include="Input\IMouseInputProvider.cs" />
     <Compile Include="Input\WidgetMouseInputProvider.cs" />
-    <Compile Include="Input\EventRouteFactory.cs" />
     <Compile Include="Media\Visual.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="Shapes\Line.cs" />
@@ -111,6 +110,7 @@
     <Compile Include="Controls\Selector.cs" />
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Media\VisualTreeHelper.cs" />
+    <Compile Include="Input\RoutedEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -33,14 +33,14 @@ namespace fkalc.UI.Framework
 {
 	public class MouseDevice
 	{
-		public event ButtonPressEventHandler PreviewButtonPressEvent;
-		public event ButtonPressEventHandler ButtonPressEvent;
+		public RoutedEvent<ButtonPressEventArgs> PreviewButtonPressEvent { get; private set; }
+		public RoutedEvent<ButtonPressEventArgs> ButtonPressEvent { get; private set; }
 		
-		public event MotionNotifyEventHandler PreviewMotionNotifyEvent;
-		public event MotionNotifyEventHandler MotionNotifyEvent;
+		public RoutedEvent<MotionNotifyEventArgs> PreviewMotionNotifyEvent { get; private set; }
+		public RoutedEvent<MotionNotifyEventArgs> MotionNotifyEvent { get; private set; }
 		
-		public event EventHandler MouseEnterEvent;
-		public event EventHandler MouseLeaveEvent;
+		public RoutedEvent<EventArgs> MouseEnterEvent { get; private set; }
+		public RoutedEvent<EventArgs> MouseLeaveEvent { get; private set; }
 		
 		private Visual targetElement;
 		
@@ -48,6 +48,14 @@ namespace fkalc.UI.Framework
 		
 		public MouseDevice ()
 		{
+			PreviewButtonPressEvent = new TunnelingEvent<ButtonPressEventArgs> ();
+			ButtonPressEvent = new BubblingEvent<ButtonPressEventArgs> (); 
+
+			PreviewMotionNotifyEvent = new TunnelingEvent<MotionNotifyEventArgs> ();
+			MotionNotifyEvent = new BubblingEvent<MotionNotifyEventArgs> ();
+
+			MouseEnterEvent = new DirectEvent<EventArgs> ();
+			MouseLeaveEvent = new DirectEvent<EventArgs> ();
 		}
 		
 		public Visual TargetElement { 
@@ -62,8 +70,7 @@ namespace fkalc.UI.Framework
 				
 				RaiseMouseEnterEvent ();				
 			}			
-		}
-		
+		}		
 		
 		public void RegistedMouseInputProvider (IMouseInputProvider provider)
 		{
@@ -100,82 +107,50 @@ namespace fkalc.UI.Framework
 		
 		private void RaisePreviewButtonPressEvent (ButtonPressEventArgs args)
 		{
-			if (PreviewButtonPressEvent == null || TargetElement == null)
+			if (TargetElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(TargetElement)) {
-				var del = PreviewButtonPressEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, args);
-				}	
-			}
+
+			PreviewButtonPressEvent.RaiseEvent (TargetElement, args);
 		}	
 		
 		private void RaiseButtonPressEvent (ButtonPressEventArgs args)
 		{
-			if (ButtonPressEvent == null || TargetElement == null)
+			if (TargetElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(TargetElement)) {
-				var del = ButtonPressEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, args);
-				}	
-			}
+
+			ButtonPressEvent.RaiseEvent (TargetElement, args);
 		}
 		
 		private void RaisePreviewMotionNotifyEvent (MotionNotifyEventArgs args)
 		{
-			if (PreviewMotionNotifyEvent == null || TargetElement == null)
+			if (TargetElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(TargetElement)) {
-				var del = PreviewMotionNotifyEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, args);
-				}	
-			}
+
+			PreviewMotionNotifyEvent.RaiseEvent (TargetElement, args);
 		}	
 		
 		private void RaiseMotionNotifyEvent (MotionNotifyEventArgs args)
 		{
-			if (MotionNotifyEvent == null || TargetElement == null)
+			if (TargetElement == null)
 				return;
-			
-			foreach (var element in new EventRouteFactory().Build(TargetElement).Reverse()) {
-				var del = MotionNotifyEvent.GetInvocationList ().FirstOrDefault (d => d.Target == element);
-				
-				if (del != null) {
-					del.DynamicInvoke (this, args);
-				}	
-			}
+
+			MotionNotifyEvent.RaiseEvent (TargetElement, args);
 		}
 		
 		private void RaiseMouseEnterEvent ()
 		{
-			if (MouseEnterEvent == null || TargetElement == null)
+			if (TargetElement == null)
 				return;
-			
-			var del = MouseEnterEvent.GetInvocationList ().FirstOrDefault (d => d.Target == TargetElement);
-				
-			if (del != null) {
-				del.DynamicInvoke (this, EventArgs.Empty);
-			}
+
+			MouseEnterEvent.RaiseEvent (TargetElement, EventArgs.Empty);
 		}
 		
 		private void RaiseMouseLeaveEvent ()
 		{
-			if (MouseLeaveEvent == null || TargetElement == null)
+			if (TargetElement == null)
 				return;
 			
-			var del = MouseLeaveEvent.GetInvocationList ().FirstOrDefault (d => d.Target == TargetElement);
-				
-			if (del != null) {
-				del.DynamicInvoke (this, EventArgs.Empty);
-			}
+			MouseLeaveEvent.RaiseEvent (TargetElement, EventArgs.Empty);
 		}
 	}
 }
