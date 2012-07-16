@@ -29,38 +29,22 @@ using fkalc.UI.Framework;
 
 namespace fkalc.UI
 {
-	public class DocumentCursor : UserControl
+	public class DocumentCursor : Adorner
 	{
+		public double X { get; set; }
+		public double Y { get; set; }
+
 		public DocumentCursor ()
 		{
-			HeightRequest = 10;
-			WidthRequest = 10;
-			
-			var canvas = new Canvas ();
-			
-			var line1 = new Line ()
-			{
-				WidthRequest = 10,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Red
-			};
-			
-			var line2 = new Line ()
-			{
-				WidthRequest = 2,
-				HeightRequest = 10,
-				StrokeThickness = 2,
-				Stroke = Colors.Red
-			};
-			
-			canvas.Children.Add (line1);
-			canvas.Children.Add (line2);
-			
-			canvas.SetTop (4, line1);
-			canvas.SetLeft (4, line2);
-			
-			Content = canvas;
-		}					
+		}	
+
+		protected override void OnRender (DrawingContext dc)
+		{
+			if (!IsVisible)
+				return;
+
+			dc.DrawLine (new Pen (Colors.Red, 2), new Point (X + 5, Y), new Point (X + 5, Y + 10));
+			dc.DrawLine (new Pen (Colors.Red, 2), new Point (X, Y + 5), new Point (X + 10, Y + 5));
+		}
 	}
 }

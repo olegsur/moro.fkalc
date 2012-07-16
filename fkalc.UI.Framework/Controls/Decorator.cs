@@ -54,7 +54,7 @@ namespace fkalc.UI.Framework
 		
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			if (Child == null)
+			if (Child == null || Child.Visibility == Visibility.Collapsed)
 				return new Size (0, 0);
 			
 			Child.Measure (availableSize);			
@@ -67,17 +67,9 @@ namespace fkalc.UI.Framework
 			if (Child == null)
 				return;
 				
-			Child.Arrange (new Rect (Child.DesiredSize));
+			Child.Arrange (new Rect (new Size (Width, Height)));
 		}
 		
-		protected override void OnRender (DrawingContext dc)
-		{
-			if (Child == null)
-				return;
-			
-			Child.Render (dc);
-		}
-
 		public override int VisualChildrenCount {
 			get {
 				return Child == null ? 0 : 1;

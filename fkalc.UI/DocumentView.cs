@@ -49,9 +49,9 @@ namespace fkalc.UI
 			this.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
 			this.ButtonPressEvent += HandleButtonPressEvent;
 			
-			Content = itemsControl;
-						
-			canvas.Children.Add (documentCursor);
+			Content = new AdornerDecorator () { Child = itemsControl };
+
+			AdornerLayer.GetAdornerLayer (itemsControl).Add (documentCursor);
 			
 			Background = Brushes.White;
 
@@ -65,10 +65,10 @@ namespace fkalc.UI
 				Screen.QueueDraw ();
 				return;
 			}
-			
-			canvas.SetLeft (args.Event.X, documentCursor);
-			canvas.SetTop (args.Event.Y, documentCursor);
-						
+
+			documentCursor.X = args.Event.X;
+			documentCursor.Y = args.Event.Y;
+									
 			documentCursor.Visibility = Visibility.Visible;
     
 			Screen.QueueDraw ();			
@@ -91,8 +91,8 @@ namespace fkalc.UI
 				region.DataContext = token;
 				
 				canvas.Children.Add (region);                				
-				canvas.SetLeft (canvas.GetLeft (documentCursor), region);
-				canvas.SetTop (canvas.GetTop (documentCursor), region);
+				canvas.SetLeft (documentCursor.X, region);
+				canvas.SetTop (documentCursor.Y, region);
 				
 				Keyboard.Focus (region);
 			}		    
