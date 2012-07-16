@@ -78,13 +78,6 @@ namespace fkalc.UI
 
 			Selection = new Selection ();
 			Selection.SelectedToken = activeToken;
-
-			GetProperty ("DataContext").DependencyPropertyValueChanged += HandleDataContextChanged;
-		}
-
-		void HandleDataContextChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
@@ -99,16 +92,6 @@ namespace fkalc.UI
 			border.BorderColor = Colors.Bisque;
 			
 			Screen.QueueDraw ();
-		}
-		
-//		public override Visual HitTest (double x, double y)
-//		{
-//			if (x >= 0 && x <= Width &&
-//				y >= 0 && y <= Height) {
-//				return this;
-//			}
-//			
-//			return null;
-//		}		
+		}	
 	}
 }

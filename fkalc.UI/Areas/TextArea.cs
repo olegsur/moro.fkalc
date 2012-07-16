@@ -50,7 +50,10 @@ namespace fkalc.UI
 
 			Content = grid;
 
-			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
+			BindingOperations.SetBinding (this, "DataContext.Text", textBlock.GetProperty ("Text"));
+			BindingOperations.SetBinding (this, "DataContext.FontFamily", textBlock.GetProperty ("FontFamily"));
+			BindingOperations.SetBinding (this, "DataContext.FontSize", textBlock.GetProperty ("FontSize"));
+
 			textBlock.GetProperty ("Text").DependencyPropertyValueChanged += TextChanged;
 		}
 
@@ -65,18 +68,6 @@ namespace fkalc.UI
 				rectangle.Visibility = Visibility.Collapsed;
 				textBlock.Visibility = Visibility.Visible;
 			}
-		}
-				
-		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-			if (e.NewValue is DependencyObject == false)
-				return;
-
-			var source = e.NewValue as DependencyObject;
-
-			BindingOperations.SetBinding (source.GetProperty ("Text"), textBlock.GetProperty ("Text"));
-			BindingOperations.SetBinding (source.GetProperty ("FontFamily"), textBlock.GetProperty ("FontFamily"));
-			BindingOperations.SetBinding (source.GetProperty ("FontSize"), textBlock.GetProperty ("FontSize"));
 		}
 	}
 }

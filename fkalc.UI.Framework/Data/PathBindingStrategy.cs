@@ -27,30 +27,49 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public static class BindingOperations
+	public class PathBindingStrategy
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter = null)
+		private string SubPath { get; set; }
+		private IDependencyProperty Target { get; set; }
+		private IValueConverter Converter { get; set; }
+
+		public PathBindingStrategy (DependencyObject source, string path, IDependencyProperty target, IValueConverter converter)
 		{
-			new DPropertyBindingStrategy (source, target, converter ?? new EmptyConverter ());
+			if (string.IsNullOrEmpty (path))
+				throw new ArgumentException ("invalid path", path);
+
+			var paths = path.Split (new [] { '.'}, 2);
+
+			if (paths.Length == 1) {
+				BindingOperations.SetBinding (source.GetProperty (path), target, converter);
+				return;
+			}
+
+			Target = target;
+			Converter = converter;
+
+			SubPath = paths [1];
+
+			var property = source.GetProperty (paths [0]);
+			property.DependencyPropertyValueChanged += HandleDependencyPropertyValueChanged;
+
+			if (property.Value != null) {
+				BindingOperations.SetBinding (property.Value, SubPath, target, converter);
+				return;
+			}
+
 		}
 
-		public static void SetBinding (DependencyObject source, string path, IDependencyProperty target, IValueConverter converter = null)
-		{		
-			new PathBindingStrategy (source, path, target, converter ?? new EmptyConverter ());
-		}
-
-		public static void SetBinding (object source, string path, IDependencyProperty target, IValueConverter converter = null)
+		private void HandleDependencyPropertyValueChanged (object sender, DPropertyValueChangedEventArgs e)
 		{
-			if (source is DependencyObject == false)
-				throw new NotImplementedException ();
+			if (e.NewValue == null) {
+				BindingOperations.ClearBinding (Target);
+				return;
+			}
 
-			SetBinding (source as DependencyObject, path, target, converter ?? new EmptyConverter ());
-		}
-
-		public static void ClearBinding (IDependencyProperty target)
-		{
-			throw new NotImplementedException ();
+			BindingOperations.SetBinding (e.NewValue, SubPath, Target, Converter);
 		}
 	}
+
 }
 

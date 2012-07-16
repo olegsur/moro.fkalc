@@ -34,10 +34,6 @@ namespace fkalc.UI.Framework
 		private IDependencyProperty Target { get; set; }
 		private IValueConverter Converter { get; set; }
 
-		public DPropertyBindingStrategy (IDependencyProperty source, IDependencyProperty target) : this(source, target, new EmptyConverter())
-		{
-		}
-
 		public DPropertyBindingStrategy (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
 		{
 			Source = source;
@@ -73,20 +69,6 @@ namespace fkalc.UI.Framework
 
 			updating = false;
 		}
-
-		private class EmptyConverter : IValueConverter
-		{
-			public object Convert (object value)
-			{
-				return value;
-			}
-
-			public object ConvertBack (object value)
-			{
-				return value;
-			}
-		}
-
 	}
 }
 

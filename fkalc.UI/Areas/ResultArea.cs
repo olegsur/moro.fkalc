@@ -77,17 +77,7 @@ namespace fkalc.UI
 
 			Content = stackPanel;
 
-			GetProperty ("DataContext").DependencyPropertyValueChanged += HandleDataContextChanged;
-		}
-
-		private void HandleDataContextChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-			if (e.NewValue is DependencyObject == false)
-				return;
-
-			var source = e.NewValue as DependencyObject;
-
-			BindingOperations.SetBinding (source.GetProperty ("Child"), Child.GetProperty ("Content"), new TokenAreaConverter ());
+			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());
 		}
 	}
 }

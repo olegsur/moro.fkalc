@@ -47,17 +47,7 @@ namespace fkalc.UI
 
 			itemsControl.ItemTemplate = new DataTemplate (Factory);
 
-			GetProperty ("DataContext").DependencyPropertyValueChanged += DataContextChanged;
-		}
-
-		private void DataContextChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-			if (e.NewValue is DependencyObject == false)
-				return;
-
-			var source = e.NewValue as DependencyObject;
-
-			BindingOperations.SetBinding (source.GetProperty ("Tokens"), itemsControl.GetProperty ("ItemsSource"));
+			BindingOperations.SetBinding (this, "DataContext.Tokens", itemsControl.GetProperty ("ItemsSource"));
 		}
 
 		private UIElement Factory (object token)

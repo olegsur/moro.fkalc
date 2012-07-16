@@ -111,6 +111,8 @@
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Media\VisualTreeHelper.cs" />
     <Compile Include="Input\RoutedEvent.cs" />
+    <Compile Include="Data\PathBindingStrategy.cs" />
+    <Compile Include="Data\EmptyConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
