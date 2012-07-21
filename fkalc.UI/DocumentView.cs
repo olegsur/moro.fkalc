@@ -56,6 +56,8 @@ namespace fkalc.UI
 			Background = Brushes.White;
 
 			Keyboard.Focus (this);
+
+			BindingOperations.SetBinding (this, "DataContext.DocumentCursor", documentCursor.GetProperty ("DataContext"));
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)

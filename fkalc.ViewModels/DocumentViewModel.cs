@@ -32,13 +32,18 @@ namespace fkalc.ViewModels
 	public class DocumentViewModel : DependencyObject
 	{
 		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
+		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
 
 		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
+		public DocumentCursorViewModel DocumentCursor { get { return documentCursor.Value; } }
 
 		public DocumentViewModel ()
 		{
 			regions = BuildProperty<ObservableCollection<MathRegionViewModel>> ("Regions");
 			regions.Value = new ObservableCollection<MathRegionViewModel> ();
+
+			documentCursor = BuildProperty<DocumentCursorViewModel> ("DocumentCursor");
+			documentCursor.Value = new DocumentCursorViewModel ();
 		}
 	}
 }
