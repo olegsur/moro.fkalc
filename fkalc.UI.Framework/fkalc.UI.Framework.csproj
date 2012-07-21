@@ -113,6 +113,7 @@
     <Compile Include="Input\RoutedEvent.cs" />
     <Compile Include="Data\PathBindingStrategy.cs" />
     <Compile Include="Data\EmptyConverter.cs" />
+    <Compile Include="Input\ICommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -33,6 +33,7 @@ namespace fkalc.ViewModels
 	{
 		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
 		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
+		private readonly DependencyProperty<ICommand> newRegionCommand;
 
 		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
 		public DocumentCursorViewModel DocumentCursor { get { return documentCursor.Value; } }
@@ -44,6 +45,15 @@ namespace fkalc.ViewModels
 
 			documentCursor = BuildProperty<DocumentCursorViewModel> ("DocumentCursor");
 			documentCursor.Value = new DocumentCursorViewModel ();
+
+			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
+			newRegionCommand.Value = new CommandDelegate (() => NewRegion ());
+		}
+
+		private void NewRegion ()
+		{
+			var region = new MathRegionViewModel ();
+			Regions.Add (region);
 		}
 	}
 }
