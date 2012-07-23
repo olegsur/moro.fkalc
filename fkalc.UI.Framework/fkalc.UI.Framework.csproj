@@ -98,7 +98,6 @@
     <Compile Include="IDependencyProperty.cs" />
     <Compile Include="Data\BindingOperations.cs" />
     <Compile Include="DependencyObject.cs" />
-    <Compile Include="Data\DPropertyBindingStrategy.cs" />
     <Compile Include="DPropertyValueChangedEventArgs.cs" />
     <Compile Include="Controls\ItemsControl.cs" />
     <Compile Include="Common\ObservableCollection.cs" />
@@ -111,8 +110,11 @@
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Media\VisualTreeHelper.cs" />
     <Compile Include="Input\RoutedEvent.cs" />
-    <Compile Include="Data\PathBindingStrategy.cs" />
     <Compile Include="Data\EmptyConverter.cs" />
+    <Compile Include="Data\BindingExpression.cs" />
+    <Compile Include="Data\Binding.cs" />
+    <Compile Include="Data\PropertyExpression.cs" />
+    <Compile Include="Data\PathExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

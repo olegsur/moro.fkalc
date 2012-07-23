@@ -1,5 +1,5 @@
 //
-// DPropertyBindingStrategy.cs
+// PropertyExpression.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,47 +27,11 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public class DPropertyBindingStrategy
+	public class PropertyExpression : BindingExpression
 	{
-		private bool updating = false;
-		private IDependencyProperty Source { get; set; }
-		private IDependencyProperty Target { get; set; }
-		private IValueConverter Converter { get; set; }
-
-		public DPropertyBindingStrategy (IDependencyProperty source, IDependencyProperty target, IValueConverter converter)
+		public PropertyExpression (IDependencyProperty property)
 		{
-			Source = source;
-			Target = target;
-			Converter = converter;
-
-			Target.Value = Converter.Convert (Source.Value);
-
-			source.DependencyPropertyValueChanged += HandleSourceValueChanged;
-			target.DependencyPropertyValueChanged += HandleTargetValueChanged;
-		}
-
-		private void HandleSourceValueChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-			if (updating)
-				return;
-
-			updating = true;
-
-			Target.Value = Converter.Convert (e.NewValue);
-
-			updating = false;
-		}
-
-		private void HandleTargetValueChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-			if (updating)
-				return;
-
-			updating = true;
-
-			Source.Value = Converter.ConvertBack (e.NewValue);
-
-			updating = false;
+			Property = property;
 		}
 	}
 }

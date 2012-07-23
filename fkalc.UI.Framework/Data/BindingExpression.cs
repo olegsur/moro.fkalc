@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// BindingExpression.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,28 +24,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
 
 namespace fkalc.UI.Framework
 {
-	public static class BindingOperations
+	public abstract class BindingExpression : DependencyObject
 	{
-		public static void SetBinding (IDependencyProperty source, IDependencyProperty target, IValueConverter converter = null)
-		{
-			new Binding (new PropertyExpression (source), new PropertyExpression (target), converter ?? new EmptyConverter ());
+		private readonly DependencyProperty<IDependencyProperty> property;
+
+		public IDependencyProperty Property { 
+			get { return property.Value;}
+			protected set { property.Value = value; }
 		}
 
-		public static void SetBinding (DependencyObject source, string path, IDependencyProperty target, IValueConverter converter = null)
+
+		public BindingExpression ()
 		{
-			var paths = path.Split ('.');
-
-			BindingExpression expression = new PropertyExpression (source.GetProperty (paths [0]));
-
-			foreach (var p in paths.Skip(1)) {
-				expression = new PathExpression (expression, p);
-			}
-
-			new Binding (expression, new PropertyExpression (target), converter ?? new EmptyConverter ());
+			property = BuildProperty<IDependencyProperty> ("Property");
 		}
 	}
 }

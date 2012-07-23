@@ -1,5 +1,5 @@
 //
-// BindingOperations.cs
+// PathExpression.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,49 +27,45 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public class PathBindingStrategy
+	public class PathExpression : BindingExpression
 	{
-		private string SubPath { get; set; }
-		private IDependencyProperty Target { get; set; }
-		private IValueConverter Converter { get; set; }
+		private string PropertyName { get; set; }
 
-		public PathBindingStrategy (DependencyObject source, string path, IDependencyProperty target, IValueConverter converter)
+		private IDependencyProperty Source { get; set; }
+
+		public PathExpression (BindingExpression expression, string propertyName)
 		{
-			if (string.IsNullOrEmpty (path))
-				throw new ArgumentException ("invalid path", path);
+			PropertyName = propertyName;
 
-			var paths = path.Split (new [] { '.'}, 2);
+			Source = expression.Property;
 
-			if (paths.Length == 1) {
-				BindingOperations.SetBinding (source.GetProperty (path), target, converter);
-				return;
+			if (Source != null) {
+				if (Source.Value != null)
+					Property = (Source.Value as DependencyObject).GetProperty (propertyName);
+				Source.DependencyPropertyValueChanged += HandlePropertyValueChanged;
 			}
 
-			Target = target;
-			Converter = converter;
-
-			SubPath = paths [1];
-
-			var property = source.GetProperty (paths [0]);
-			property.DependencyPropertyValueChanged += HandleDependencyPropertyValueChanged;
-
-			if (property.Value != null) {
-				BindingOperations.SetBinding (property.Value, SubPath, target, converter);
-				return;
-			}
-
+			expression.GetProperty ("Property").DependencyPropertyValueChanged += HandlePropertyChanged;
 		}
 
-		private void HandleDependencyPropertyValueChanged (object sender, DPropertyValueChangedEventArgs e)
-		{
-			if (e.NewValue == null) {
-				BindingOperations.ClearBinding (Target);
-				return;
-			}
+		private void HandlePropertyChanged (object sender, DPropertyValueChangedEventArgs e)
+		{		
+			if (Source != null)
+				Source.DependencyPropertyValueChanged -= HandlePropertyValueChanged;
 
-			BindingOperations.SetBinding (e.NewValue, SubPath, Target, Converter);
+			Source = e.NewValue as IDependencyProperty;
+
+			if (Source != null) {
+				if (Source.Value != null)
+					Property = (Source.Value as DependencyObject).GetProperty (PropertyName);
+				Source.DependencyPropertyValueChanged += HandlePropertyValueChanged;
+			}
+		}
+
+		private void HandlePropertyValueChanged (object sender, DPropertyValueChangedEventArgs e)
+		{
+			Property = (e.NewValue as DependencyObject).GetProperty (PropertyName);
 		}
 	}
-
 }
 
