@@ -34,17 +34,22 @@ namespace fkalc.UI
 {
 	public class DocumentView : UserControl
 	{
-		private List<MathRegionViewModel> mathRegionTokens = new List<MathRegionViewModel> ();
-		
+		private readonly DependencyProperty<ICommand> newRegionCommand;
+
+		public ICommand NewRegionCommand { get { return newRegionCommand.Value; } }
+
 		private DocumentCursor documentCursor = new DocumentCursor ();
 		private Canvas canvas = new Canvas ();
 		private ItemsControl itemsControl = new ItemsControl ();
 		
 		public DocumentView ()
-		{		
+		{	
+			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
+
 			Focusable = true;
 
 			itemsControl.ItemsPanel = canvas;
+			itemsControl.ItemTemplate = new DataTemplate (Factory);
 
 			this.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
 			this.ButtonPressEvent += HandleButtonPressEvent;
@@ -58,6 +63,8 @@ namespace fkalc.UI
 			Keyboard.Focus (this);
 
 			BindingOperations.SetBinding (this, "DataContext.DocumentCursor", documentCursor.GetProperty ("DataContext"));
+			BindingOperations.SetBinding (this, "DataContext.Regions", itemsControl.GetProperty ("ItemsSource"));
+			BindingOperations.SetBinding (this, "DataContext.NewRegionCommand", GetProperty ("NewRegionCommand"));
 		}
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
@@ -86,20 +93,28 @@ namespace fkalc.UI
 			if (Keyboard.FocusedElement == this) {
 				documentCursor.Visibility = Visibility.Collapsed;
 
-				var token = new MathRegionViewModel ();
-				mathRegionTokens.Add (token);
-		
-				var region = new MathRegion ();
-				region.DataContext = token;
-				
-				canvas.Children.Add (region);                				
-				canvas.SetLeft (documentCursor.X, region);
-				canvas.SetTop (documentCursor.Y, region);
-				
-				Keyboard.Focus (region);
+				if (NewRegionCommand != null)
+					NewRegionCommand.Execute ();
+
+
+//				canvas.Children.Add (region);                				
+//				canvas.SetLeft (documentCursor.X, region);
+//				canvas.SetTop (documentCursor.Y, region);
+
 			}		    
 		
 			Screen.QueueDraw ();
+		}
+
+		private UIElement Factory (object viewModel)
+		{
+			var region = new MathRegion ();
+
+			region.DataContext = viewModel;
+
+			Keyboard.Focus (region);
+
+			return region;
 		}
 	}
 }

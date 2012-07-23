@@ -117,6 +117,7 @@
     <Compile Include="Data\PathExpression.cs" />
     <Compile Include="Data\AttachedPropertyExpression.cs" />
     <Compile Include="IAttachedPropertiesContainer.cs" />
+    <Compile Include="Input\ICommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
