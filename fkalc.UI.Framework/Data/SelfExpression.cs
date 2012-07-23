@@ -1,5 +1,5 @@
 //
-// MathRegionViewModel.cs
+// SelfExpression.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,36 +23,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using fkalc.ViewModels.MathRegion.Tokens;
-using fkalc.UI.Framework;
 
-namespace fkalc.ViewModels.MathRegion
+namespace fkalc.UI.Framework
 {
-	public class MathRegionViewModel : DependencyObject
-	{	
-		private readonly DependencyProperty<double> x;
-		private readonly DependencyProperty<double> y;
+	public class SelfExpression : BindingExpression
+	{
+		private readonly DependencyProperty<object> item;
 
-		public double X { 
-			get { return x.Value; }
-			set { x.Value = value; }
-		}
-
-		public double Y { 
-			get { return y.Value; }
-			set { y.Value = value; }
-		}
-
-		public HBoxToken Root { get; private set; }
-
-		public MathRegionViewModel ()
+		public SelfExpression (object obj)
 		{
-			Root = new HBoxToken ();
+			item = BuildProperty<object> ("Item");
+			item.Value = obj;
 
-			x = BuildProperty<double> ("X");
-			y = BuildProperty<double> ("Y");
+			Property = item;
 		}
 	}
 }

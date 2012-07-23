@@ -32,7 +32,7 @@ using System.Collections.Specialized;
 
 namespace fkalc.UI.Framework
 {
-	public class Canvas : Panel
+	public class Canvas : Panel, IAttachedPropertiesContainer
 	{		
 		private List<CanvasChild> children = new List<CanvasChild> ();
 		
@@ -92,6 +92,8 @@ namespace fkalc.UI.Framework
 					AddVisualChild (child);
 					children.Insert (index, child);
 
+					RaiseAddedItem (uielement);
+
 					index++;
 				}
 			}
@@ -104,6 +106,8 @@ namespace fkalc.UI.Framework
 					RemoveVisualChild (child);			
 					children.Remove (child);
 
+					RaiseRemovedItem (uielement);
+
 					index++;
 				}
 			}
@@ -115,15 +119,22 @@ namespace fkalc.UI.Framework
 					var child = new CanvasChild (uielement);
 			
 					RemoveVisualChild (children [index]);
+					RaiseRemovedItem (children [index].Content);
 
 					AddVisualChild (child);
 					children [index] = child;
+
+					RaiseAddedItem (uielement);
 
 					index++;
 				}
 			}
 
 			if (e.Action == NotifyCollectionChangedAction.Reset) {
+				foreach (var child in children) {
+					RaiseRemovedItem (child.Content);
+				}
+
 				children.Clear ();
 			}
 		}
@@ -147,6 +158,28 @@ namespace fkalc.UI.Framework
 		public override Visual GetVisualChild (int index)
 		{
 			return children [index];
+		}
+
+		public event EventHandler<ItemEventArgs> AddedItem;
+		public event EventHandler<ItemEventArgs> RemovedItem;
+
+		public IDependencyProperty GetProperty (object item, string propertyName)
+		{
+			var child = children.FirstOrDefault (c => c.Content == item);
+						
+			return child != null ? child.GetProperty (propertyName) : null;
+		}
+
+		private void RaiseAddedItem (object item)
+		{
+			if (AddedItem != null)
+				AddedItem (this, new ItemEventArgs (item));
+		}
+
+		private void RaiseRemovedItem (object item)
+		{
+			if (RemovedItem != null)
+				RemovedItem (this, new ItemEventArgs (item));
 		}
 	}
 }

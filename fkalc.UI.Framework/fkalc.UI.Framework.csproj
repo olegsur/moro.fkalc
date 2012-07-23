@@ -118,6 +118,7 @@
     <Compile Include="Data\AttachedPropertyExpression.cs" />
     <Compile Include="IAttachedPropertiesContainer.cs" />
     <Compile Include="Input\ICommand.cs" />
+    <Compile Include="Data\SelfExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

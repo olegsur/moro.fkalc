@@ -109,8 +109,10 @@ namespace fkalc.UI
 		private UIElement Factory (object viewModel)
 		{
 			var region = new MathRegion ();
-
 			region.DataContext = viewModel;
+
+			BindingOperations.SetBinding ((viewModel as DependencyObject).GetProperty ("X"), canvas, region, "X");
+			BindingOperations.SetBinding ((viewModel as DependencyObject).GetProperty ("Y"), canvas, region, "Y");
 
 			Keyboard.Focus (region);
 

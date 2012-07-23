@@ -47,6 +47,13 @@ namespace fkalc.UI.Framework
 
 			new Binding (expression, new PropertyExpression (target), converter ?? new EmptyConverter ());
 		}
+
+		public static void SetBinding (IDependencyProperty source, IAttachedPropertiesContainer container, object item, string propertyName, IValueConverter converter = null)
+		{
+			var self = new SelfExpression (container);
+
+			new Binding (new PropertyExpression (source), new AttachedPropertyExpression (self, item, propertyName), converter ?? new EmptyConverter ());
+		}
 	}
 }
 

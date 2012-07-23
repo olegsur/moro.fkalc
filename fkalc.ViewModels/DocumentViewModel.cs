@@ -53,6 +53,10 @@ namespace fkalc.ViewModels
 		private void NewRegion ()
 		{
 			var region = new MathRegionViewModel ();
+
+			region.X = DocumentCursor.X;
+			region.Y = DocumentCursor.Y;
+
 			Regions.Add (region);
 		}
 	}
