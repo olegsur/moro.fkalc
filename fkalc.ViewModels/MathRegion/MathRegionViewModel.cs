@@ -27,6 +27,7 @@
 using System;
 using fkalc.ViewModels.MathRegion.Tokens;
 using fkalc.UI.Framework;
+using fkalc.ViewModels.MathRegion.Actions;
 
 namespace fkalc.ViewModels.MathRegion
 {
@@ -36,6 +37,8 @@ namespace fkalc.ViewModels.MathRegion
 		private readonly DependencyProperty<double> y;
 		private readonly DependencyProperty<HBoxToken> root;
 		private readonly DependencyProperty<Selection> selection;
+
+		private readonly DependencyProperty<ICommand> resultCommand;
 
 		public double X { 
 			get { return x.Value; }
@@ -64,6 +67,9 @@ namespace fkalc.ViewModels.MathRegion
 			root = BuildProperty<HBoxToken> ("Root");
 			selection = BuildProperty<Selection> ("Selection");
 
+			resultCommand = BuildProperty<ICommand> ("ResultCommand");
+			resultCommand.Value = new DelegateCommand (() => new ResultAction (this).Do ());
+
 			Root = new HBoxToken ();
 			Selection = new Selection ();
 
@@ -71,7 +77,10 @@ namespace fkalc.ViewModels.MathRegion
 			Root.Add (token);
 
 			Selection.SelectedToken = token;
+		
+
+			                                     
 		}
+
 	}
 }
-

@@ -47,8 +47,9 @@
     <Compile Include="MathRegion\MathRegionViewModel.cs" />
     <Compile Include="DocumentViewModel.cs" />
     <Compile Include="DocumentCursorViewModel.cs" />
-    <Compile Include="CommandDelegate.cs" />
     <Compile Include="MathRegion\Selection.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="MathRegion\Actions\ResultAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -70,5 +71,6 @@
     <Folder Include="MathRegion\" />
     <Folder Include="MathRegion\Tokens\" />
     <Folder Include="Assembly\" />
+    <Folder Include="MathRegion\Actions\" />
   </ItemGroup>
 </Project>

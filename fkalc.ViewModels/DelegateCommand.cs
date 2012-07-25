@@ -1,5 +1,5 @@
 //
-// CommandDelegate.cs
+// DelegateCommand.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -28,21 +28,21 @@ using fkalc.UI.Framework;
 
 namespace fkalc.ViewModels
 {
-	public class CommandDelegate : ICommand
+	public class DelegateCommand : ICommand
 	{
-		private Action ExecuteAction { get; set; }
+		private Action execute;
 
-		public CommandDelegate (Action executeAction)
+		public DelegateCommand (Action execute)
 		{
-			if (executeAction == null)
-				throw new ArgumentNullException ("executeAction");
+			if (execute == null)
+				throw new ArgumentNullException ("execute");
 
-			ExecuteAction = executeAction;
+			this.execute = execute;
 		}
 
 		public void Execute ()
 		{
-			ExecuteAction ();
+			execute ();
 		}
 	}
 }

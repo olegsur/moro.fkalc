@@ -1,5 +1,5 @@
 //
-// DocumentViewModel.cs
+// ResultAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,40 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
-using fkalc.ViewModels.MathRegion;
+using System.Linq;
+using fkalc.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.ViewModels
+namespace fkalc.ViewModels.MathRegion.Actions
 {
-	public class DocumentViewModel : DependencyObject
+	public class ResultAction
 	{
-		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
-		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
-		private readonly DependencyProperty<ICommand> newRegionCommand;
-
-		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
-		public DocumentCursorViewModel DocumentCursor { get { return documentCursor.Value; } }
-
-		public DocumentViewModel ()
+		private MathRegionViewModel Region { get; set; }
+		
+		public ResultAction (MathRegionViewModel region)
 		{
-			regions = BuildProperty<ObservableCollection<MathRegionViewModel>> ("Regions");
-			regions.Value = new ObservableCollection<MathRegionViewModel> ();
+			if (region == null)
+				throw new ArgumentNullException ("region");
 
-			documentCursor = BuildProperty<DocumentCursorViewModel> ("DocumentCursor");
-			documentCursor.Value = new DocumentCursorViewModel ();
-
-			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
-			newRegionCommand.Value = new DelegateCommand (() => NewRegion ());
+			Region = region;
 		}
-
-		private void NewRegion ()
+		
+		public void Do ()
 		{
-			var region = new MathRegionViewModel ();
+			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
+				return;
 
-			region.X = DocumentCursor.X;
-			region.Y = DocumentCursor.Y;
+			var result = new ResultToken ();			
 
-			Regions.Add (region);
+			Region.Root.Add (result);
+
+			//new Engine ().Evaluate (Region.Root);
 		}
 	}
 }
