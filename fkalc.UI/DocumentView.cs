@@ -95,12 +95,6 @@ namespace fkalc.UI
 
 				if (NewRegionCommand != null)
 					NewRegionCommand.Execute ();
-
-
-//				canvas.Children.Add (region);                				
-//				canvas.SetLeft (documentCursor.X, region);
-//				canvas.SetTop (documentCursor.Y, region);
-
 			}		    
 		
 			Screen.QueueDraw ();

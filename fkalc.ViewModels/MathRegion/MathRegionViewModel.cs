@@ -34,6 +34,8 @@ namespace fkalc.ViewModels.MathRegion
 	{	
 		private readonly DependencyProperty<double> x;
 		private readonly DependencyProperty<double> y;
+		private readonly DependencyProperty<HBoxToken> root;
+		private readonly DependencyProperty<Selection> selection;
 
 		public double X { 
 			get { return x.Value; }
@@ -45,14 +47,30 @@ namespace fkalc.ViewModels.MathRegion
 			set { y.Value = value; }
 		}
 
-		public HBoxToken Root { get; private set; }
+		public HBoxToken Root { 
+			get { return root.Value; }
+			private set { root.Value = value; } 
+		}
+
+		public Selection Selection { 
+			get { return selection.Value; }
+			private set { selection.Value = value; }
+		}
 
 		public MathRegionViewModel ()
 		{
-			Root = new HBoxToken ();
-
 			x = BuildProperty<double> ("X");
 			y = BuildProperty<double> ("Y");
+			root = BuildProperty<HBoxToken> ("Root");
+			selection = BuildProperty<Selection> ("Selection");
+
+			Root = new HBoxToken ();
+			Selection = new Selection ();
+
+			var token = new TextToken ();
+			Root.Add (token);
+
+			Selection.SelectedToken = token;
 		}
 	}
 }

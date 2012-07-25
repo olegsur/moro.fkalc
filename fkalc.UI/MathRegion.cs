@@ -27,19 +27,22 @@
 using System;
 using fkalc.UI.Framework;
 using fkalc.ViewModels.MathRegion.Tokens;
+using fkalc.ViewModels.MathRegion;
 
 namespace fkalc.UI
 {
 	public class MathRegion : UserControl
 	{
 		private Border border;
+		private readonly DependencyProperty<Selection> selection;
 
-		private HBoxToken root = new HBoxToken ();
-		public Selection Selection { get; private set; }
+		public Selection Selection {
+			get { return selection.Value; }
+		}
 
 		public HBoxToken Root {
 			get {
-				return root;
+				return (border.Child as HBoxArea).DataContext as HBoxToken;
 			}
 		}
 		
@@ -47,21 +50,16 @@ namespace fkalc.UI
 		{
 			Focusable = true;
 
-			var activeToken = new TextToken ();
-			var rootVisual = new HBoxArea ();
-			rootVisual.DataContext = root;
-
-			root.Add (activeToken);
-
 			border = new Border ()
 			{
-				Child = rootVisual,
 				BorderColor = Colors.Bisque
 			};	
-									
-			Content = new AdornerDecorator () {Child = border };
 
-			AdornerLayer.GetAdornerLayer (rootVisual).Add (new CursorLines (this));
+			BindingOperations.SetBinding (this, "DataContext.Root", border.GetProperty ("Child"), new TokenAreaConverter ());
+									
+			Content = new AdornerDecorator () { Child = border };
+
+			AdornerLayer.GetAdornerLayer (border).Add (new CursorLines (this));
 			
 			MouseEnterEvent += HandleMouseEnterEvent;
 			MouseLeaveEvent += HandleMouseLeaveEvent;
@@ -76,8 +74,9 @@ namespace fkalc.UI
 			new RightProcessor (this);
 			new AssignmentProcessor (this);
 
-			Selection = new Selection ();
-			Selection.SelectedToken = activeToken;
+			selection = BuildProperty<Selection> ("Selection");
+
+			BindingOperations.SetBinding (this, "DataContext.Selection", GetProperty ("Selection"));
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)

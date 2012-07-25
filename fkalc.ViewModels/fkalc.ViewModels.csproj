@@ -48,6 +48,7 @@
     <Compile Include="DocumentViewModel.cs" />
     <Compile Include="DocumentCursorViewModel.cs" />
     <Compile Include="CommandDelegate.cs" />
+    <Compile Include="MathRegion\Selection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

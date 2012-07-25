@@ -26,7 +26,7 @@
 using System;
 using fkalc.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.ViewModels.MathRegion
 {
 	public enum SelectionType
 	{

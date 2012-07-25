@@ -30,26 +30,26 @@ namespace fkalc.UI.Framework
 {
 	public class Decorator : FrameworkElement
 	{
-		private UIElement child;		
+		private DependencyProperty<UIElement> child;		
 		
 		public Decorator ()
 		{
+			child = BuildProperty<UIElement> ("Child");
+			child.DependencyPropertyValueChanged += HandleChildChanged;
+		}
+
+		private void HandleChildChanged (object sender, DPropertyValueChangedEventArgs<UIElement> e)
+		{
+			if (e.OldValue != null)
+				RemoveVisualChild (e.OldValue);
+
+			if (e.NewValue != null)
+				AddVisualChild (e.NewValue);
 		}
 		
 		public UIElement Child { 
-			get { return child; }
-			set {
-				if (child == value)
-					return;
-				
-				if (child != null)
-					RemoveVisualChild (child);
-				
-				if (value != null)
-					AddVisualChild (value);
-				
-				child = value;					
-			}
+			get { return child.Value; }
+			set { child.Value = value; }
 		}
 		
 		protected override Size MeasureOverride (Size availableSize)

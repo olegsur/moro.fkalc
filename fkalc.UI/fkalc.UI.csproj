@@ -92,7 +92,6 @@
     <Compile Include="Input\ResultProcessor.cs" />
     <Compile Include="Actions\ResultAction.cs" />
     <Compile Include="Areas\FractionArea.cs" />
-    <Compile Include="Selection.cs" />
     <Compile Include="Input\LeftProcessor.cs" />
     <Compile Include="Actions\LeftAction.cs" />
     <Compile Include="Input\RightProcessor.cs" />
