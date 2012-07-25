@@ -1,5 +1,5 @@
 //
-// Selection.cs
+// FractionToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,41 +24,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.ViewModels.MathRegion.Tokens;
+using fkalc.UI.Framework;
+using System.Collections.Generic;
 
-namespace fkalc.ViewModels.MathRegion
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public enum SelectionType
+	public class FractionToken : ContainerToken
 	{
-		Left,
-		Right,
-	}
+		private readonly DependencyProperty<Token> dividend;
+		private readonly DependencyProperty<Token> divisor;
 
-	public class Selection
-	{
-		private Token selectedToken;
+		public Token Dividend { 
+			get { return dividend.Value; } 
+			set{ dividend.Value = value; }
+		}
 
-		public int Position { get; set; }
-		public SelectionType Type { get; set; }
+		public Token Divisor { 
+			get { return divisor.Value; } 
+			set{ divisor.Value = value; }
+		}
 
-		public Selection ()
+		public FractionToken ()
 		{
-			Type = SelectionType.Left;
+			dividend = BuildProperty<Token> ("Dividend");
+			dividend.DependencyPropertyValueChanged += HandleValueChanged;
+
+			divisor = BuildProperty<Token> ("Divisor");
+			divisor.DependencyPropertyValueChanged += HandleValueChanged;
+
+			Dividend = new TextToken ();
+			Divisor = new TextToken ();					
 		}
 
-		public Token SelectedToken {
-			get {
-				return selectedToken;
-			}
-			set {
-				if (selectedToken == value)
-					return;
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
 
-				selectedToken = value;
-				Position = 0;
-			}
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
 		}
+				
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			if (oldToken == Dividend)
+				Dividend = newToken;
 
+			if (oldToken == Divisor)
+				Divisor = newToken;
+		}
 	}
 }
 

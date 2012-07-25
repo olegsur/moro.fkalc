@@ -1,5 +1,5 @@
 //
-// TextToken.cs
+// Selection.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,40 +24,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.ViewModels.MathRegion.Tokens
+namespace fkalc.UI.ViewModels.MathRegion
 {
-	public class TextToken : Token
-	{		
-		private readonly DependencyProperty<string> text;
-		private readonly DependencyProperty<string> fontFamily;
-		private readonly DependencyProperty<double> fontSize;
+	public enum SelectionType
+	{
+		Left,
+		Right,
+	}
 
-		public string Text { 
-			get { return text.Value;} 
-			set { text.Value = value; }
-		}
+	public class Selection
+	{
+		private Token selectedToken;
 
-		public string FontFamily { 
-			get { return fontFamily.Value;} 
-			set { fontFamily.Value = value; }
-		}
+		public int Position { get; set; }
+		public SelectionType Type { get; set; }
 
-		public double FontSize { 
-			get { return fontSize.Value;} 
-			set { fontSize.Value = value; }
-		}
-		
-		public TextToken ()
+		public Selection ()
 		{
-			text = BuildProperty<string> ("Text");
-			fontFamily = BuildProperty<string> ("FontFamily");
-			fontSize = BuildProperty<double> ("FontSize");
-
-			FontFamily = "Arial";
-			FontSize = 20;
+			Type = SelectionType.Left;
 		}
+
+		public Token SelectedToken {
+			get {
+				return selectedToken;
+			}
+			set {
+				if (selectedToken == value)
+					return;
+
+				selectedToken = value;
+				Position = 0;
+			}
+		}
+
 	}
 }
 

@@ -1,5 +1,5 @@
 //
-// ResultAction.cs
+// TextToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,33 +24,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.ViewModels.MathRegion.Tokens;
+using fkalc.UI.Framework;
 
-namespace fkalc.ViewModels.MathRegion.Actions
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class ResultAction
-	{
-		private MathRegionViewModel Region { get; set; }
-		
-		public ResultAction (MathRegionViewModel region)
-		{
-			if (region == null)
-				throw new ArgumentNullException ("region");
+	public class TextToken : Token
+	{		
+		private readonly DependencyProperty<string> text;
+		private readonly DependencyProperty<string> fontFamily;
+		private readonly DependencyProperty<double> fontSize;
 
-			Region = region;
+		public string Text { 
+			get { return text.Value;} 
+			set { text.Value = value; }
+		}
+
+		public string FontFamily { 
+			get { return fontFamily.Value;} 
+			set { fontFamily.Value = value; }
+		}
+
+		public double FontSize { 
+			get { return fontSize.Value;} 
+			set { fontSize.Value = value; }
 		}
 		
-		public void Do ()
+		public TextToken ()
 		{
-			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
-				return;
+			text = BuildProperty<string> ("Text");
+			fontFamily = BuildProperty<string> ("FontFamily");
+			fontSize = BuildProperty<double> ("FontSize");
 
-			var result = new ResultToken ();			
-
-			Region.Root.Add (result);
-
-			//new Engine ().Evaluate (Region.Root);
+			FontFamily = "Arial";
+			FontSize = 20;
 		}
 	}
 }

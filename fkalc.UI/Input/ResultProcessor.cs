@@ -41,8 +41,9 @@ namespace fkalc.UI
 		{
 			if (!NeedToProcess (args.Event.KeyValue))
 				return;
-			
-			new ResultAction (Region).Execute ();
+
+			if (Region.ResultCommand != null)
+				Region.ResultCommand.Execute ();
 		}
 		
 		private bool NeedToProcess (uint keyval)

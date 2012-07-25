@@ -1,5 +1,5 @@
 //
-// Token.cs
+// ResultAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,16 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
+using System.Linq;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.ViewModels.MathRegion.Tokens
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public abstract class Token : DependencyObject
+	public class ResultAction
 	{
-		public ContainerToken Parent { get; set; }
-
-		public Token ()
+		private MathRegionViewModel Region { get; set; }
+		
+		public ResultAction (MathRegionViewModel region)
 		{
+			if (region == null)
+				throw new ArgumentNullException ("region");
+
+			Region = region;
+		}
+		
+		public void Do ()
+		{
+			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
+				return;
+
+			var result = new ResultToken ();			
+
+			Region.Root.Add (result);
+
+			//new Engine ().Evaluate (Region.Root);
 		}
 	}
 }

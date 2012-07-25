@@ -27,8 +27,8 @@
 using System;
 using System.Collections.Generic;
 using fkalc.UI.Framework;
-using fkalc.ViewModels.MathRegion;
-using fkalc.ViewModels;
+using fkalc.UI.ViewModels.MathRegion;
+using fkalc.UI.ViewModels;
 
 namespace fkalc.UI
 {

@@ -26,8 +26,8 @@
 
 using System;
 using fkalc.UI.Framework;
-using fkalc.ViewModels.MathRegion.Tokens;
-using fkalc.ViewModels.MathRegion;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
+using fkalc.UI.ViewModels.MathRegion;
 
 namespace fkalc.UI
 {
@@ -35,6 +35,7 @@ namespace fkalc.UI
 	{
 		private Border border;
 		private readonly DependencyProperty<Selection> selection;
+		private readonly DependencyProperty<ICommand> resultCommand;
 
 		public Selection Selection {
 			get { return selection.Value; }
@@ -44,6 +45,10 @@ namespace fkalc.UI
 			get {
 				return (border.Child as HBoxArea).DataContext as HBoxToken;
 			}
+		}
+
+		public ICommand ResultCommand {
+			get { return resultCommand.Value; }
 		}
 		
 		public MathRegion ()
@@ -75,8 +80,10 @@ namespace fkalc.UI
 			new AssignmentProcessor (this);
 
 			selection = BuildProperty<Selection> ("Selection");
+			resultCommand = BuildProperty<ICommand> ("ResultCommand");
 
 			BindingOperations.SetBinding (this, "DataContext.Selection", GetProperty ("Selection"));
+			BindingOperations.SetBinding (this, "DataContext.ResultCommand", GetProperty ("ResultCommand"));
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)

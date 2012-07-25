@@ -1,5 +1,5 @@
 //
-// DocumentViewModel.cs
+// ResultToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,39 +25,39 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
-using fkalc.ViewModels.MathRegion;
+using System.Collections.Generic;
 
-namespace fkalc.ViewModels
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class DocumentViewModel : DependencyObject
+	public class ResultToken : ContainerToken
 	{
-		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
-		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
-		private readonly DependencyProperty<ICommand> newRegionCommand;
+		private readonly DependencyProperty<Token> child;
 
-		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
-		public DocumentCursorViewModel DocumentCursor { get { return documentCursor.Value; } }
-
-		public DocumentViewModel ()
-		{
-			regions = BuildProperty<ObservableCollection<MathRegionViewModel>> ("Regions");
-			regions.Value = new ObservableCollection<MathRegionViewModel> ();
-
-			documentCursor = BuildProperty<DocumentCursorViewModel> ("DocumentCursor");
-			documentCursor.Value = new DocumentCursorViewModel ();
-
-			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
-			newRegionCommand.Value = new DelegateCommand (() => NewRegion ());
+		public Token Child { 
+			get { return child.Value; } 
+			set{ child.Value = value; }
 		}
 
-		private void NewRegion ()
+		public ResultToken ()
 		{
-			var region = new MathRegionViewModel ();
+			child = BuildProperty<Token> ("Child");
+			child.DependencyPropertyValueChanged += HandleValueChanged;
 
-			region.X = DocumentCursor.X;
-			region.Y = DocumentCursor.Y;
+			Child = new TextToken ();
+		}
 
-			Regions.Add (region);
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			Child = newToken;
 		}
 	}
 }

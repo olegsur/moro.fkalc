@@ -1,5 +1,5 @@
 //
-// MultiplicationToken.cs
+// DocumentCursorViewModel.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,13 +24,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using fkalc.UI.Framework;
 
-namespace fkalc.ViewModels.MathRegion.Tokens
+namespace fkalc.UI.ViewModels
 {
-	public class MultiplicationToken : Token
+	public class DocumentCursorViewModel : DependencyObject
 	{
-		public MultiplicationToken ()
+		private readonly DependencyProperty<double> x;
+		private readonly DependencyProperty<double> y;
+
+		public double X { 
+			get { return x.Value; }
+			set { x.Value = value; }
+		}
+
+		public double Y { 
+			get { return y.Value; }
+			set { y.Value = value; }
+		}
+
+		public DocumentCursorViewModel ()
 		{
+			x = BuildProperty<double> ("X");
+			y = BuildProperty<double> ("Y");
 		}
 	}
 }

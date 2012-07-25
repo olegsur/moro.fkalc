@@ -64,9 +64,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\fkalc.ViewModels\fkalc.ViewModels.csproj">
+    <ProjectReference Include="..\fkalc.UI.ViewModels\fkalc.UI.ViewModels.csproj">
       <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
-      <Name>fkalc.ViewModels</Name>
+      <Name>fkalc.UI.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

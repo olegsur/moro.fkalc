@@ -28,7 +28,7 @@ using System;
 using Gtk;
 using fkalc.UI;
 using fkalc.UI.Framework;
-using fkalc.ViewModels;
+using fkalc.UI.ViewModels;
 
 public partial class MainWindow: Gtk.Window
 {	

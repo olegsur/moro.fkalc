@@ -25,8 +25,8 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
-using fkalc.ViewModels.MathRegion;
-using fkalc.ViewModels.MathRegion.Tokens;
+using fkalc.UI.ViewModels.MathRegion;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.Core
 {

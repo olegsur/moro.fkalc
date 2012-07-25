@@ -1,5 +1,5 @@
 //
-// ContainerToken.cs
+// PlusToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,17 +24,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Collections.Generic;
 
-namespace fkalc.ViewModels.MathRegion.Tokens
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public abstract class ContainerToken : Token
+	public class PlusToken : Token
 	{
-		public ContainerToken ()
+		public PlusToken ()
 		{
 		}
-
-		public abstract void Replace (Token oldToken, Token newToken);
 	}
 }
 

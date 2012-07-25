@@ -26,8 +26,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using fkalc.ViewModels.MathRegion.Tokens;
-using fkalc.ViewModels.MathRegion;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
+using fkalc.UI.ViewModels.MathRegion;
 
 namespace fkalc.UI
 {

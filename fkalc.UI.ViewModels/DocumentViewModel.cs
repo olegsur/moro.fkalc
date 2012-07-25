@@ -1,5 +1,5 @@
 //
-// DocumentCursorViewModel.cs
+// DocumentViewModel.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,28 +25,39 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
+using fkalc.UI.ViewModels.MathRegion;
 
-namespace fkalc.ViewModels
+namespace fkalc.UI.ViewModels
 {
-	public class DocumentCursorViewModel : DependencyObject
+	public class DocumentViewModel : DependencyObject
 	{
-		private readonly DependencyProperty<double> x;
-		private readonly DependencyProperty<double> y;
+		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
+		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
+		private readonly DependencyProperty<ICommand> newRegionCommand;
 
-		public double X { 
-			get { return x.Value; }
-			set { x.Value = value; }
-		}
+		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
+		public DocumentCursorViewModel DocumentCursor { get { return documentCursor.Value; } }
 
-		public double Y { 
-			get { return y.Value; }
-			set { y.Value = value; }
-		}
-
-		public DocumentCursorViewModel ()
+		public DocumentViewModel ()
 		{
-			x = BuildProperty<double> ("X");
-			y = BuildProperty<double> ("Y");
+			regions = BuildProperty<ObservableCollection<MathRegionViewModel>> ("Regions");
+			regions.Value = new ObservableCollection<MathRegionViewModel> ();
+
+			documentCursor = BuildProperty<DocumentCursorViewModel> ("DocumentCursor");
+			documentCursor.Value = new DocumentCursorViewModel ();
+
+			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
+			newRegionCommand.Value = new DelegateCommand (() => NewRegion ()); 
+		}
+
+		private void NewRegion ()
+		{
+			var region = new MathRegionViewModel ();
+
+			region.X = DocumentCursor.X;
+			region.Y = DocumentCursor.Y;
+
+			Regions.Add (region);
 		}
 	}
 }

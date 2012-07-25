@@ -90,7 +90,6 @@
     <Compile Include="Areas\TokenAreaConverter.cs" />
     <Compile Include="Areas\ResultArea.cs" />
     <Compile Include="Input\ResultProcessor.cs" />
-    <Compile Include="Actions\ResultAction.cs" />
     <Compile Include="Areas\FractionArea.cs" />
     <Compile Include="Input\LeftProcessor.cs" />
     <Compile Include="Actions\LeftAction.cs" />
@@ -112,9 +111,9 @@
       <Project>{11ECCE85-EC24-4912-8F45-33BAB6AD4251}</Project>
       <Name>fkalc.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\fkalc.ViewModels\fkalc.ViewModels.csproj">
+    <ProjectReference Include="..\fkalc.UI.ViewModels\fkalc.UI.ViewModels.csproj">
       <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
-      <Name>fkalc.ViewModels</Name>
+      <Name>fkalc.UI.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

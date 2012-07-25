@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B196D221-ACC3-42F3-9666-51C5877407CA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>fkalc.ViewModels</RootNamespace>
-    <AssemblyName>fkalc.ViewModels</AssemblyName>
+    <RootNamespace>fkalc.UI.ViewModels</RootNamespace>
+    <AssemblyName>fkalc.UI.ViewModels</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

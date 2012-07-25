@@ -1,5 +1,5 @@
 //
-// MinusToken.cs
+// AssignmentToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.ViewModels.MathRegion.Tokens
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class MinusToken : Token
+	public class AssignmentToken : Token
 	{
-		public MinusToken ()
+		public AssignmentToken ()
 		{
 		}
 	}

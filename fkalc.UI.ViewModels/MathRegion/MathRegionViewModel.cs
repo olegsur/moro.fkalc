@@ -25,11 +25,11 @@
 // THE SOFTWARE.
 
 using System;
-using fkalc.ViewModels.MathRegion.Tokens;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
 using fkalc.UI.Framework;
-using fkalc.ViewModels.MathRegion.Actions;
+using fkalc.UI.ViewModels.MathRegion.Actions;
 
-namespace fkalc.ViewModels.MathRegion
+namespace fkalc.UI.ViewModels.MathRegion
 {
 	public class MathRegionViewModel : DependencyObject
 	{	

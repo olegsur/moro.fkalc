@@ -1,5 +1,5 @@
 //
-// AssemblyInfo.cs
+// ContainerToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,30 +23,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
 
-// Information about this assembly is defined by the following attributes. 
-// Change them to the values specific to your project.
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
+{
+	public abstract class ContainerToken : Token
+	{
+		public ContainerToken ()
+		{
+		}
 
-[assembly: AssemblyTitle("fkalc.Tokens")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Oleg Sur")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-
-// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
-// The form "{Major}.{Minor}.*" will automatically update the build and revision,
-// and "{Major}.{Minor}.{Build}.*" will update just the revision.
-
-[assembly: AssemblyVersion("1.0.*")]
-
-// The following attributes are used to specify the signing key for the assembly, 
-// if desired. See the Mono documentation for more information about signing.
-
-//[assembly: AssemblyDelaySign(false)]
-//[assembly: AssemblyKeyFile("")]
+		public abstract void Replace (Token oldToken, Token newToken);
+	}
+}
 

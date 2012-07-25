@@ -1,5 +1,5 @@
 //
-// PlusToken.cs
+// DelegateCommand.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,13 +24,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using fkalc.UI.Framework;
 
-namespace fkalc.ViewModels.MathRegion.Tokens
+namespace fkalc.UI.ViewModels
 {
-	public class PlusToken : Token
+	public class DelegateCommand : ICommand
 	{
-		public PlusToken ()
+		private Action execute;
+
+		public DelegateCommand (Action execute)
 		{
+			if (execute == null)
+				throw new ArgumentNullException ("execute");
+
+			this.execute = execute;
+		}
+
+		public void Execute ()
+		{
+			execute ();
 		}
 	}
 }
