@@ -25,13 +25,63 @@
 // THE SOFTWARE.
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace fkalc.Core
 {
 	public class Evaluator
 	{
+		private Dictionary<string, double> variables = new Dictionary<string, double> ();
+
 		public Evaluator ()
 		{
+		}
+
+		public void Evaluate (Statement statement)
+		{
+			if (statement is ExpressionStatement) {
+				var s = statement as ExpressionStatement;
+				var result = Evaluate (s.Expression);
+
+				if (s.Location != null && s.Location.Region != null)
+					s.Location.Region.SetResult (result.ToString ());
+			}
+
+			if (statement is StatementBlock) {
+				foreach (var s in (statement as StatementBlock).Children) {
+					Evaluate (s);
+				}
+			}
+
+			if (statement is Assignment) {
+				var s = statement as Assignment;
+
+				var result = Evaluate (s.Expression);
+
+				variables [s.Id] = result;
+			}
+		}
+
+		private double Evaluate (Expression expression)
+		{
+			if (expression is Const)
+				return (expression as Const).Value;
+			if (expression is Addition)
+				return Evaluate ((expression as Addition).Left) + Evaluate ((expression as Addition).Right);
+			if (expression is Subtraction)
+				return Evaluate ((expression as Subtraction).Left) - Evaluate ((expression as Subtraction).Right);
+			if (expression is Multiplication)
+				return Evaluate ((expression as Multiplication).Left) * Evaluate ((expression as Multiplication).Right);
+			if (expression is Division)
+				return Evaluate ((expression as Division).Left) / Evaluate ((expression as Division).Right);
+			if (expression is Variable) {
+				var variable = expression as Variable;
+				var value = 0d;
+				variables.TryGetValue (variable.Id, out value);
+
+				return value;
+			}
+			return 0;
 		}
 	}
 }

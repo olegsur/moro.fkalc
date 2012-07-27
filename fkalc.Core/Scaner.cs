@@ -65,9 +65,10 @@ namespace fkalc.Core
 			if (token is ITextToken) {
 				var t = token as ITextToken;
 				double value;
-				double.TryParse (t.Text, out value);
-
-				yield return new NumberCoreToken (value) { Location = new Location(region) };
+				if (double.TryParse (t.Text, out value))
+					yield return new NumberCoreToken (value) { Location = new Location(region) };
+				else
+					yield return new IdentifierCoreToken (t.Text) { Location = new Location(region) };
 			}
 
 			if (token is IPlusToken)
@@ -103,7 +104,7 @@ namespace fkalc.Core
 			}
 
 			if (token is IAssignmentToken) {
-				yield return new AssignmentCoreToken ();
+				yield return new AssignmentCoreToken () { Location = new Location(region) };
 			}
 		}
 	}

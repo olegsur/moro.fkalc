@@ -1,5 +1,5 @@
 //
-// Engine.cs
+// IdentifierCoreToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,25 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using fkalc.UI.Common.MathRegion;
 
 namespace fkalc.Core
 {
-	public class Engine
+	public class IdentifierCoreToken : CoreToken
 	{
-		public Engine ()
+		public string Id { get; private set; }
+
+		public IdentifierCoreToken (string id)
 		{
-		}
-
-		public void Evaluate (IEnumerable<IMathRegionViewModel> tokens)
-		{
-			var coreTokens = new Scaner (tokens).Scan ().ToList ();
-
-			var tree = new Parser (coreTokens).ParseStatementBlock ();
-
-			new Evaluator ().Evaluate (tree);
+			Id = id;
 		}
 	}
 }

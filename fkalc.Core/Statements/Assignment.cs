@@ -29,8 +29,13 @@ namespace fkalc.Core
 {
 	public class Assignment : Statement
 	{
-		public Assignment (Expression left, Expression right)
+		public string Id { get; private set; }
+		public Expression Expression { get; private set; }
+
+		public Assignment (string id, Expression expression)
 		{
+			Id = id;
+			Expression = expression;
 		}
 	}
 }

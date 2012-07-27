@@ -62,6 +62,8 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Statements\ExpressionStatement.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="CoreTokens\IdentifierCoreToken.cs" />
+    <Compile Include="Expressions\Variable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

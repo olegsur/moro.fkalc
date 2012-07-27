@@ -55,30 +55,27 @@ namespace fkalc.Core
 
 		private Statement ParseExpressionStatement ()
 		{
+			Statement result = null;
+
 			var expression = ParseExpression ();
+
+			if (enumerator.Current is AssignmentCoreToken) {
+				if (expression is Variable) {
+					enumerator.MoveNext ();
+					var right = ParseExpression ();
+
+					var variable = expression as Variable;
+
+					result = new Assignment (variable.Id, right) { Location = expression.Location };
+				}
+			} else {
+				result = new ExpressionStatement (expression) { Location = expression.Location };
+			}
 
 			Expect<SemicolonCoreToken> ();
 
-			return new ExpressionStatement (expression) { Location = expression.Location };
+			return result;
 		}
-
-//		private Statement ParseAssinmentStatement ()
-//		{
-//			var left = ParseExpression ();
-//
-//			var opt = enumerator.Current;
-//
-//			if (opt is AssignmentCoreToken) {
-//				enumerator.MoveNext ();
-//				var right = ParseExpression ();
-//
-//				Expect<SemicolonCoreToken> ();
-//
-//				return new Assignment (left, right);
-//			}
-//
-//			return new ExpressionStatement (left);
-//		}
 
 		private Expression ParseExpression ()
 		{
@@ -159,6 +156,17 @@ namespace fkalc.Core
 
 			if (enumerator.Current is OpenBracketCoreToken)
 				return ParseTuple ();
+
+			return ParseIdentifier ();
+		}
+
+		private Expression ParseIdentifier ()
+		{
+			if (enumerator.Current is IdentifierCoreToken) {
+				var token = enumerator.Current as IdentifierCoreToken;
+				enumerator.MoveNext ();
+				return new Variable (token.Id) { Location = token.Location };
+			}
 
 			return null;
 		}
