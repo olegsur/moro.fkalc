@@ -1,5 +1,5 @@
 //
-// StatementExpression.cs
+// IMinusToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,16 +25,10 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.Core
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class StatementExpression : Statement
+	public interface IMinusToken : IToken
 	{
-		public Expression Expression { get; private set; }
-
-		public StatementExpression (Expression expression)
-		{
-			Expression = expression;
-		}
 	}
 }
 

@@ -1,5 +1,5 @@
 //
-// ResultAction.cs
+// IToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,38 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
-using fkalc.Core;
 
-namespace fkalc.UI.ViewModels.MathRegion.Actions
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class ResultAction
+	public interface IToken
 	{
-		private MathRegionViewModel Region { get; set; }
-		
-		public ResultAction (MathRegionViewModel region)
-		{
-			if (region == null)
-				throw new ArgumentNullException ("region");
-
-			Region = region;
-		}
-		
-		public void Do ()
-		{
-			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
-				return;
-
-			var result = new ResultToken ();			
-
-			Region.Root.Add (result);
-
-			var regions = Region.Document.Regions.GroupBy (r => r.Y).OrderBy (g => g.Key)
-				.SelectMany (g => g.GroupBy (r => r.X).OrderBy (o => o.Key).SelectMany (o => o.ToList ())).ToArray ();
-
-			new Engine ().Evaluate (regions);
-		}
 	}
 }
 

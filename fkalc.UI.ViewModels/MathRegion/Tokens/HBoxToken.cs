@@ -29,10 +29,11 @@ using fkalc.UI.Framework;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class HBoxToken : ContainerToken
+	public class HBoxToken : ContainerToken, IHBoxToken
 	{
 		private readonly DependencyProperty<ObservableCollection<Token>> tokens;
 
@@ -93,6 +94,13 @@ namespace fkalc.UI.ViewModels.MathRegion.Tokens
 			}
 
 		}
+	
+		IEnumerable<IToken> IHBoxToken.Tokens {
+			get {
+				return Tokens.Cast<IToken> ().ToArray ();
+			}
+		}
+
 	}
 }
 

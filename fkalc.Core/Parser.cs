@@ -39,7 +39,30 @@ namespace fkalc.Core
 			enumerator.MoveNext ();
 		}
 
-		public Statement ParseAssinmentStatement ()
+		public StatementBlock ParseStatementBlock ()
+		{
+			var result = new StatementBlock ();
+			Expect<StartBlockCoreToken> ();
+
+			while (enumerator.Current is EndBlockCoreToken == false) {
+				result.Add (ParseExpressionStatement ());
+			}
+
+			Expect<EndBlockCoreToken> ();
+
+			return result;
+		}
+
+		private Statement ParseExpressionStatement ()
+		{
+			var expression = ParseExpression ();
+
+			Expect<SemicolonCoreToken> ();
+
+			return new ExpressionStatement (expression);
+		}
+
+		private Statement ParseAssinmentStatement ()
 		{
 			var left = ParseExpression ();
 
@@ -54,10 +77,10 @@ namespace fkalc.Core
 				return new Assignment (left, right);
 			}
 
-			return new StatementExpression (left);
+			return new ExpressionStatement (left);
 		}
 
-		public Expression ParseExpression ()
+		private Expression ParseExpression ()
 		{
 			var left = ParseAdditiveExpression ();
 			return left;

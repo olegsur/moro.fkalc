@@ -56,22 +56,22 @@
     <Compile Include="CoreTokens\AssignmentCoreToken.cs" />
     <Compile Include="Statements\Assignment.cs" />
     <Compile Include="Statements\Statement.cs" />
-    <Compile Include="Statements\StatementExpression.cs" />
     <Compile Include="Statements\StatementBlock.cs" />
     <Compile Include="CoreTokens\StartBlockCoreToken.cs" />
     <Compile Include="CoreTokens\EndBlockCoreToken.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="Statements\ExpressionStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\fkalc.UI.ViewModels\fkalc.UI.ViewModels.csproj">
-      <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
-      <Name>fkalc.UI.ViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />
     <Folder Include="CoreTokens\" />
     <Folder Include="Statements\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fkalc.UI.Common\fkalc.UI.Common.csproj">
+      <Project>{7F86C0C8-0B78-482B-AC9F-5C660AA93001}</Project>
+      <Name>fkalc.UI.Common</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

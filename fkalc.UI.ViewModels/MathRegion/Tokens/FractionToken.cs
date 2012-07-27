@@ -26,10 +26,11 @@
 using System;
 using fkalc.UI.Framework;
 using System.Collections.Generic;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class FractionToken : ContainerToken
+	public class FractionToken : ContainerToken, IFractionToken
 	{
 		private readonly DependencyProperty<Token> dividend;
 		private readonly DependencyProperty<Token> divisor;
@@ -73,6 +74,20 @@ namespace fkalc.UI.ViewModels.MathRegion.Tokens
 			if (oldToken == Divisor)
 				Divisor = newToken;
 		}
+
+		IToken IFractionToken.Dividend {
+			get {
+				return Dividend;
+			}
+		}
+
+		IToken IFractionToken.Divisor {
+			get {
+				return Divisor;
+			}
+		}
+
+
 	}
 }
 

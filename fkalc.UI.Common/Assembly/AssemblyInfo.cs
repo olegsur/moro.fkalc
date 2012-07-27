@@ -1,5 +1,5 @@
 //
-// ResultAction.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,39 +23,30 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using System.Linq;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
-using fkalc.Core;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace fkalc.UI.ViewModels.MathRegion.Actions
-{
-	public class ResultAction
-	{
-		private MathRegionViewModel Region { get; set; }
-		
-		public ResultAction (MathRegionViewModel region)
-		{
-			if (region == null)
-				throw new ArgumentNullException ("region");
+// Information about this assembly is defined by the following attributes. 
+// Change them to the values specific to your project.
 
-			Region = region;
-		}
-		
-		public void Do ()
-		{
-			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
-				return;
+[assembly: AssemblyTitle("fkalc.UI.Common")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Oleg Sur")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
-			var result = new ResultToken ();			
+// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
+// The form "{Major}.{Minor}.*" will automatically update the build and revision,
+// and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-			Region.Root.Add (result);
+[assembly: AssemblyVersion("1.0.*")]
 
-			var regions = Region.Document.Regions.GroupBy (r => r.Y).OrderBy (g => g.Key)
-				.SelectMany (g => g.GroupBy (r => r.X).OrderBy (o => o.Key).SelectMany (o => o.ToList ())).ToArray ();
+// The following attributes are used to specify the signing key for the assembly, 
+// if desired. See the Mono documentation for more information about signing.
 
-			new Engine ().Evaluate (regions);
-		}
-	}
-}
+//[assembly: AssemblyDelaySign(false)]
+//[assembly: AssemblyKeyFile("")]
 

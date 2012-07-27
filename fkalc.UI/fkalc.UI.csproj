@@ -107,10 +107,6 @@
       <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
       <Name>fkalc.UI.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\fkalc.Core\fkalc.Core.csproj">
-      <Project>{11ECCE85-EC24-4912-8F45-33BAB6AD4251}</Project>
-      <Name>fkalc.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\fkalc.UI.ViewModels\fkalc.UI.ViewModels.csproj">
       <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
       <Name>fkalc.UI.ViewModels</Name>

@@ -24,10 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class PlusToken : Token
+	public class PlusToken : Token, IPlusToken
 	{
 		public PlusToken ()
 		{

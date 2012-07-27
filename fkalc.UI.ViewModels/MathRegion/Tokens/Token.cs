@@ -25,10 +25,11 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public abstract class Token : DependencyObject
+	public abstract class Token : DependencyObject, IToken
 	{
 		public ContainerToken Parent { get; set; }
 

@@ -28,11 +28,15 @@ using System;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 using fkalc.UI.Framework;
 using fkalc.UI.ViewModels.MathRegion.Actions;
+using fkalc.UI.Common.MathRegion;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion
 {
-	public class MathRegionViewModel : DependencyObject
+	public class MathRegionViewModel : DependencyObject, IMathRegionViewModel
 	{	
+		public DocumentViewModel Document { get; private set; }
+
 		private readonly DependencyProperty<double> x;
 		private readonly DependencyProperty<double> y;
 		private readonly DependencyProperty<HBoxToken> root;
@@ -60,8 +64,10 @@ namespace fkalc.UI.ViewModels.MathRegion
 			private set { selection.Value = value; }
 		}
 
-		public MathRegionViewModel ()
+		public MathRegionViewModel (DocumentViewModel document)
 		{
+			Document = document;
+
 			x = BuildProperty<double> ("X");
 			y = BuildProperty<double> ("Y");
 			root = BuildProperty<HBoxToken> ("Root");
@@ -76,11 +82,12 @@ namespace fkalc.UI.ViewModels.MathRegion
 			var token = new TextToken ();
 			Root.Add (token);
 
-			Selection.SelectedToken = token;
-		
-
-			                                     
+			Selection.SelectedToken = token;     
 		}
 
+		IToken IMathRegionViewModel.Root {
+			get { return Root; }
+		}
+		
 	}
 }

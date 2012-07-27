@@ -26,10 +26,11 @@
 using System;
 using fkalc.UI.Framework;
 using fkalc.UI.ViewModels.MathRegion;
+using fkalc.UI.Common;
 
 namespace fkalc.UI.ViewModels
 {
-	public class DocumentViewModel : DependencyObject
+	public class DocumentViewModel : DependencyObject, IDocumentViewModel
 	{
 		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
 		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
@@ -52,7 +53,7 @@ namespace fkalc.UI.ViewModels
 
 		private void NewRegion ()
 		{
-			var region = new MathRegionViewModel ();
+			var region = new MathRegionViewModel (this);
 
 			region.X = DocumentCursor.X;
 			region.Y = DocumentCursor.Y;

@@ -25,10 +25,11 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class TextToken : Token
+	public class TextToken : Token, ITextToken
 	{		
 		private readonly DependencyProperty<string> text;
 		private readonly DependencyProperty<string> fontFamily;

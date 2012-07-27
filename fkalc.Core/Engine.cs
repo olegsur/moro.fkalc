@@ -26,7 +26,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using fkalc.UI.ViewModels.MathRegion;
+using fkalc.UI.Common.MathRegion;
 
 namespace fkalc.Core
 {
@@ -36,21 +36,27 @@ namespace fkalc.Core
 		{
 		}
 
-		public void Evaluate (IEnumerable<MathRegionViewModel> tokens)
+		public void Evaluate (IEnumerable<IMathRegionViewModel> tokens)
 		{
 			var coreTokens = new Scaner (tokens).Scan ();
 
-			var tree = new Parser (coreTokens).ParseAssinmentStatement ();
+			var tree = new Parser (coreTokens).ParseStatementBlock ();
 
 			var result = Evaluate (tree);
 
 			//resultToken.Child = new TextToken () {Text = result.ToString()};
 		}
 
-		public double Evaluate (Statement statement)
+		private double Evaluate (Statement statement)
 		{
-			if (statement is StatementExpression)
-				return Evaluate ((statement as StatementExpression).Expression);
+			if (statement is ExpressionStatement)
+				return Evaluate ((statement as ExpressionStatement).Expression);
+
+			if (statement is StatementBlock) {
+				foreach (var s in (statement as StatementBlock).Children) {
+					Evaluate (s);
+				}
+			}
 
 			return 0;
 		}

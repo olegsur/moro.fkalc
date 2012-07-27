@@ -25,16 +25,16 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
-using fkalc.UI.ViewModels.MathRegion;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
+using fkalc.UI.Common.MathRegion;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.Core
 {
 	public class Scaner
 	{
-		private IEnumerable<MathRegionViewModel> Tokens { get; set; }
+		private IEnumerable<IMathRegionViewModel> Tokens { get; set; }
 
-		public Scaner (IEnumerable<MathRegionViewModel> tokens)
+		public Scaner (IEnumerable<IMathRegionViewModel> tokens)
 		{
 			Tokens = tokens;
 		}
@@ -43,12 +43,14 @@ namespace fkalc.Core
 		{
 			yield return new StartBlockCoreToken ();
 
-			Scan (Tokens);
+			foreach (var token in Scan (Tokens)) {
+				yield return token;
+			}
 
 			yield return new EndBlockCoreToken ();
 		}
 
-		private  IEnumerable<CoreToken> Scan (IEnumerable<MathRegionViewModel> tokens)
+		private  IEnumerable<CoreToken> Scan (IEnumerable<IMathRegionViewModel> tokens)
 		{
 			foreach (var mathToken in tokens) {
 				foreach (var coreToken in Scan(mathToken.Root)) {
@@ -58,27 +60,27 @@ namespace fkalc.Core
 			}
 		}
 
-		private IEnumerable<CoreToken> Scan (Token token)
+		private IEnumerable<CoreToken> Scan (IToken token)
 		{
-			if (token is TextToken) {
-				var t = token as TextToken;
+			if (token is ITextToken) {
+				var t = token as ITextToken;
 				double value;
 				double.TryParse (t.Text, out value);
 
 				yield return new NumberCoreToken (value);
 			}
 
-			if (token is PlusToken)
+			if (token is IPlusToken)
 				yield return new PlusCoreToken ();
 
-			if (token is MinusToken)
+			if (token is IMinusToken)
 				yield return new MinusCoreToken ();
 
-			if (token is MultiplicationToken)
+			if (token is IMultiplicationToken)
 				yield return new MultiplicationCoreToken ();
 
-			if (token is FractionToken) {
-				var fraction = token as FractionToken;
+			if (token is IFractionToken) {
+				var fraction = token as IFractionToken;
 
 				yield return new OpenBracketCoreToken ();
 				foreach (var coreToken in Scan(fraction.Dividend))
@@ -93,14 +95,14 @@ namespace fkalc.Core
 				yield return new CloseBracketCoreToken ();
 			}
 
-			if (token is HBoxToken) {
-				var box = token as HBoxToken;
+			if (token is IHBoxToken) {
+				var box = token as IHBoxToken;
 				foreach (var t in box.Tokens)
 					foreach (var coreToken in Scan(t))
 						yield return coreToken;
 			}
 
-			if (token is AssignmentToken) {
+			if (token is IAssignmentToken) {
 				yield return new AssignmentCoreToken ();
 			}
 		}
