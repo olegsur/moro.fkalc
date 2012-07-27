@@ -29,7 +29,7 @@ namespace fkalc.Core
 {
 	public class CoreToken
 	{
+		public Location Location { get; set; }
 	}
-
 }
 

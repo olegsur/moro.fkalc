@@ -30,6 +30,7 @@ using fkalc.UI.Framework;
 using fkalc.UI.ViewModels.MathRegion.Actions;
 using fkalc.UI.Common.MathRegion;
 using fkalc.UI.Common.MathRegion.Tokens;
+using System.Linq;
 
 namespace fkalc.UI.ViewModels.MathRegion
 {
@@ -87,7 +88,16 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 		IToken IMathRegionViewModel.Root {
 			get { return Root; }
+		}		
+
+		public void SetResult (string result)
+		{
+			var resultToken = Root.Tokens.OfType<ResultToken> ().FirstOrDefault ();
+
+			if (resultToken == null)
+				return;
+
+			resultToken.Child = new TextToken () { Text = result };
 		}
-		
 	}
 }

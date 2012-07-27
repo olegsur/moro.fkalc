@@ -42,23 +42,24 @@ namespace fkalc.Core
 
 			var tree = new Parser (coreTokens).ParseStatementBlock ();
 
-			var result = Evaluate (tree);
-
-			//resultToken.Child = new TextToken () {Text = result.ToString()};
+			Evaluate (tree);
 		}
 
-		private double Evaluate (Statement statement)
+		private void Evaluate (Statement statement)
 		{
-			if (statement is ExpressionStatement)
-				return Evaluate ((statement as ExpressionStatement).Expression);
+			if (statement is ExpressionStatement) {
+				var s = statement as ExpressionStatement;
+				var result = Evaluate (s.Expression);
+
+				if (s.Location != null && s.Location.Region != null)
+					s.Location.Region.SetResult (result.ToString ());
+			}
 
 			if (statement is StatementBlock) {
 				foreach (var s in (statement as StatementBlock).Children) {
 					Evaluate (s);
 				}
 			}
-
-			return 0;
 		}
 
 		private double Evaluate (Expression expression)

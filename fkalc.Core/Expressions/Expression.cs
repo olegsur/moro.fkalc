@@ -29,6 +29,8 @@ namespace fkalc.Core
 {
 	public abstract class Expression
 	{
+		public Location Location { get; set; }
+
 		public Expression ()
 		{
 		}

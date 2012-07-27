@@ -30,6 +30,7 @@ namespace fkalc.Core
 	public abstract class Statement
 	{
 		public StatementBlock Parent { get; set; }
+		public Location Location { get ; set; }
 
 		public Statement ()
 		{

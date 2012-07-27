@@ -59,26 +59,26 @@ namespace fkalc.Core
 
 			Expect<SemicolonCoreToken> ();
 
-			return new ExpressionStatement (expression);
+			return new ExpressionStatement (expression) { Location = expression.Location };
 		}
 
-		private Statement ParseAssinmentStatement ()
-		{
-			var left = ParseExpression ();
-
-			var opt = enumerator.Current;
-
-			if (opt is AssignmentCoreToken) {
-				enumerator.MoveNext ();
-				var right = ParseExpression ();
-
-				Expect<SemicolonCoreToken> ();
-
-				return new Assignment (left, right);
-			}
-
-			return new ExpressionStatement (left);
-		}
+//		private Statement ParseAssinmentStatement ()
+//		{
+//			var left = ParseExpression ();
+//
+//			var opt = enumerator.Current;
+//
+//			if (opt is AssignmentCoreToken) {
+//				enumerator.MoveNext ();
+//				var right = ParseExpression ();
+//
+//				Expect<SemicolonCoreToken> ();
+//
+//				return new Assignment (left, right);
+//			}
+//
+//			return new ExpressionStatement (left);
+//		}
 
 		private Expression ParseExpression ()
 		{
@@ -97,7 +97,7 @@ namespace fkalc.Core
 					enumerator.MoveNext ();
 					var right = ParseMultiplicativeExpression ();
 
-					left = new Addition (left, right);
+					left = new Addition (left, right) { Location = opt.Location };
 					continue;
 				}
 
@@ -105,7 +105,7 @@ namespace fkalc.Core
 					enumerator.MoveNext ();
 					var right = ParseMultiplicativeExpression ();
 
-					left = new Subtraction (left, right);
+					left = new Subtraction (left, right) { Location = opt.Location };
 					continue;
 				}
 
@@ -126,7 +126,7 @@ namespace fkalc.Core
 					enumerator.MoveNext ();
 					var right = ParseUnaryExpression ();
 
-					left = new Multiplication (left, right);
+					left = new Multiplication (left, right) { Location = opt.Location };
 					continue;
 				}
 
@@ -134,7 +134,7 @@ namespace fkalc.Core
 					enumerator.MoveNext ();
 					var right = ParseUnaryExpression ();
 
-					left = new Division (left, right);
+					left = new Division (left, right) { Location = opt.Location };
 					continue;
 				}
 
@@ -151,7 +151,8 @@ namespace fkalc.Core
 		private Expression ParsePrimaryExpression ()
 		{
 			if (enumerator.Current is NumberCoreToken) {
-				var result = new Const ((enumerator.Current as NumberCoreToken).Value);
+				var token = enumerator.Current as NumberCoreToken;
+				var result = new Const (token.Value) { Location = token.Location };
 				enumerator.MoveNext ();
 				return result;
 			}

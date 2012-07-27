@@ -1,5 +1,5 @@
 //
-// IMathRegionViewModel.cs
+// Location.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,15 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Common.MathRegion.Tokens;
+using fkalc.UI.Common.MathRegion;
 
-namespace fkalc.UI.Common.MathRegion
+namespace fkalc.Core
 {
-	public interface IMathRegionViewModel
+	public class Location
 	{
-		IToken Root { get; }
+		public IMathRegionViewModel Region { get; private set; }
 
-		void SetResult (string result);
+		public Location (IMathRegionViewModel region)
+		{
+			Region = region;
+		}
 	}
 }
 
