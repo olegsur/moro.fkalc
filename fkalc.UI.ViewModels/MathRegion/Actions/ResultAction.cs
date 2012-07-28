@@ -44,12 +44,15 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 		
 		public void Do ()
 		{
-			if (Region.Root.Tokens.OfType<ResultToken> ().Any ())
-				return;
+			var result = Region.Root.Tokens.OfType<ResultToken> ().FirstOrDefault ();
 
-			var result = new ResultToken ();			
+			if (result == null) {
+				result = new ResultToken ();			
 
-			Region.Root.Add (result);
+				Region.Root.Add (result);
+			} else {
+				result.Child = new TextToken ();
+			}
 
 			var regions = Region.Document.Regions.GroupBy (r => r.Y).OrderBy (g => g.Key)
 				.SelectMany (g => g.GroupBy (r => r.X).OrderBy (o => o.Key).SelectMany (o => o.ToList ())).ToArray ();
