@@ -1,21 +1,21 @@
-// 
-// InsertCharacterAction.cs
-//  
+//
+// AssignmentAction.cs
+//
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
-// 
+//
 // Copyright (c) 2012 Oleg Sur
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,51 +23,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using System.Text.RegularExpressions;
+using System.Linq;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class InsertCharacterAction
+	public class AssignmentAction
 	{
-		private uint Key { get; set; }
-
-		private MathRegion Region { get; set; }
-
-		public InsertCharacterAction (uint key, MathRegion region)
+		private MathRegionViewModel Region { get; set; }
+		
+		public AssignmentAction (MathRegionViewModel region)
 		{
-			Key = key;
 			Region = region;
 		}
 		
-		public void Execute ()
+		public void Do ()
 		{
-			var name = Gdk.Keyval.Name (Key);
+			if (Region.Root.Tokens.OfType<AssignmentToken> ().Any () || Region.Root.Tokens.OfType<ResultToken> ().Any ())
+				return;
 
-			if (Region.Selection.SelectedToken is TextToken == false) {
-				var operation = new MultiplicationToken ();			
-				
-				new InsertHBinaryOperation (Region, operation).Execute ();
-			}
+			var token = new AssignmentToken ();			
+			var textToken = new TextToken ();
 
-			var textToken = Region.Selection.SelectedToken as TextToken;
+			Region.Root.Add (token);
+			Region.Root.Add (textToken);
 
-			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Regex.IsMatch (name, @"\D")) {
-				var operation = new MultiplicationToken ();			
-				
-				new InsertHBinaryOperation (Region, operation).Execute ();
-			}
-
-			textToken = Region.Selection.SelectedToken as TextToken;
-			
-			if (string.IsNullOrEmpty (textToken.Text))
-				textToken.Text += name [0];
-			else 
-				textToken.Text = textToken.Text.Insert (Region.Selection.Position, name [0].ToString ());
-
-			Region.Selection.Position++;
+			Region.Selection.SelectedToken = textToken;
 		}
 	}
 }
+

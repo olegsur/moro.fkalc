@@ -35,7 +35,7 @@ namespace fkalc.UI
 	{
 		private Border border;
 		private readonly DependencyProperty<Selection> selection;
-		private readonly DependencyProperty<ICommand> resultCommand;
+		private readonly DependencyProperty<ICommand> insertCharacterCommand;
 
 		public Selection Selection {
 			get { return selection.Value; }
@@ -47,8 +47,8 @@ namespace fkalc.UI
 			}
 		}
 
-		public ICommand ResultCommand {
-			get { return resultCommand.Value; }
+		public ICommand InsertCharacterCommand {
+			get { return insertCharacterCommand.Value; }
 		}
 		
 		public MathRegion ()
@@ -70,26 +70,59 @@ namespace fkalc.UI
 			MouseLeaveEvent += HandleMouseLeaveEvent;
 			
 			new InsertCharacterProcessor (this);
-			new DivideProcessor (this);
-			new PlusProcessor (this);
-			new MinusProcessor (this);
-			new MultiplicationProcessor (this);
-			new ResultProcessor (this);
-			new LeftProcessor (this);
-			new RightProcessor (this);
-			new AssignmentProcessor (this);
+
+			var plusKeyBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.PlusCommand", plusKeyBinding.GetProperty ("Command"));
+			plusKeyBinding.Gesture = new KeyGesture (Gdk.Key.plus);
+
+			var minusKeyBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.MinusCommand", minusKeyBinding.GetProperty ("Command"));
+			minusKeyBinding.Gesture = new KeyGesture (Gdk.Key.minus);
+
+			var multiplicationBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.MultiplicationCommand", multiplicationBinding.GetProperty ("Command"));
+			multiplicationBinding.Gesture = new KeyGesture (Gdk.Key.asterisk);
+
+			var divideBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.DivideCommand", divideBinding.GetProperty ("Command"));
+			divideBinding.Gesture = new KeyGesture (Gdk.Key.slash);
+
+			var assignmentBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.AssignmentCommand", assignmentBinding.GetProperty ("Command"));
+			assignmentBinding.Gesture = new KeyGesture (Gdk.Key.colon);
+
+			var resultKeyBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.ResultCommand", resultKeyBinding.GetProperty ("Command"));
+			resultKeyBinding.Gesture = new KeyGesture (Gdk.Key.equal);
+
+			var leftKeyBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.LeftCommand", leftKeyBinding.GetProperty ("Command"));
+			leftKeyBinding.Gesture = new KeyGesture (Gdk.Key.Left);
+
+			var rightKeyBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.RightCommand", rightKeyBinding.GetProperty ("Command"));
+			rightKeyBinding.Gesture = new KeyGesture (Gdk.Key.Right);
+
+			InputBindings.Add (plusKeyBinding);
+			InputBindings.Add (minusKeyBinding);
+			InputBindings.Add (multiplicationBinding);
+			InputBindings.Add (divideBinding);
+			InputBindings.Add (assignmentBinding);
+			InputBindings.Add (resultKeyBinding);
+			InputBindings.Add (leftKeyBinding);
+			InputBindings.Add (rightKeyBinding);
 
 			selection = BuildProperty<Selection> ("Selection");
-			resultCommand = BuildProperty<ICommand> ("ResultCommand");
+			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");
 
 			BindingOperations.SetBinding (this, "DataContext.Selection", GetProperty ("Selection"));
-			BindingOperations.SetBinding (this, "DataContext.ResultCommand", GetProperty ("ResultCommand"));
+			BindingOperations.SetBinding (this, "DataContext.InsertCharacterCommand", GetProperty ("InsertCharacterCommand"));
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
 		{
 			border.BorderColor = Colors.Red;
-			
+
 			Screen.QueueDraw ();
 		}
 		

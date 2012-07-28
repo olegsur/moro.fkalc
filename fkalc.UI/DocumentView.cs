@@ -94,7 +94,7 @@ namespace fkalc.UI
 				documentCursor.Visibility = Visibility.Collapsed;
 
 				if (NewRegionCommand != null)
-					NewRegionCommand.Execute ();
+					NewRegionCommand.Execute (null);
 			}		    
 		
 			Screen.QueueDraw ();

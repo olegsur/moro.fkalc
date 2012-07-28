@@ -31,6 +31,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gdk-sharp-2.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MathRegion\Tokens\AssignmentToken.cs" />
@@ -50,6 +54,17 @@
     <Compile Include="MathRegion\Selection.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MathRegion\Actions\ResultAction.cs" />
+    <Compile Include="MathRegion\Tokens\OpenBracketToken.cs" />
+    <Compile Include="MathRegion\Actions\PlusAction.cs" />
+    <Compile Include="MathRegion\Actions\InsertHBinaryOperation.cs" />
+    <Compile Include="MathRegion\Actions\InsertCharacterAction.cs" />
+    <Compile Include="MathRegion\Actions\MinusAction.cs" />
+    <Compile Include="MathRegion\Actions\MultiplicationAction.cs" />
+    <Compile Include="MathRegion\Actions\DivideAction.cs" />
+    <Compile Include="MathRegion\Actions\AssignmentAction.cs" />
+    <Compile Include="MathRegion\Actions\LeftAction.cs" />
+    <Compile Include="MathRegion\Actions\SelectionTreeBuilder.cs" />
+    <Compile Include="MathRegion\Actions\RightAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

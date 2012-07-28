@@ -28,11 +28,11 @@ using fkalc.UI.Framework;
 
 namespace fkalc.UI.ViewModels
 {
-	public class DelegateCommand : ICommand
+	public class DelegateCommand<T> : ICommand
 	{
-		private Action execute;
+		private Action<T> execute;
 
-		public DelegateCommand (Action execute)
+		public DelegateCommand (Action<T> execute)
 		{
 			if (execute == null)
 				throw new ArgumentNullException ("execute");
@@ -40,9 +40,9 @@ namespace fkalc.UI.ViewModels
 			this.execute = execute;
 		}
 
-		public void Execute ()
+		public void Execute (object parameter)
 		{
-			execute ();
+			execute ((T)parameter);
 		}
 	}
 }

@@ -42,8 +42,10 @@ namespace fkalc.UI
 		{
 			if (!NeedToProcess (args.Event.KeyValue))
 				return;
-			
-			new InsertCharacterAction (args.Event.KeyValue, Region).Execute ();
+
+			if (Region.InsertCharacterCommand != null) {
+				Region.InsertCharacterCommand.Execute (args.Event.KeyValue);
+			}
 		}
 		
 		private bool NeedToProcess (uint keyval)

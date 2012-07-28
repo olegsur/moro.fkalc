@@ -29,7 +29,7 @@ namespace fkalc.UI.Framework
 {
 	public interface ICommand
 	{
-		void Execute ();
+		void Execute (object parameter);
 	}
 }
 

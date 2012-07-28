@@ -27,18 +27,18 @@
 using System;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
 	public class DivideAction
 	{
-		private MathRegion Region { get; set; }
+		private MathRegionViewModel Region { get; set; }
 		
-		public DivideAction (MathRegion region)
+		public DivideAction (MathRegionViewModel region)
 		{
 			Region = region;
 		}
 		
-		public void Execute ()
+		public void Do ()
 		{
 			var parent = Region.Selection.SelectedToken.Parent;
 

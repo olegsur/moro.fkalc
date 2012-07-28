@@ -1,5 +1,5 @@
 // 
-// MultiplicationProcessor.cs
+// PlusAction.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,31 +25,24 @@
 // THE SOFTWARE.
 
 using System;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class MultiplicationProcessor
-	{		
-		private MathRegion Region { get; set; }
+	public class PlusAction
+	{
+		private MathRegionViewModel Region { get; set; }
 		
-		public MultiplicationProcessor (MathRegion region)
+		public PlusAction (MathRegionViewModel region)
 		{
-			Region = region;	
-			Region.KeyPressEvent += HandleKeyPressEvent;
+			Region = region;
 		}
+		
+		public void Do ()
+		{
+			var operation = new PlusToken ();			
 
-		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
-		{
-			if (!NeedToProcess (args))
-				return;
-			
-			new MultiplicationAction (Region).Execute ();
+			new InsertHBinaryOperation (Region, operation).Do ();				
 		}
-		
-		private bool NeedToProcess (Gtk.KeyPressEventArgs args)
-		{
-			return args.Event.Key == Gdk.Key.asterisk;	
-		}	
 	}
 }
-

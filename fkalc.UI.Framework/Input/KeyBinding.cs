@@ -1,21 +1,21 @@
-// 
-// PlusActionFactory.cs
-//  
+//
+// KeyBinding.cs
+//
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
-// 
+//
 // Copyright (c) 2012 Oleg Sur
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,27 +23,30 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
 
-namespace GMathCad.UI
+namespace fkalc.UI.Framework
 {
-	public class PlusActionFactory
+	public class KeyBinding : DependencyObject
 	{
-		public PlusActionFactory ()
-		{
+		private DependencyProperty<ICommand> command;
+
+		public ICommand Command { 
+			get { return command.Value;}
+			set { command.Value = value;}
 		}
-		
-		public bool IsSupported (uint keyval)
-		{
-			var name = Gdk.Keyval.Name (keyval);			
-			
-			return name.ToLower () == "plus";			
-		}
-		
-		public PlusAction Build (MathRegion region)
+
+		public KeyGesture Gesture { get; set; }
+
+		public KeyBinding ()
 		{			
-			return new PlusAction (region);
+			command = BuildProperty<ICommand> ("Command");
+		}
+
+		public KeyBinding (ICommand command, KeyGesture gesture) : this ()
+		{
+			Command = command;
+			Gesture = gesture;
 		}
 	}
 }

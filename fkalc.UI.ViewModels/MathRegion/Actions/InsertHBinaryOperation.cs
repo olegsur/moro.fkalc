@@ -27,20 +27,20 @@ using System;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 using fkalc.UI.ViewModels.MathRegion;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
 	public class InsertHBinaryOperation
 	{
-		private MathRegion Region { get; set; }
+		private MathRegionViewModel Region { get; set; }
 		private Token Operation { get; set; }
 
-		public InsertHBinaryOperation (MathRegion region, Token operation)
+		public InsertHBinaryOperation (MathRegionViewModel region, Token operation)
 		{
 			Region = region;
 			Operation = operation;
 		}
 
-		public void Execute ()
+		public void Do ()
 		{
 			var right = new TextToken ();
 

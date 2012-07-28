@@ -48,7 +48,7 @@ namespace fkalc.UI.ViewModels
 			documentCursor.Value = new DocumentCursorViewModel ();
 
 			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
-			newRegionCommand.Value = new DelegateCommand (() => NewRegion ()); 
+			newRegionCommand.Value = new DelegateCommand<object> (o => NewRegion ()); 
 		}
 
 		private void NewRegion ()

@@ -43,7 +43,15 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<HBoxToken> root;
 		private readonly DependencyProperty<Selection> selection;
 
+		private readonly DependencyProperty<ICommand> insertCharacterCommand;
 		private readonly DependencyProperty<ICommand> resultCommand;
+		private readonly DependencyProperty<ICommand> plusCommand;
+		private readonly DependencyProperty<ICommand> minusCommand;
+		private readonly DependencyProperty<ICommand> multiplicationCommand;
+		private readonly DependencyProperty<ICommand> divideCommand;
+		private readonly DependencyProperty<ICommand> assignmentCommand;
+		private readonly DependencyProperty<ICommand> leftCommand;
+		private readonly DependencyProperty<ICommand> rightCommand;
 
 		public double X { 
 			get { return x.Value; }
@@ -74,8 +82,32 @@ namespace fkalc.UI.ViewModels.MathRegion
 			root = BuildProperty<HBoxToken> ("Root");
 			selection = BuildProperty<Selection> ("Selection");
 
+			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");
+			insertCharacterCommand.Value = new DelegateCommand<uint> (o => new InsertCharacterAction (o, this).Do ());
+
+			plusCommand = BuildProperty<ICommand> ("PlusCommand");
+			plusCommand.Value = new DelegateCommand<object> (o => new PlusAction (this).Do ());
+
+			minusCommand = BuildProperty<ICommand> ("MinusCommand");
+			minusCommand.Value = new DelegateCommand<object> (o => new MinusAction (this).Do ());
+
+			multiplicationCommand = BuildProperty<ICommand> ("MultiplicationCommand");
+			multiplicationCommand.Value = new DelegateCommand<object> (o => new MultiplicationAction (this).Do ());
+			
+			divideCommand = BuildProperty<ICommand> ("DivideCommand");
+			divideCommand.Value = new DelegateCommand<object> (o => new DivideAction (this).Do ());
+
+			assignmentCommand = BuildProperty<ICommand> ("AssignmentCommand");
+			assignmentCommand.Value = new DelegateCommand<object> (o => new AssignmentAction (this).Do ());
+
 			resultCommand = BuildProperty<ICommand> ("ResultCommand");
-			resultCommand.Value = new DelegateCommand (() => new ResultAction (this).Do ());
+			resultCommand.Value = new DelegateCommand<object> (o => new ResultAction (this).Do ());
+
+			leftCommand = BuildProperty<ICommand> ("LeftCommand");
+			leftCommand.Value = new DelegateCommand<object> (o => new LeftAction (this).Do ());
+
+			rightCommand = BuildProperty<ICommand> ("RightCommand");
+			rightCommand.Value = new DelegateCommand<object> (o => new RightAction (this).Do ());
 
 			Root = new HBoxToken ();
 			Selection = new Selection ();

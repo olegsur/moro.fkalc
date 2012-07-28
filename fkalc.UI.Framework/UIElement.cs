@@ -25,7 +25,9 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using Gtk;
+using System.Linq;
 
 namespace fkalc.UI.Framework
 {
@@ -60,10 +62,14 @@ namespace fkalc.UI.Framework
 			set { focusable.Value = value; }
 		}
 
+		public List<KeyBinding> InputBindings { get; private set; }
+
 		private bool lookingFocus;
 		
 		public UIElement ()
 		{
+			InputBindings = new List<KeyBinding> ();
+
 			visibility = BuildProperty<Visibility> ("Visibility");
 			focusable = BuildProperty<bool> ("Focusable");
 
@@ -162,6 +168,12 @@ namespace fkalc.UI.Framework
 		
 		protected virtual void OnKeyPressEvent (object o, KeyPressEventArgs args)
 		{
+			var commands = InputBindings.Where (ib => ib.Command != null && ib.Gesture.Matches (args.Event.Key)).Select (ib => ib.Command);
+
+			foreach (var command in commands) {
+				command.Execute (null);
+			}
+
 			RaiseKeyPressEvent (args);
 		}
 				

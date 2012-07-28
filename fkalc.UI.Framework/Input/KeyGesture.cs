@@ -1,5 +1,5 @@
 //
-// ResultProcessor.cs
+// KeyGesture.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,33 +24,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using Gdk;
 
-namespace fkalc.UI
+namespace fkalc.UI.Framework
 {
-	public class ResultProcessor
+	public class KeyGesture
 	{
-		private MathRegion Region { get; set; }
-		
-		public ResultProcessor (MathRegion region)
+		public Key Key { get; private set; }
+
+		public KeyGesture (Key key)
 		{
-			Region = region;	
-			Region.KeyPressEvent += HandleKeyPressEvent;
+			Key = key;
 		}
 
-		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		public virtual bool Matches (Key key)
 		{
-			if (!NeedToProcess (args.Event.KeyValue))
-				return;
-
-			if (Region.ResultCommand != null)
-				Region.ResultCommand.Execute ();
-		}
-		
-		private bool NeedToProcess (uint keyval)
-		{
-			var name = Gdk.Keyval.Name (keyval);			
-			
-			return name.ToLower () == "equal";	
+			return Key == key;
 		}
 	}
 }

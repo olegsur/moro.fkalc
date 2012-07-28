@@ -1,5 +1,5 @@
 // 
-// MultiplicationAction.cs
+// InsertCharacterAction.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,25 +25,49 @@
 // THE SOFTWARE.
 
 using System;
+using System.Text.RegularExpressions;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class MultiplicationAction
+	public class InsertCharacterAction
 	{
-		private MathRegion Region { get; set; }
-		
-		public MultiplicationAction (MathRegion region)
+		private uint Key { get; set; }
+
+		private MathRegionViewModel Region { get; set; }
+
+		public InsertCharacterAction (uint key, MathRegionViewModel region)
 		{
+			Key = key;
 			Region = region;
 		}
 		
-		public void Execute ()
+		public void Do ()
 		{
-			var operation = new MultiplicationToken ();			
+			var name = Gdk.Keyval.Name (Key);
+
+			if (Region.Selection.SelectedToken is TextToken == false) {
+				var operation = new MultiplicationToken ();			
 				
-			new InsertHBinaryOperation (Region, operation).Execute ();
+				new InsertHBinaryOperation (Region, operation).Do ();
+			}
+
+			var textToken = Region.Selection.SelectedToken as TextToken;
+
+			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Regex.IsMatch (name, @"\D")) {
+				var operation = new MultiplicationToken ();			
+				
+				new InsertHBinaryOperation (Region, operation).Do ();
+			}
+
+			textToken = Region.Selection.SelectedToken as TextToken;
+			
+			if (string.IsNullOrEmpty (textToken.Text))
+				textToken.Text += name [0];
+			else 
+				textToken.Text = textToken.Text.Insert (Region.Selection.Position, name [0].ToString ());
+
+			Region.Selection.Position++;
 		}
 	}
 }
-

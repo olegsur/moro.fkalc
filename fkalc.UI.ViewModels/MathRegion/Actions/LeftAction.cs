@@ -1,5 +1,5 @@
 //
-// LeftProcessor.cs
+// LeftAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,32 +24,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
+using fkalc.UI.ViewModels.MathRegion;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class LeftProcessor
+	public class LeftAction
 	{
-		private MathRegion Region { get; set; }
+		private MathRegionViewModel Region { get; set; }
 
-		public LeftProcessor (MathRegion region)
+		public LeftAction (MathRegionViewModel region)
 		{
-			Region = region;	
-			Region.KeyPressEvent += HandleKeyPressEvent;
-		}
-
-		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
-		{
-			if (!NeedToProcess (args.Event.KeyValue))
-				return;
-			
-			new LeftAction (Region).Execute ();
+			Region = region;
 		}
 		
-		private bool NeedToProcess (uint keyval)
+		public void Do ()
 		{
-			var name = Gdk.Keyval.Name (keyval);			
-			
-			return name.ToLower () == "left";	
+			if (Region.Selection.SelectedToken is TextToken) {
+				if (Region.Selection.Position > 0) {
+					Region.Selection.Position--;
+					return;
+				}
+
+				Region.Selection.Type = SelectionType.Right;
+			}
+
+			var previos = new SelectionTreeBuilder (SelectionType.Right).Build (Region.Root)
+				.TakeWhile (t => !(t.Token == Region.Selection.SelectedToken && t.Type == Region.Selection.Type))
+					.Reverse ().FirstOrDefault ();
+
+			if (previos != null) {
+				Region.Selection.SelectedToken = previos.Token;
+				Region.Selection.Type = previos.Type;
+
+				if (Region.Selection.SelectedToken is TextToken) {
+					var textToken = Region.Selection.SelectedToken as TextToken;
+					Region.Selection.Position = string.IsNullOrEmpty (textToken.Text) ? 0 : textToken.Text.Length;
+				}
+			}
 		}
 	}
 }
