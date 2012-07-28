@@ -31,7 +31,7 @@ using fkalc.UI.ViewModels.MathRegion;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class LeftAction
+	public class LeftAction : IAction
 	{
 		private MathRegionViewModel Region { get; set; }
 

@@ -29,7 +29,7 @@ using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class DivideAction
+	public class DivideAction : IAction
 	{
 		private MathRegionViewModel Region { get; set; }
 		
@@ -40,6 +40,8 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 		
 		public void Do ()
 		{
+			Region.SetNeedToEvaluate (true);
+
 			var parent = Region.Selection.SelectedToken.Parent;
 
 			Token dividend;

@@ -65,6 +65,8 @@
     <Compile Include="MathRegion\Actions\LeftAction.cs" />
     <Compile Include="MathRegion\Actions\SelectionTreeBuilder.cs" />
     <Compile Include="MathRegion\Actions\RightAction.cs" />
+    <Compile Include="MathRegion\Actions\EvaluateAction.cs" />
+    <Compile Include="MathRegion\Actions\IAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

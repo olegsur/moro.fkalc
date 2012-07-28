@@ -29,7 +29,7 @@ using fkalc.UI.ViewModels.MathRegion;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class InsertHBinaryOperation
+	public class InsertHBinaryOperation : IAction
 	{
 		private MathRegionViewModel Region { get; set; }
 		private Token Operation { get; set; }
@@ -42,6 +42,8 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 		public void Do ()
 		{
+			Region.SetNeedToEvaluate (true);
+
 			var right = new TextToken ();
 
 			if (Region.Selection.SelectedToken is TextToken) {

@@ -30,7 +30,7 @@ using fkalc.Core;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class ResultAction
+	public class ResultAction : IAction
 	{
 		private MathRegionViewModel Region { get; set; }
 		
@@ -54,10 +54,9 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 				result.Child = new TextToken ();
 			}
 
-			var regions = Region.Document.Regions.GroupBy (r => r.Y).OrderBy (g => g.Key)
-				.SelectMany (g => g.GroupBy (r => r.X).OrderBy (o => o.Key).SelectMany (o => o.ToList ())).ToArray ();
+			Region.SetNeedToEvaluate (true);
 
-			new Engine ().Evaluate (regions);
+			new EvaluateAction (Region).Do ();
 		}
 	}
 }

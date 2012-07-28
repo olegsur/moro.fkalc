@@ -30,7 +30,7 @@ using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class InsertCharacterAction
+	public class InsertCharacterAction : IAction
 	{
 		private uint Key { get; set; }
 
@@ -44,6 +44,8 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 		
 		public void Do ()
 		{
+			Region.SetNeedToEvaluate (true);
+
 			var name = Gdk.Keyval.Name (Key);
 
 			if (Region.Selection.SelectedToken is TextToken == false) {

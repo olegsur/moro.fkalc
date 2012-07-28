@@ -40,6 +40,8 @@ namespace fkalc.UI.Framework
 		public event EventHandler MouseLeaveEvent;
 		public event KeyPressEventHandler PreviewKeyPressEvent;
 		public event KeyPressEventHandler KeyPressEvent;
+		public event EventHandler GotKeyboardFocusEvent;
+		public event EventHandler LostKeyboardFocusEvent;
 
 		private readonly DependencyProperty<Visibility> visibility;
 		private readonly DependencyProperty<bool> focusable;
@@ -137,7 +139,6 @@ namespace fkalc.UI.Framework
 		private void HandlePreviewButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
 			lookingFocus = true;
-			//if (IsFocused) return;
 			
 			if (!Focusable || Mouse.Device.TargetElement != this)
 				return;
@@ -197,18 +198,22 @@ namespace fkalc.UI.Framework
 			RaiseMouseLeaveEvent (args);
 		}
 
-		private void OnGotKeyboardFocusEvent (object sender, EventArgs e)
+		protected virtual void OnGotKeyboardFocusEvent (object sender, EventArgs e)
 		{
 			lookingFocus = false;
 
-			if (Keyboard.FocusedElement == this)
+			if (Keyboard.FocusedElement == this) {
 				IsFocused = true;
+				RaiseGotKeyboardFocusEvent (EventArgs.Empty);
+			}
 		}
 
-		private void OnLostKeyboardFocusEvent (object sender, EventArgs e)
+		protected virtual void OnLostKeyboardFocusEvent (object sender, EventArgs e)
 		{
-			if (Keyboard.FocusedElement == this)
+			if (Keyboard.FocusedElement == this) {
 				IsFocused = false;
+				RaiseLostKeyboardFocusEvent (EventArgs.Empty);
+			}
 		}
 		
 		private void RaiseButtonPressEvent (ButtonPressEventArgs args)
@@ -257,6 +262,20 @@ namespace fkalc.UI.Framework
 		{
 			if (KeyPressEvent != null) {
 				KeyPressEvent (this, args);
+			}
+		}
+
+		private void RaiseGotKeyboardFocusEvent (EventArgs args)
+		{
+			if (GotKeyboardFocusEvent != null) {
+				GotKeyboardFocusEvent (this, args);
+			}
+		}
+
+		private void RaiseLostKeyboardFocusEvent (EventArgs args)
+		{
+			if (LostKeyboardFocusEvent != null) {
+				LostKeyboardFocusEvent (this, args);
 			}
 		}
 	}

@@ -29,7 +29,7 @@ using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class PlusAction
+	public class PlusAction : IAction
 	{
 		private MathRegionViewModel Region { get; set; }
 		

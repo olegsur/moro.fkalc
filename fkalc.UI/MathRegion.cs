@@ -36,6 +36,7 @@ namespace fkalc.UI
 		private Border border;
 		private readonly DependencyProperty<Selection> selection;
 		private readonly DependencyProperty<ICommand> insertCharacterCommand;
+		private readonly DependencyProperty<ICommand> evaluateCommand;
 
 		public Selection Selection {
 			get { return selection.Value; }
@@ -49,6 +50,10 @@ namespace fkalc.UI
 
 		public ICommand InsertCharacterCommand {
 			get { return insertCharacterCommand.Value; }
+		}
+
+		public ICommand EvaluateCommand { 
+			get { return evaluateCommand.Value; }
 		}
 		
 		public MathRegion ()
@@ -68,6 +73,7 @@ namespace fkalc.UI
 			
 			MouseEnterEvent += HandleMouseEnterEvent;
 			MouseLeaveEvent += HandleMouseLeaveEvent;
+			LostKeyboardFocusEvent += HandleLostKeyboardFocusEvent;
 			
 			new InsertCharacterProcessor (this);
 
@@ -114,9 +120,11 @@ namespace fkalc.UI
 
 			selection = BuildProperty<Selection> ("Selection");
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");
+			evaluateCommand = BuildProperty<ICommand> ("EvaluateCommand");
 
 			BindingOperations.SetBinding (this, "DataContext.Selection", GetProperty ("Selection"));
 			BindingOperations.SetBinding (this, "DataContext.InsertCharacterCommand", GetProperty ("InsertCharacterCommand"));
+			BindingOperations.SetBinding (this, "DataContext.EvaluateCommand", GetProperty ("EvaluateCommand"));
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
@@ -131,6 +139,13 @@ namespace fkalc.UI
 			border.BorderColor = Colors.Bisque;
 			
 			Screen.QueueDraw ();
-		}	
+		}
+
+		private void HandleLostKeyboardFocusEvent (object sender, EventArgs e)
+		{
+			if (EvaluateCommand != null) {
+				EvaluateCommand.Execute (null);
+			}
+		}
 	}
 }

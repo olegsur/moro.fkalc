@@ -52,6 +52,9 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<ICommand> assignmentCommand;
 		private readonly DependencyProperty<ICommand> leftCommand;
 		private readonly DependencyProperty<ICommand> rightCommand;
+		private readonly DependencyProperty<ICommand> evaluateCommand;
+
+		private readonly DependencyProperty<bool> needToEvaluate;
 
 		public double X { 
 			get { return x.Value; }
@@ -71,6 +74,11 @@ namespace fkalc.UI.ViewModels.MathRegion
 		public Selection Selection { 
 			get { return selection.Value; }
 			private set { selection.Value = value; }
+		}
+
+		public bool NeedToEvaluate {
+			get { return needToEvaluate.Value; }
+			private set { needToEvaluate.Value = value; }
 		}
 
 		public MathRegionViewModel (DocumentViewModel document)
@@ -109,6 +117,12 @@ namespace fkalc.UI.ViewModels.MathRegion
 			rightCommand = BuildProperty<ICommand> ("RightCommand");
 			rightCommand.Value = new DelegateCommand<object> (o => new RightAction (this).Do ());
 
+			evaluateCommand = BuildProperty<ICommand> ("EvaluateCommand");
+			evaluateCommand.Value = new DelegateCommand<object> (o => new EvaluateAction (this).Do ());
+
+			needToEvaluate = BuildProperty<bool> ("NeedToEvaluate");
+			needToEvaluate.DependencyPropertyValueChanged += HandleNeedToEvaluateChanged;
+
 			Root = new HBoxToken ();
 			Selection = new Selection ();
 
@@ -117,6 +131,7 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 			Selection.SelectedToken = token;     
 		}
+
 
 		IToken IMathRegionViewModel.Root {
 			get { return Root; }
@@ -131,5 +146,26 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 			resultToken.Child = new TextToken () { Text = result };
 		}
+
+		public void SetNeedToEvaluate (bool value)
+		{
+			if (!Root.Tokens.OfType<ResultToken> ().Any ())
+				return;
+
+			NeedToEvaluate = value;
+		}
+
+		private void HandleNeedToEvaluateChanged (object sender, DPropertyValueChangedEventArgs<bool> e)
+		{
+			if (!e.NewValue)
+				return;
+
+			var resultToken = Root.Tokens.OfType<ResultToken> ().FirstOrDefault ();
+
+			if (resultToken == null)
+				return;
+
+			resultToken.Child = new TextToken ();
+		}	
 	}
 }
