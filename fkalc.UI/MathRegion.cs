@@ -113,6 +113,10 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.OpenBracketCommand", openBracketBinding.GetProperty ("Command"));
 			openBracketBinding.Gesture = new KeyGesture (Gdk.Key.parenleft);
 
+			var closeBracketBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.CloseBracketCommand", closeBracketBinding.GetProperty ("Command"));
+			closeBracketBinding.Gesture = new KeyGesture (Gdk.Key.parenright);
+
 			InputBindings.Add (plusKeyBinding);
 			InputBindings.Add (minusKeyBinding);
 			InputBindings.Add (multiplicationBinding);
@@ -122,6 +126,7 @@ namespace fkalc.UI
 			InputBindings.Add (leftKeyBinding);
 			InputBindings.Add (rightKeyBinding);
 			InputBindings.Add (openBracketBinding);
+			InputBindings.Add (closeBracketBinding);
 
 			selection = BuildProperty<Selection> ("Selection");
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");

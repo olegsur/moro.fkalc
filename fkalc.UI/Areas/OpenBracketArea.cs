@@ -69,6 +69,7 @@ namespace fkalc.UI
 			canvas.Children.Add (line3);
 			canvas.SetTop (1, line1);
 			canvas.SetTop (1, line2);
+			canvas.SetLeft (1, line2);
 			canvas.SetTop (19, line3);
 
 			
