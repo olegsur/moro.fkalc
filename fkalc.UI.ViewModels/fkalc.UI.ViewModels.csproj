@@ -67,6 +67,7 @@
     <Compile Include="MathRegion\Actions\RightAction.cs" />
     <Compile Include="MathRegion\Actions\EvaluateAction.cs" />
     <Compile Include="MathRegion\Actions\IAction.cs" />
+    <Compile Include="MathRegion\Actions\OpenBracketAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

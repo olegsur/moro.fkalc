@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// OpenBracketArea.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,55 +25,54 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI
 {
-	public class TokenAreaConverter : IValueConverter
+	public class OpenBracketArea : Area
 	{
-		public TokenAreaConverter ()
+		public OpenBracketArea ()
 		{
-		}
+			HeightRequest = 20;
+			WidthRequest = 7;
 
-		public object Convert (object value)
-		{
-			Area result = null;
+			var canvas = new Canvas ();
+			
+			var line1 = new Line ()
+			{
+				WidthRequest = 7,
+				HeightRequest = 2,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
 
-			if (value is TextToken) 
-				result = new TextArea ();				
+			var line2 = new Line ()
+			{
+				WidthRequest = 2,
+				HeightRequest = 20,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
 
-			if (value is PlusToken)
-				result = new PlusArea ();
+			var line3 = new Line ()
+			{
+				WidthRequest = 7,
+				HeightRequest = 2,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+						
+			canvas.Children.Add (line1);			
+			canvas.Children.Add (line2);
+			canvas.Children.Add (line3);
+			canvas.SetTop (1, line1);
+			canvas.SetTop (1, line2);
+			canvas.SetTop (19, line3);
 
-			if (value is MinusToken)
-				result = new MinusArea ();
-
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is OpenBracketToken)
-				result = new OpenBracketArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
+			
+			Content = canvas;
 		}
 	}
 }

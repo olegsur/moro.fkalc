@@ -82,6 +82,7 @@
     <Compile Include="Areas\ResultArea.cs" />
     <Compile Include="Areas\FractionArea.cs" />
     <Compile Include="Areas\AssignmentArea.cs" />
+    <Compile Include="Areas\OpenBracketArea.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

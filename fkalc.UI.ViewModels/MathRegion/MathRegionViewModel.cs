@@ -53,6 +53,7 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<ICommand> leftCommand;
 		private readonly DependencyProperty<ICommand> rightCommand;
 		private readonly DependencyProperty<ICommand> evaluateCommand;
+		private readonly DependencyProperty<ICommand> openBracketCommand;
 
 		private readonly DependencyProperty<bool> needToEvaluate;
 
@@ -119,6 +120,9 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 			evaluateCommand = BuildProperty<ICommand> ("EvaluateCommand");
 			evaluateCommand.Value = new DelegateCommand<object> (o => new EvaluateAction (this).Do ());
+
+			openBracketCommand = BuildProperty<ICommand> ("OpenBracketCommand");
+			openBracketCommand.Value = new DelegateCommand<object> (o => new OpenBracketAction (this).Do ());
 
 			needToEvaluate = BuildProperty<bool> ("NeedToEvaluate");
 			needToEvaluate.DependencyPropertyValueChanged += HandleNeedToEvaluateChanged;
