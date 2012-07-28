@@ -1,5 +1,5 @@
 //
-// CloseBracketArea.cs
+// IOpenBracketToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,57 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class CloseBracketArea : Area
+	public interface IOpenBracketToken : IToken
 	{
-		public CloseBracketArea ()
-		{
-			HeightRequest = 20;
-			WidthRequest = 7;
-
-			var canvas = new Canvas ();
-			
-			var line1 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-
-			var line2 = new Line ()
-			{
-				WidthRequest = 2,
-				HeightRequest = 20,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-
-			var line3 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-						
-			canvas.Children.Add (line1);			
-			canvas.Children.Add (line2);
-			canvas.Children.Add (line3);
-			canvas.SetTop (1, line1);
-			canvas.SetTop (1, line2);
-			canvas.SetLeft (4, line2);
-			canvas.SetTop (19, line3);
-
-			
-			Content = canvas;
-		}
 	}
 }
 
