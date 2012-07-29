@@ -30,6 +30,7 @@ namespace fkalc.UI.Common.MathRegion.Tokens
 	public interface IParenthesesToken : IToken
 	{
 		IToken Child { get; }
+		bool ShowCloseParentheses { get; }
 	}
 }
 

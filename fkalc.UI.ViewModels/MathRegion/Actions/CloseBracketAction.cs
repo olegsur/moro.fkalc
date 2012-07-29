@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
@@ -39,37 +41,50 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 		public void Do ()
 		{
+			var selectedToken = Region.Selection.SelectedToken;
+
+			if (selectedToken.Parent == null || selectedToken.Parent is HBoxToken == false || selectedToken.Parent.Parent is ParenthesesToken == false)
+				return;
+
+			var parentheses = selectedToken.Parent.Parent as ParenthesesToken;
+
+			if (parentheses.ShowCloseParentheses)
+				return;
+
 			Region.SetNeedToEvaluate (true);
 
-			var right = new TextToken ();
-
-			if (Region.Selection.SelectedToken is TextToken) {
+			if (Region.Selection.SelectedToken is TextToken == false) {
+				if (Region.Selection.Type == SelectionType.Left) {
+					var operation = new MultiplicationToken ();
+					new InsertHBinaryOperation (Region, operation).Do ();
+				}
+			} else {
 				var textToken = Region.Selection.SelectedToken as TextToken;
 
-				var parent = GetHBoxToken (textToken);
+				if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && 
+					!string.IsNullOrEmpty (textToken.Text) && Region.Selection.Position != textToken.Text.Length) {
 
-				var left = new TextToken ()
-				{
-					Text = GetLeftString (textToken.Text)
-				};
+					var operation = new MultiplicationToken ();			
 
-				right.Text = GetRightString (textToken.Text);
-
-				var index = parent.Tokens.IndexOf (textToken);
-
-				if (right.Text != null) {
-					parent.Tokens [index] = left;
-					parent.Tokens.Insert (index + 1, new CloseBracketToken ());	
-					parent.Tokens.Insert (index + 2, new MultiplicationToken ());	
-					parent.Tokens.Insert (index + 3, right);				 
-				} else {
-					parent.Tokens [index] = left;
-					parent.Tokens.Insert (index + 1, new CloseBracketToken ());				
+					new InsertHBinaryOperation (Region, operation).Do ();
+					new LeftAction (Region).Do ();
 				}
 			}
 
-			if (right.Text != null)			
-				Region.Selection.SelectedToken = right;
+			var parent = GetHBoxToken (Region.Selection.SelectedToken);
+
+			var index = parent.Tokens.IndexOf (Region.Selection.SelectedToken);
+
+			var container = GetHBoxToken (parentheses);
+			var i = container.Tokens.IndexOf (parent.Parent) + 1;
+
+			foreach (var token in parent.Tokens.Skip (index + 1).ToList()) {
+				parent.Tokens.Remove (token);
+				container.Tokens.Insert (i, token);
+				i++;
+			}	
+
+			parentheses.ShowCloseParentheses = true;
 		}
 
 		private HBoxToken GetHBoxToken (Token token)
@@ -83,22 +98,6 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 			}
 
 			return token.Parent as HBoxToken;
-		}
-
-		private string GetLeftString (string text)
-		{
-			if (string.IsNullOrEmpty (text))
-				return null;
-
-			return text.Substring (0, Region.Selection.Position);
-		}
-
-		private string GetRightString (string text)
-		{
-			if (string.IsNullOrEmpty (text))
-				return null;
-
-			return text.Substring (Region.Selection.Position, text.Length - Region.Selection.Position);
 		}
 	}
 }

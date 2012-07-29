@@ -125,6 +125,7 @@
     <Compile Include="Data\SelfExpression.cs" />
     <Compile Include="Input\KeyGesture.cs" />
     <Compile Include="Input\KeyBinding.cs" />
+    <Compile Include="Controls\BooleanToVisibilityConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

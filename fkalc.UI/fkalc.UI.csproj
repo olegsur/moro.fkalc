@@ -82,7 +82,6 @@
     <Compile Include="Areas\ResultArea.cs" />
     <Compile Include="Areas\FractionArea.cs" />
     <Compile Include="Areas\AssignmentArea.cs" />
-    <Compile Include="Areas\CloseBracketArea.cs" />
     <Compile Include="Areas\ParenthesesArea.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

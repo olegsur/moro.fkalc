@@ -140,6 +140,8 @@ namespace fkalc.UI
 			canvas.HeightRequest = 20;
 			canvas.WidthRequest = 7;
 
+			BindingOperations.SetBinding (this, "DataContext.ShowCloseParentheses", canvas.GetProperty ("Visibility"), new BooleanToVisibilityConverter ());
+
 			return canvas;
 		}
 	}

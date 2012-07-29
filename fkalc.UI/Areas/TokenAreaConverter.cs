@@ -63,9 +63,6 @@ namespace fkalc.UI
 			if (value is AssignmentToken)
 				result = new AssignmentArea ();
 
-			if (value is CloseBracketToken)
-				result = new CloseBracketArea ();
-
 			if (value is ParenthesesToken)
 				result = new ParenthesesArea ();
 

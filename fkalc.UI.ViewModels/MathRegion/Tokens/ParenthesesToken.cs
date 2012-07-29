@@ -32,16 +32,24 @@ namespace fkalc.UI.ViewModels.MathRegion.Tokens
 	public class ParenthesesToken : ContainerToken, IParenthesesToken
 	{
 		private readonly DependencyProperty<Token> child;
+		private readonly DependencyProperty<bool> showCloseParentheses;
 
 		public Token Child { 
 			get { return child.Value; } 
 			set { child.Value = value; }
 		}
 
+		public bool ShowCloseParentheses { 
+			get { return showCloseParentheses.Value; } 
+			set { showCloseParentheses.Value = value; }
+		}
+
 		public ParenthesesToken ()
 		{
 			child = BuildProperty<Token> ("Child");
 			child.DependencyPropertyValueChanged += HandleValueChanged;
+
+			showCloseParentheses = BuildProperty<bool> ("ShowCloseParentheses");
 
 			Child = new TextToken ();
 		}

@@ -43,7 +43,6 @@
     <Compile Include="MathRegion\Tokens\IFractionToken.cs" />
     <Compile Include="MathRegion\Tokens\IHBoxToken.cs" />
     <Compile Include="MathRegion\Tokens\IAssignmentToken.cs" />
-    <Compile Include="MathRegion\Tokens\ICloseBracketToken.cs" />
     <Compile Include="MathRegion\Tokens\IParenthesesToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

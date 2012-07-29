@@ -1,5 +1,5 @@
 //
-// CloseBracketArea.cs
+// BooleanToVisibilityConverter.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,56 +24,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.UI.Framework
 {
-	public class CloseBracketArea : Area
+	public class BooleanToVisibilityConverter : IValueConverter
 	{
-		public CloseBracketArea ()
+		public BooleanToVisibilityConverter ()
 		{
-			HeightRequest = 20;
-			WidthRequest = 7;
+		}
 
-			var canvas = new Canvas ();
-			
-			var line1 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
+		public object Convert (object value)
+		{
+			return (value is bool) ? ((bool)value ? Visibility.Visible : Visibility.Collapsed) : Visibility.Collapsed;
+		}
 
-			var line2 = new Line ()
-			{
-				WidthRequest = 2,
-				HeightRequest = 20,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-
-			var line3 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-						
-			canvas.Children.Add (line1);			
-			canvas.Children.Add (line2);
-			canvas.Children.Add (line3);
-			canvas.SetTop (1, line1);
-			canvas.SetTop (1, line2);
-			canvas.SetLeft (4, line2);
-			canvas.SetTop (19, line3);
-
-			
-			Content = canvas;
+		public object ConvertBack (object value)
+		{
+			return (value is Visibility) ? ((Visibility)value == Visibility.Visible ? true : false) : false;
 		}
 	}
 }
