@@ -97,11 +97,12 @@ namespace fkalc.UI.Framework
 			switch (e.Action) {
 			case NotifyCollectionChangedAction.Add:
 				var index = e.NewStartingIndex;
+
 				foreach (var o in e.NewItems) {
 					var child = ItemTemplate.LoadContent (o);
 					itemsPanel.Children.Insert (index, child);
 
-					items.Add (new ItemVisual () { Item = o, Visual = child });
+					items.Insert (index, new ItemVisual () { Item = o, Visual = child });
 					index++;
 				}
 				break;
