@@ -57,6 +57,7 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<ICommand> closeBracketCommand;
 
 		private readonly DependencyProperty<bool> needToEvaluate;
+		private readonly DependencyProperty<bool> hasError;
 
 		public double X { 
 			get { return x.Value; }
@@ -81,6 +82,11 @@ namespace fkalc.UI.ViewModels.MathRegion
 		public bool NeedToEvaluate {
 			get { return needToEvaluate.Value; }
 			private set { needToEvaluate.Value = value; }
+		}
+
+		public bool HasError {
+			get { return hasError.Value; }
+			set { hasError.Value = value; }
 		}
 
 		public MathRegionViewModel (DocumentViewModel document)
@@ -137,7 +143,9 @@ namespace fkalc.UI.ViewModels.MathRegion
 			var token = new TextToken ();
 			Root.Add (token);
 
-			Selection.SelectedToken = token;     
+			Selection.SelectedToken = token; 
+
+			hasError = BuildProperty<bool> ("HasError");
 		}
 
 
@@ -157,6 +165,8 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 		public void SetNeedToEvaluate (bool value)
 		{
+			HasError = false;
+
 			if (!Root.Tokens.OfType<ResultToken> ().Any ())
 				return;
 

@@ -135,6 +135,8 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.Selection", GetProperty ("Selection"));
 			BindingOperations.SetBinding (this, "DataContext.InsertCharacterCommand", GetProperty ("InsertCharacterCommand"));
 			BindingOperations.SetBinding (this, "DataContext.EvaluateCommand", GetProperty ("EvaluateCommand"));
+
+			BindingOperations.SetBinding (this, "DataContext.HasError", GetProperty ("Background"), new HasErrorToBrushesConverter ());
 		}
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
@@ -155,6 +157,19 @@ namespace fkalc.UI
 		{
 			if (EvaluateCommand != null) {
 				EvaluateCommand.Execute (null);
+			}
+		}
+
+		private class HasErrorToBrushesConverter : IValueConverter
+		{
+			public object Convert (object value)
+			{
+				return ((bool)value) ? Brushes.Tomato : Brushes.Transparent;
+			}
+
+			public object ConvertBack (object value)
+			{
+				throw new System.NotImplementedException ();
 			}
 		}
 	}

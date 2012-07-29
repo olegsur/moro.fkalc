@@ -3,12 +3,20 @@ namespace fkalc.UI.Framework
 {
 	public class Control : FrameworkElement
 	{
-		public Brush Background { get; set; }
+		private DependencyProperty<Brush> background;
+
+		public Brush Background { 
+			get { return background.Value;}
+			set { background.Value = value;}
+		}
+
 		public Color BorderColor { get; set; }
 		public double BorderThickness { get; set; }
 		
 		public Control ()
 		{
+			background = BuildProperty<Brush> ("Background");
+
 			Background = Brushes.Transparent;
 			BorderThickness = 1;
 		}

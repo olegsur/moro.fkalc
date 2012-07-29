@@ -31,7 +31,7 @@ namespace fkalc.UI.Common.MathRegion
 	public interface IMathRegionViewModel
 	{
 		IToken Root { get; }
-
+		bool HasError { get; set; }
 		void SetResult (string result);
 	}
 }

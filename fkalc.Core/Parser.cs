@@ -45,7 +45,19 @@ namespace fkalc.Core
 			Expect<StartBlockCoreToken> ();
 
 			while (enumerator.Current is EndBlockCoreToken == false) {
-				result.Add (ParseExpressionStatement ());
+				try {
+					result.Add (ParseExpressionStatement ());
+				} catch {
+					if (enumerator.Current.Location != null) {
+						enumerator.Current.Location.Region.HasError = true;
+					}
+
+					while (enumerator.Current is SemicolonCoreToken == false) {
+						enumerator.MoveNext ();
+					}
+
+					enumerator.MoveNext ();
+				}
 			}
 
 			Expect<EndBlockCoreToken> ();
