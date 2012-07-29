@@ -107,11 +107,16 @@ namespace fkalc.Core
 				yield return new AssignmentCoreToken () { Location = new Location(region) };
 			}
 
-			if (token is IOpenBracketToken) {
-				yield return new OpenBracketCoreToken () { Location = new Location(region) };
+			if (token is ICloseBracketToken) {
+				yield return new CloseBracketCoreToken () { Location = new Location(region) };
 			}
 
-			if (token is ICloseBracketToken) {
+			if (token is IParenthesesToken) {
+				var parentheses = token as IParenthesesToken;
+
+				yield return new OpenBracketCoreToken () { Location = new Location(region) };
+				foreach (var coreToken in Scan(parentheses.Child, region))
+					yield return coreToken;
 				yield return new CloseBracketCoreToken () { Location = new Location(region) };
 			}
 		}

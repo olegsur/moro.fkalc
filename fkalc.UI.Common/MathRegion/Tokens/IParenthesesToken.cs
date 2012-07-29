@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// IParenthesesToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,60 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class TokenAreaConverter : IValueConverter
+	public interface IParenthesesToken : IToken
 	{
-		public TokenAreaConverter ()
-		{
-		}
-
-		public object Convert (object value)
-		{
-			Area result = null;
-
-			if (value is TextToken) 
-				result = new TextArea ();				
-
-			if (value is PlusToken)
-				result = new PlusArea ();
-
-			if (value is MinusToken)
-				result = new MinusArea ();
-
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is CloseBracketToken)
-				result = new CloseBracketArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
-		}
+		IToken Child { get; }
 	}
 }
 

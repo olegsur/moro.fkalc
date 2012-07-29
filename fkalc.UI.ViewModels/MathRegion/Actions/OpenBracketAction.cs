@@ -26,6 +26,7 @@
 using System;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
@@ -43,29 +44,35 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 			Region.SetNeedToEvaluate (true);
 									
 			if (Region.Selection.SelectedToken is TextToken == false) {
-				var operation = new MultiplicationToken ();			
-				
-				new InsertHBinaryOperation (Region, operation).Do ();
+				if (Region.Selection.Type == SelectionType.Right) {
+					var operation = new MultiplicationToken ();
+					new InsertHBinaryOperation (Region, operation).Do ();
+				} 
+			} else {
+				var textToken = Region.Selection.SelectedToken as TextToken;
+
+				if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Region.Selection.Position != 0) {
+					var operation = new MultiplicationToken ();			
+
+					new InsertHBinaryOperation (Region, operation).Do ();
+				}
 			}
 
-			var textToken = Region.Selection.SelectedToken as TextToken;
+			var parent = GetHBoxToken (Region.Selection.SelectedToken);
 
-			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Region.Selection.Position != 0) {
-				var operation = new MultiplicationToken ();			
-				
-				new InsertHBinaryOperation (Region, operation).Do ();
+			var index = parent.Tokens.IndexOf (Region.Selection.SelectedToken);
+
+			var newContainer = new HBoxToken ();
+
+			foreach (var token in parent.Tokens.Skip (index).ToList()) {
+				parent.Tokens.Remove (token);
+				newContainer.Add (token);
 			}
 
-			textToken = Region.Selection.SelectedToken as TextToken;
+			var parenthess = new ParenthesesToken ();
+			parenthess.Child = newContainer;
 
-			var parent = GetHBoxToken (textToken);
-
-			var index = parent.Tokens.IndexOf (textToken);
-
-			parent.Tokens [index] = new OpenBracketToken ();
-			parent.Tokens.Insert (index + 1, textToken);
-
-			Region.Selection.SelectedToken = textToken;
+			parent.Tokens.Add (parenthess);
 		}
 
 		private HBoxToken GetHBoxToken (Token token)

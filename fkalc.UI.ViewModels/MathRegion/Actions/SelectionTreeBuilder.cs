@@ -67,6 +67,16 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 			if (token is TextToken)
 				yield return new SelectionToken (Type, token);
 
+			if (token is ParenthesesToken) {
+				var parentheses = token as ParenthesesToken;
+
+				yield return new SelectionToken (SelectionType.Left, parentheses);
+
+				foreach (var node in Build(parentheses.Child))
+					yield return node;
+
+				yield return new SelectionToken (SelectionType.Right, parentheses);
+			}
 		}
 
 		private bool IsOperator (Token token)

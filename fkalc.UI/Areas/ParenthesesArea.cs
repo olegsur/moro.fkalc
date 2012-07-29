@@ -1,5 +1,5 @@
 //
-// OpenBracketArea.cs
+// ParenthesesArea.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -28,13 +28,33 @@ using fkalc.UI.Framework;
 
 namespace fkalc.UI
 {
-	public class OpenBracketArea : Area
+	public class ParenthesesArea : Area
 	{
-		public OpenBracketArea ()
-		{
-			HeightRequest = 20;
-			WidthRequest = 7;
+		public ContentControl Child { get; private set; }
 
+		public ParenthesesArea ()
+		{
+			Child = new ContentControl ()
+			{
+				Content = new TextArea ()
+			};
+
+			var stackPanel = new StackPanel ()
+			{
+				Orientation = Orientation.Horizontal
+			};
+
+			stackPanel.Children.Add (OpenParentheses ());
+			stackPanel.Children.Add (Child);
+			stackPanel.Children.Add (CloseParentheses ());
+
+			Content = stackPanel;
+
+			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());
+		}
+
+		private Canvas OpenParentheses ()
+		{
 			var canvas = new Canvas ();
 			
 			var line1 = new Line ()
@@ -72,8 +92,55 @@ namespace fkalc.UI
 			canvas.SetLeft (1, line2);
 			canvas.SetTop (19, line3);
 
+			canvas.HeightRequest = 20;
+			canvas.WidthRequest = 7;
+
+			return canvas;
+		}
+
+		private Canvas CloseParentheses ()
+		{
+			var canvas = new Canvas ();
 			
-			Content = canvas;
+			var line1 = new Line ()
+			{
+				WidthRequest = 7,
+				HeightRequest = 2,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+
+			var line2 = new Line ()
+			{
+				WidthRequest = 2,
+				HeightRequest = 20,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+
+			var line3 = new Line ()
+			{
+				WidthRequest = 7,
+				HeightRequest = 2,
+				StrokeThickness = 2,
+				Stroke = Colors.Black,
+				SnapsToDevicePixels = true
+			};
+						
+			canvas.Children.Add (line1);			
+			canvas.Children.Add (line2);
+			canvas.Children.Add (line3);
+			canvas.SetTop (1, line1);
+			canvas.SetTop (1, line2);
+			canvas.SetLeft (4, line2);
+			canvas.SetTop (19, line3);
+
+			canvas.HeightRequest = 20;
+			canvas.WidthRequest = 7;
+
+			return canvas;
 		}
 	}
 }
