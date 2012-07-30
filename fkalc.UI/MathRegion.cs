@@ -164,7 +164,7 @@ namespace fkalc.UI
 		{
 			public object Convert (object value)
 			{
-				return ((bool)value) ? Brushes.Tomato : Brushes.Transparent;
+				return ((bool)value) ? Brushes.Pink : Brushes.Transparent;
 			}
 
 			public object ConvertBack (object value)

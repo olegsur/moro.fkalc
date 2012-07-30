@@ -108,6 +108,51 @@ namespace fkalc.UI.Framework
 			}			
 		}
 
+		public override void DrawGeometry (Brush brush, Pen pen, Geometry geometry)
+		{
+			if (pen != null) {
+				cr.Color = new Cairo.Color (pen.Color.R, pen.Color.G, pen.Color.B, pen.Color.Alfa);	
+				cr.LineWidth = pen.Thickness;
+
+				DrawGeometry (geometry);	
+			
+				cr.Stroke ();
+			}
+		}
+
+		private void DrawGeometry (Geometry geometry)
+		{
+			if (geometry is PathGeometry) {
+				var path = geometry as PathGeometry;
+
+				foreach (var figure in path.Figures) {
+					DrawFigure (figure);
+				}
+			}
+		}
+
+		private void DrawFigure (PathFigure figure)
+		{
+			cr.MoveTo (figure.StartPoint.X, figure.StartPoint.Y);
+
+			foreach (var segment in figure.Segments) {
+				DrawSegment (segment);
+			}
+		}
+
+		private void DrawSegment (PathSegment segment)
+		{
+			if (segment is LineSegment) {
+				var line = segment as LineSegment;
+
+				cr.LineTo (line.Point.X, line.Point.Y);
+			}
+
+			if (segment is ArcSegment) {
+				var arc = segment as ArcSegment;
+			}
+		}
+
 		public override void PushTransform (Transform transform)
 		{
 			cr.Save ();
@@ -135,7 +180,6 @@ namespace fkalc.UI.Framework
 				default:
 					return Antialias.Default;
 				}
-
 			}
 			set {
 				switch (value) {

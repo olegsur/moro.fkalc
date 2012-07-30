@@ -1,5 +1,5 @@
 //
-// DrawingContext.cs
+// LineSegment.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,21 +27,13 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public abstract class DrawingContext
+	public class LineSegment : PathSegment
 	{
-		public abstract Antialias Antialias { get; set; }
+		public Point Point { get; set; }
 
-		public DrawingContext ()
+		public LineSegment ()
 		{
 		}
-
-		public abstract void PushTransform (Transform transform);
-		public abstract void Pop ();
-
-		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Brush brush, Pen pen, Point center, double radiusX, double radiusY);
-		public abstract void DrawText (FormattedText formattedText, Point origin);
-		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
-		public abstract void DrawGeometry (Brush brush, Pen pen, Geometry geometry);	
 	}
 }
+

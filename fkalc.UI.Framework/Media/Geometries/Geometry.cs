@@ -1,5 +1,5 @@
 //
-// DrawingContext.cs
+// Geometry.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,21 +27,11 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public abstract class DrawingContext
+	public abstract class Geometry : DependencyObject
 	{
-		public abstract Antialias Antialias { get; set; }
-
-		public DrawingContext ()
+		public Geometry ()
 		{
 		}
-
-		public abstract void PushTransform (Transform transform);
-		public abstract void Pop ();
-
-		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Brush brush, Pen pen, Point center, double radiusX, double radiusY);
-		public abstract void DrawText (FormattedText formattedText, Point origin);
-		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
-		public abstract void DrawGeometry (Brush brush, Pen pen, Geometry geometry);	
 	}
 }
+

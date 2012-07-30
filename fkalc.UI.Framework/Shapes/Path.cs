@@ -1,5 +1,5 @@
 //
-// DrawingContext.cs
+// Path.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,21 +27,22 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public abstract class DrawingContext
+	public class Path : Shape
 	{
-		public abstract Antialias Antialias { get; set; }
+		public Geometry Data { get; set; }
 
-		public DrawingContext ()
+		public Path ()
 		{
 		}
 
-		public abstract void PushTransform (Transform transform);
-		public abstract void Pop ();
+		protected override void OnRender (DrawingContext dc)
+		{
+			if (Data == null)
+				return;
 
-		public abstract void DrawLine (Pen pen, Point point0, Point point1);
-		public abstract void DrawEllipse (Brush brush, Pen pen, Point center, double radiusX, double radiusY);
-		public abstract void DrawText (FormattedText formattedText, Point origin);
-		public abstract void DrawRectangle (Brush brush, Pen pen, Rect rectangle);
-		public abstract void DrawGeometry (Brush brush, Pen pen, Geometry geometry);	
+
+			dc.DrawGeometry (Fill, new Pen (Stroke, StrokeThickness), Data);
+		}
 	}
 }
+

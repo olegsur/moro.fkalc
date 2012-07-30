@@ -126,6 +126,13 @@
     <Compile Include="Input\KeyGesture.cs" />
     <Compile Include="Input\KeyBinding.cs" />
     <Compile Include="Controls\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Shapes\Path.cs" />
+    <Compile Include="Media\Geometries\Geometry.cs" />
+    <Compile Include="Media\Geometries\PathGeometry.cs" />
+    <Compile Include="Media\Geometries\PathFigure.cs" />
+    <Compile Include="Media\Geometries\PathSegment.cs" />
+    <Compile Include="Media\Geometries\ArcSegment.cs" />
+    <Compile Include="Media\Geometries\LineSegment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -134,5 +141,6 @@
     <Folder Include="Media\Transformations\" />
     <Folder Include="Data\" />
     <Folder Include="Templates\" />
+    <Folder Include="Media\Geometries\" />
   </ItemGroup>
 </Project>

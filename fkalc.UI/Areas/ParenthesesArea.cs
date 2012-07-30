@@ -53,96 +53,46 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());
 		}
 
-		private Canvas OpenParentheses ()
+		private UIElement OpenParentheses ()
 		{
-			var canvas = new Canvas ();
-			
-			var line1 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
+			var figure = new PathFigure ();
+			figure.StartPoint = new Point (7, 1);
+			figure.Segments.Add (new LineSegment () { Point = new Point (1, 1) });
+			figure.Segments.Add (new LineSegment () { Point = new Point (1, 19) });
+			figure.Segments.Add (new LineSegment () { Point = new Point(7, 19) });
+				
+			var geometry = new PathGeometry ();
+			geometry.Figures.Add (figure);
 
-			var line2 = new Line ()
-			{
-				WidthRequest = 2,
-				HeightRequest = 20,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
+			var path = new Path ();
+			path.Data = geometry;
+			path.StrokeThickness = 2;
+			path.HeightRequest = 20;
+			path.WidthRequest = 7;
 
-			var line3 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-						
-			canvas.Children.Add (line1);			
-			canvas.Children.Add (line2);
-			canvas.Children.Add (line3);
-			canvas.SetTop (1, line1);
-			canvas.SetTop (1, line2);
-			canvas.SetLeft (1, line2);
-			canvas.SetTop (19, line3);
-
-			canvas.HeightRequest = 20;
-			canvas.WidthRequest = 7;
-
-			return canvas;
+			return path;
 		}
 
-		private Canvas CloseParentheses ()
+		private UIElement CloseParentheses ()
 		{
-			var canvas = new Canvas ();
-			
-			var line1 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
+			var figure = new PathFigure ();
+			figure.StartPoint = new Point (1, 1);
+			figure.Segments.Add (new LineSegment () { Point = new Point (7, 1) });
+			figure.Segments.Add (new LineSegment () { Point = new Point (7, 19) });
+			figure.Segments.Add (new LineSegment () { Point = new Point(1, 19) });
+				
+			var geometry = new PathGeometry ();
+			geometry.Figures.Add (figure);
 
-			var line2 = new Line ()
-			{
-				WidthRequest = 2,
-				HeightRequest = 20,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
+			var path = new Path ();
+			path.Data = geometry;
+			path.StrokeThickness = 2;
+			path.HeightRequest = 20;
+			path.WidthRequest = 7;
 
-			var line3 = new Line ()
-			{
-				WidthRequest = 7,
-				HeightRequest = 2,
-				StrokeThickness = 2,
-				Stroke = Colors.Black,
-				SnapsToDevicePixels = true
-			};
-						
-			canvas.Children.Add (line1);			
-			canvas.Children.Add (line2);
-			canvas.Children.Add (line3);
-			canvas.SetTop (1, line1);
-			canvas.SetTop (1, line2);
-			canvas.SetLeft (4, line2);
-			canvas.SetTop (19, line3);
+			BindingOperations.SetBinding (this, "DataContext.ShowCloseParentheses", path.GetProperty ("Visibility"), new BooleanToVisibilityConverter ());
 
-			canvas.HeightRequest = 20;
-			canvas.WidthRequest = 7;
-
-			BindingOperations.SetBinding (this, "DataContext.ShowCloseParentheses", canvas.GetProperty ("Visibility"), new BooleanToVisibilityConverter ());
-
-			return canvas;
+			return path;
 		}
 	}
 }
