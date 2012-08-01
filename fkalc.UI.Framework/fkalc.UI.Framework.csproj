@@ -134,6 +134,7 @@
     <Compile Include="Media\Geometries\ArcSegment.cs" />
     <Compile Include="Media\Geometries\LineSegment.cs" />
     <Compile Include="Media\Transformations\ScaleTransform.cs" />
+    <Compile Include="Media\Transformations\RotateTransform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

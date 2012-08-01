@@ -1,5 +1,5 @@
 //
-// ScaleTransform.cs
+// RotateTransform.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,26 +27,29 @@ using System;
 
 namespace fkalc.UI.Framework
 {
-	public class ScaleTransform : Transform
+	public class RotateTransform : Transform
 	{
-		public double ScaleX { get; private set; }
-		public double ScaleY { get; private set; }
+		public double Angle { get; private set; }
 		public double CenterX { get; private set; }
 		public double CenterY { get; private set; }
 		public override Matrix Value { get; protected set; }
 
-		public ScaleTransform (double scaleX, double scaleY) : this (scaleX, scaleY, 0, 0)
+		public RotateTransform (double angle) : this (angle, 0 ,0)
 		{
 		}
 
-		public ScaleTransform (double scaleX, double scaleY, double centerX, double centerY)
+		public RotateTransform (double angle, double centerX, double centerY)
 		{
-			ScaleX = scaleX;
-			ScaleY = scaleY;
+			Angle = angle;
 			CenterX = centerX;
 			CenterY = centerY;
 
-			Value = new Matrix (scaleX, 0, 0, scaleY, - centerX, - centerY);
+			var x = -Math.Cos (angle) * centerX + Math.Sin (angle) * centerY + centerX;
+			var y = -Math.Sin (angle) * centerX - Math.Cos (angle) * centerY + centerY;
+
+			angle = -angle;
+
+			Value = new Matrix (Math.Cos (angle), -Math.Sin (angle), Math.Sin (angle), Math.Cos (angle), x, y);
 		}
 	}
 }
