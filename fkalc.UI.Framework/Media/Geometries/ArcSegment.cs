@@ -29,12 +29,21 @@ namespace fkalc.UI.Framework
 {
 	public class ArcSegment : PathSegment
 	{
+		public bool IsLargeArc { get; set; }
 		public Point Point { get; set; }
 		public Size Size { get; set; }
+		public double RotationAngle { get; set; }
+		public SweepDirection SweepDirection { get; set; }
 
 		public ArcSegment ()
 		{
 		}
+	}
+
+	public enum SweepDirection
+	{
+		Clockwise,
+		Counterclockwise
 	}
 }
 

@@ -56,10 +56,10 @@ namespace fkalc.UI
 		private UIElement OpenParentheses ()
 		{
 			var figure = new PathFigure ();
-			figure.StartPoint = new Point (7, 1);
-			figure.Segments.Add (new LineSegment () { Point = new Point (1, 1) });
-			figure.Segments.Add (new LineSegment () { Point = new Point (1, 19) });
-			figure.Segments.Add (new LineSegment () { Point = new Point(7, 19) });
+			figure.StartPoint = new Point (4, 1);
+
+
+			figure.Segments.Add (new ArcSegment () { Point = new Point (4, 30), Size = new Size (14, 20), SweepDirection = SweepDirection.Counterclockwise });
 				
 			var geometry = new PathGeometry ();
 			geometry.Figures.Add (figure);
@@ -67,8 +67,8 @@ namespace fkalc.UI
 			var path = new Path ();
 			path.Data = geometry;
 			path.StrokeThickness = 2;
-			path.HeightRequest = 20;
-			path.WidthRequest = 7;
+			path.WidthRequest = 5;
+			path.HeightRequest = 30;
 
 			return path;
 		}
@@ -76,10 +76,9 @@ namespace fkalc.UI
 		private UIElement CloseParentheses ()
 		{
 			var figure = new PathFigure ();
-			figure.StartPoint = new Point (1, 1);
-			figure.Segments.Add (new LineSegment () { Point = new Point (7, 1) });
-			figure.Segments.Add (new LineSegment () { Point = new Point (7, 19) });
-			figure.Segments.Add (new LineSegment () { Point = new Point(1, 19) });
+			figure.StartPoint = new Point (2, 1);
+
+			figure.Segments.Add (new ArcSegment () { Point = new Point (2, 30), Size = new Size (14, 20), SweepDirection = SweepDirection.Clockwise });
 				
 			var geometry = new PathGeometry ();
 			geometry.Figures.Add (figure);
@@ -87,8 +86,8 @@ namespace fkalc.UI
 			var path = new Path ();
 			path.Data = geometry;
 			path.StrokeThickness = 2;
-			path.HeightRequest = 20;
-			path.WidthRequest = 7;
+			path.HeightRequest = 30;
+			path.WidthRequest = 5;
 
 			BindingOperations.SetBinding (this, "DataContext.ShowCloseParentheses", path.GetProperty ("Visibility"), new BooleanToVisibilityConverter ());
 

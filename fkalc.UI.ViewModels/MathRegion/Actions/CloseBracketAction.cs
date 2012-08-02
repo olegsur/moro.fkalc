@@ -62,7 +62,7 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 				var textToken = Region.Selection.SelectedToken as TextToken;
 
 				if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && 
-					!string.IsNullOrEmpty (textToken.Text) && Region.Selection.Position != textToken.Text.Length) {
+					Region.Selection.Position != textToken.Text.Length) {
 
 					var operation = new MultiplicationToken ();			
 

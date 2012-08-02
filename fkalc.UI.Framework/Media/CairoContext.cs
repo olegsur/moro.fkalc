@@ -143,14 +143,133 @@ namespace fkalc.UI.Framework
 		private void DrawSegment (PathSegment segment)
 		{
 			if (segment is LineSegment) {
-				var line = segment as LineSegment;
-
-				cr.LineTo (line.Point.X, line.Point.Y);
+				DrawLineSegment (segment as LineSegment);
 			}
 
 			if (segment is ArcSegment) {
-				var arc = segment as ArcSegment;
+				DrawArcSegment (segment as ArcSegment);
 			}
+		}
+
+		private void DrawLineSegment (LineSegment segment)
+		{
+			cr.LineTo (segment.Point.X, segment.Point.Y);
+		}
+
+		private void DrawArcSegment (ArcSegment segment)
+		{
+			DrawArcSegment (cr.CurrentPoint.X, cr.CurrentPoint.Y, segment.Point.X, segment.Point.Y, 
+			               segment.Size.Width, segment.Size.Height, 
+			               segment.RotationAngle, segment.IsLargeArc, segment.SweepDirection);
+		}
+
+		private void DrawArcSegment (double xm1, double ym1, double xm2, double ym2, double xr, double yr, double alpha, bool isLargeArc, SweepDirection direction)
+		{
+			var x1 = xm1 * Math.Cos (-alpha) - ym1 * Math.Sin (-alpha);
+			var y1 = xm1 * Math.Sin (-alpha) + ym1 * Math.Cos (-alpha);
+
+			var x2 = xm2 * Math.Cos (-alpha) - ym2 * Math.Sin (-alpha);
+			var y2 = xm2 * Math.Sin (-alpha) + ym2 * Math.Cos (-alpha);
+
+			var r = 0.0;
+
+			if (xr > yr) {
+				y1 = y1 * xr / yr;
+				y2 = y2 * xr / yr;
+
+				r = xr;
+
+			} else {
+				x1 = x1 * yr / xr;
+				x2 = x2 * yr / xr;
+
+				r = yr;
+			}
+
+			if (4 * r * r < (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+				return;
+
+			var xc1 = 0.0;
+			var xc2 = 0.0;
+			var yc1 = 0.0;
+			var yc2 = 0.0;
+
+			if ((y2 - y1) != 0) {
+				var A = (x1 - x2) / (y2 - y1);
+				var B = (x2 * x2 - x1 * x1 + y2 * y2 - y1 * y1) / (2 * (y2 - y1));
+
+				var a = A * A + 1;
+				var b = -2 * x1 + 2 * A * B - 2 * A * y1;
+				var c = x1 * x1 + B * B - 2 * B * y1 + y1 * y1 - r * r;
+
+
+				xc1 = (-b + Math.Sqrt (b * b - 4 * a * c)) / (2 * a);
+				yc1 = A * xc1 + B;
+
+				xc2 = (-b - Math.Sqrt (b * b - 4 * a * c)) / (2 * a);
+				yc2 = A * xc2 + B;
+			} else {
+				xc1 = (x1 + x2) / 2;
+				yc1 = y1 + Math.Sqrt (r * r - (xc1 - x1) * (xc1 - x1));
+
+				xc2 = (x1 + x2) / 2;
+				yc2 = y1 - Math.Sqrt (r * r - (xc2 - x1) * (xc2 - x1));
+				
+			}
+
+			var angle1 = Math.Asin ((y1 - yc1) / r);
+			if (x1 < xc1)
+				angle1 = Math.PI - angle1;
+		    
+			var angle2 = Math.Asin ((y2 - yc1) / r);
+			if (x2 < xc1)
+				angle2 = Math.PI - angle2;
+			
+			var alfa1 = Math.Asin ((y1 - yc2) / r);
+			if (x1 < xc2)
+				alfa1 = Math.PI - alfa1;
+
+			var alfa2 = Math.Asin ((y2 - yc2) / r);
+			if (x2 < xc2)
+				alfa2 = Math.PI - alfa2;
+
+			cr.Save ();
+
+			cr.Rotate (alpha);
+
+			if (xr > yr) 			
+				cr.Scale (1, yr / xr);
+			else
+				cr.Scale (xr / yr, 1);
+
+			if (direction == SweepDirection.Clockwise) {	
+				if (isLargeArc) {
+					if ((alfa2 - alfa1) > (angle2 - angle1)) 
+						cr.Arc (xc1, yc1, r, angle1, angle2);
+					else 
+						cr.Arc (xc2, yc2, r, alfa1, alfa2);
+				} else {
+					if ((alfa2 - alfa1) < (angle2 - angle1)) 
+						cr.Arc (xc1, yc1, r, angle1, angle2);
+					else 
+						cr.Arc (xc2, yc2, r, alfa1, alfa2);						
+				}
+
+			} else {
+				if (isLargeArc) {
+					if ((alfa2 - alfa1) < (angle2 - angle1)) 
+						cr.ArcNegative (xc1, yc1, r, angle1, angle2);
+					else 
+						cr.ArcNegative (xc2, yc2, r, alfa1, alfa2);
+				} else {
+					if ((alfa2 - alfa1) > (angle2 - angle1)) 
+						cr.ArcNegative (xc1, yc1, r, angle1, angle2);
+					else
+						cr.ArcNegative (xc2, yc2, r, alfa1, alfa2);	
+				}
+			}
+
+			cr.Restore ();
 		}
 
 		public override void PushTransform (Transform transform)

@@ -71,7 +71,6 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 			var parenthess = new ParenthesesToken ();
 			parenthess.Child = newContainer;
-
 			parent.Tokens.Add (parenthess);
 		}
 
