@@ -51,15 +51,17 @@ namespace fkalc.UI
 			Content = stackPanel;
 
 			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());
+
+			Margin = new Thickness (3, 0, 0, 0);
 		}
 
 		private UIElement OpenParentheses ()
 		{
 			var figure = new PathFigure ();
-			figure.StartPoint = new Point (4, 1);
+			figure.StartPoint = new Point (5, 1);
 
 
-			figure.Segments.Add (new ArcSegment () { Point = new Point (4, 30), Size = new Size (14, 20), SweepDirection = SweepDirection.Counterclockwise });
+			figure.Segments.Add (new ArcSegment () { Point = new Point (5, 30), Size = new Size (14, 20), SweepDirection = SweepDirection.Counterclockwise });
 				
 			var geometry = new PathGeometry ();
 			geometry.Figures.Add (figure);
@@ -67,7 +69,7 @@ namespace fkalc.UI
 			var path = new Path ();
 			path.Data = geometry;
 			path.StrokeThickness = 2;
-			path.WidthRequest = 5;
+			path.WidthRequest = 6;
 			path.HeightRequest = 30;
 
 			return path;

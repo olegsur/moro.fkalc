@@ -42,7 +42,7 @@ namespace fkalc.Core
 
 			var tree = new Parser (coreTokens).ParseStatementBlock ();
 
-			new Evaluator ().Evaluate (tree);
+			new Compiler ().Compile (tree) ();
 		}
 	}
 }

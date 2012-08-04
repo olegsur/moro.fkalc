@@ -51,10 +51,18 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 			} else {
 				var textToken = Region.Selection.SelectedToken as TextToken;
 
-				if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Region.Selection.Position != 0) {
-					var operation = new MultiplicationToken ();			
+				if (!string.IsNullOrEmpty (textToken.Text) && Region.Selection.Position != 0) {
+					if (Regex.IsMatch (textToken.Text, @"^\D") && Region.Selection.Position == textToken.Text.Length) {
+						var p = GetHBoxToken (textToken);
+						var i = p.Tokens.IndexOf (textToken);
 
-					new InsertHBinaryOperation (Region, operation).Do ();
+						p.Tokens.Insert (i + 1, new TextToken ());
+						new RightAction (Region).Do ();
+
+					} else {
+						var operation = new MultiplicationToken ();			
+						new InsertHBinaryOperation (Region, operation).Do ();					
+					}
 				}
 			}
 

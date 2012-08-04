@@ -34,7 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Evaluator.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Expressions\Expression.cs" />
     <Compile Include="Expressions\Const.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="Location.cs" />
     <Compile Include="CoreTokens\IdentifierCoreToken.cs" />
     <Compile Include="Expressions\Variable.cs" />
+    <Compile Include="Compiler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

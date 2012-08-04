@@ -56,7 +56,7 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 			var textToken = Region.Selection.SelectedToken as TextToken;
 
-			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"\d+") && Regex.IsMatch (name, @"\D")) {
+			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"^\d") && Regex.IsMatch (name, @"\D")) {
 				var operation = new MultiplicationToken ();			
 				
 				new InsertHBinaryOperation (Region, operation).Do ();

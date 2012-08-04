@@ -64,7 +64,8 @@ namespace fkalc.UI
 
 			Child = new ContentControl ()
 			{
-				Content = new TextArea ()
+				Content = new TextArea (),
+				Margin = new Thickness (2, 0, 0, 0)
 			};
 
 			var stackPanel = new StackPanel ()
@@ -78,6 +79,8 @@ namespace fkalc.UI
 			Content = stackPanel;
 
 			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());
+
+			Margin = new Thickness (2, 0, 0, 0);
 		}
 	}
 }
