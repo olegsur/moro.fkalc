@@ -52,6 +52,7 @@ namespace fkalc.UI
 			canvas.SetTop (5, line);
 			
 			Content = canvas;
+			Margin = new Thickness (2);
 		}
 	}
 }

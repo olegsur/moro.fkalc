@@ -50,6 +50,7 @@ namespace fkalc.UI
 			
 			
 			Content = canvas;
+			Margin = new Thickness (5);
 		}
 	}
 }

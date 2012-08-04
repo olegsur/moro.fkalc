@@ -53,7 +53,7 @@ namespace fkalc.UI
 		private UIElement Factory (object token)
 		{
 			var result = new TokenAreaConverter ().Convert (token) as Area;
-			result.Margin = new Thickness (2, 0, 0, 0);
+			//result.Margin = new Thickness (2, 0, 0, 0);
 
 			return result;
 		}
