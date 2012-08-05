@@ -78,7 +78,16 @@ namespace fkalc.Core
 
 					var variable = expression as Variable;
 
-					result = new Assignment (variable.Id, right) { Location = expression.Location };
+					result = new AssignmentVariable (variable.Id, right) { Location = expression.Location };
+				} else if (expression is Function) {
+					enumerator.MoveNext ();
+					var right = ParseExpression ();
+
+					var function = expression as Function;
+
+					var args = function.Args.Cast<Variable> ().Select (v => v.Id).ToArray ();
+
+					result = new AssignmentFunction (function.Id, args, right) { Location = expression.Location };
 				}
 			} else {
 				result = new ExpressionStatement (expression) { Location = expression.Location };
@@ -159,28 +168,51 @@ namespace fkalc.Core
 
 		private Expression ParsePrimaryExpression ()
 		{
+			Expression result = null;
+
 			if (enumerator.Current is NumberCoreToken) {
 				var token = enumerator.Current as NumberCoreToken;
-				var result = new Const (token.Value) { Location = token.Location };
+				result = new Const (token.Value) { Location = token.Location };
 				enumerator.MoveNext ();
-				return result;
+			} else if (enumerator.Current is OpenBracketCoreToken)
+				result = ParseTuple ();
+			else {
+				if (enumerator.Current is IdentifierCoreToken) {
+					var token = enumerator.Current as IdentifierCoreToken;
+					var id = token.Id;
+
+					enumerator.MoveNext ();
+
+					if (enumerator.Current is OpenBracketCoreToken) {	
+						result = ParseFunctionCall (id);
+						result.Location = token.Location;
+					} else					
+						result = new Variable (id) { Location = token.Location };
+				}
 			}
 
-			if (enumerator.Current is OpenBracketCoreToken)
-				return ParseTuple ();
-
-			return ParseIdentifier ();
+			return result;
 		}
 
-		private Expression ParseIdentifier ()
-		{
-			if (enumerator.Current is IdentifierCoreToken) {
-				var token = enumerator.Current as IdentifierCoreToken;
-				enumerator.MoveNext ();
-				return new Variable (token.Id) { Location = token.Location };
-			}
 
-			return null;
+		private Expression ParseFunctionCall (string id)
+		{
+			Expect<OpenBracketCoreToken> ();
+
+			var arg_list = ParseArgumentList ();
+
+			Expect<CloseBracketCoreToken> ();
+
+			return new Function (id, arg_list.ToArray ());
+		}
+
+		private IEnumerable<Expression> ParseArgumentList ()
+		{
+			var result = new List<Expression> ();
+
+			result.Add (ParseExpression ());
+
+			return result;
 		}
 
 		private Expression ParseTuple ()

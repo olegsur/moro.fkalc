@@ -31,7 +31,8 @@ namespace fkalc.Core
 {
 	public class Compiler
 	{
-		private Dictionary<string, double> variables = new Dictionary<string, double> ();
+		private Scope CurrentScope = new Scope ();
+		private List<FunctionSignature> functions = new List<FunctionSignature> ();
 
 		public Compiler ()
 		{
@@ -63,14 +64,32 @@ namespace fkalc.Core
 				};
 			}
 
-			if (statement is Assignment) {
-				var s = statement as Assignment;
+			if (statement is AssignmentVariable) {
+				var s = statement as AssignmentVariable;
 
 				var result = Compile (s.Expression);
 
 				return () =>
 				{
-					variables [s.Id] = result ();
+					CurrentScope.SetVariable (s.Id, result ());
+				};
+			}
+
+			if (statement is AssignmentFunction) {
+				var s = statement as AssignmentFunction;
+
+				var result = Compile (s.Body);
+
+				return () =>
+				{
+					var index = functions.FindIndex (f => f.Id == s.Id);
+
+					var function = new FunctionSignature () {Id = s.Id, Parameters = s.Parameters, Body = result };
+
+					if (index != -1)
+						functions [index] = function;
+					else
+						functions.Add (function);
 				};
 			}
 
@@ -110,15 +129,78 @@ namespace fkalc.Core
 
 				return () =>
 				{
-					var value = 0d;
-					variables.TryGetValue (variable.Id, out value);
+					return CurrentScope.GetVariable (variable.Id);
+				};
+			}
+			if (expression is Function) {
+				var function = expression as Function;
 
-					return value;
+				var arg_list = function.Args.Select (arg => Compile (arg)).ToList ();
+
+				return () =>
+				{
+					var func = functions.FirstOrDefault (f => f.Id == function.Id && f.Parameters.Count () == arg_list.Count);
+			
+					if (func == null)
+						return 0;
+
+					var parentScope = CurrentScope;
+					CurrentScope = new Scope () { Parent = parentScope};
+
+					var i = 0;
+					foreach (var p in func.Parameters) {
+						var value = arg_list [i] ();
+						CurrentScope.SetVariable (p, value);
+						i++;
+					}
+
+					var result = func.Body ();
+
+					CurrentScope.Parent = null;
+					CurrentScope = parentScope;
+
+					return result;
 				};
 			}
 
+
 			return null;
 		}
+	}
+
+	public class Scope
+	{
+		public Scope Parent { get; set; }
+
+		private Dictionary<string, double> variables = new Dictionary<string, double> ();
+
+		public Scope ()
+		{
+		}
+
+		public void SetVariable (string id, double value)
+		{
+			variables [id] = value;
+		}
+
+		public double GetVariable (string id)
+		{
+			var result = 0d;
+
+			if (variables.TryGetValue (id, out result)) {
+				return result;
+			}
+
+			return Parent == null ? 0 : Parent.GetVariable (id);
+		}
+
+	}
+
+	public class FunctionSignature
+	{
+		public string Id { get; set; }
+		public string[] Parameters { get; set; }
+		public Func<double> Body { get; set; }
 	}
 }
 

@@ -53,7 +53,6 @@
     <Compile Include="Scaner.cs" />
     <Compile Include="CoreTokens\SemicolonCoreToken.cs" />
     <Compile Include="CoreTokens\AssignmentCoreToken.cs" />
-    <Compile Include="Statements\Assignment.cs" />
     <Compile Include="Statements\Statement.cs" />
     <Compile Include="Statements\StatementBlock.cs" />
     <Compile Include="CoreTokens\StartBlockCoreToken.cs" />
@@ -64,6 +63,9 @@
     <Compile Include="CoreTokens\IdentifierCoreToken.cs" />
     <Compile Include="Expressions\Variable.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Expressions\Function.cs" />
+    <Compile Include="Statements\AssignmentVariable.cs" />
+    <Compile Include="Statements\AssignmentFunction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

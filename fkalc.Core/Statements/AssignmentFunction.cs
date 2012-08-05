@@ -1,5 +1,5 @@
 //
-// Assignment.cs
+// AssignmentFunction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,15 +27,17 @@ using System;
 
 namespace fkalc.Core
 {
-	public class Assignment : Statement
+	public class AssignmentFunction : Statement
 	{
 		public string Id { get; private set; }
-		public Expression Expression { get; private set; }
+		public string[] Parameters { get; private set; }
+		public Expression Body { get; private set; }
 
-		public Assignment (string id, Expression expression)
+		public AssignmentFunction (string id, string[] parameters, Expression body)
 		{
 			Id = id;
-			Expression = expression;
+			Parameters = parameters;
+			Body = body;
 		}
 	}
 }
