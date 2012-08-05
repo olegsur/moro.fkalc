@@ -58,7 +58,7 @@ namespace fkalc.UI.Framework
 				if (brush is SolidColorBrush) {
 					var b = brush as SolidColorBrush;
 					cr.Color = new Cairo.Color (b.Color.R, b.Color.G, b.Color.B, b.Color.Alfa);	
-					cr.Arc (0, 0, radiusX - pen.Thickness / 2, 0, 2 * Math.PI);			
+					cr.Arc (0, 0, radiusX, 0, 2 * Math.PI);			
 			
 					cr.Fill ();
 				}
@@ -71,8 +71,6 @@ namespace fkalc.UI.Framework
 			
 				cr.Stroke ();
 			}
-									
-			cr.Stroke ();
 			
 			cr.Restore ();
 		}
@@ -165,6 +163,11 @@ namespace fkalc.UI.Framework
 
 		private void DrawArcSegment (double xm1, double ym1, double xm2, double ym2, double xr, double yr, double alpha, bool isLargeArc, SweepDirection direction)
 		{
+			var rotate = new RotateTransform (alpha);
+			var scale = (xr > yr) ? new ScaleTransform (1, yr / xr) : new ScaleTransform (xr / yr, 1);
+
+			var m = rotate.Value * scale.Value;
+
 			var x1 = xm1 * Math.Cos (-alpha) - ym1 * Math.Sin (-alpha);
 			var y1 = xm1 * Math.Sin (-alpha) + ym1 * Math.Cos (-alpha);
 
@@ -235,12 +238,14 @@ namespace fkalc.UI.Framework
 
 			cr.Save ();
 
-			cr.Rotate (alpha);
+			PushTransform (new MatrixTransform (m));
 
-			if (xr > yr) 			
-				cr.Scale (1, yr / xr);
-			else
-				cr.Scale (xr / yr, 1);
+//			cr.Rotate (alpha);
+//
+//			if (xr > yr) 			
+//				cr.Scale (1, yr / xr);
+//			else
+//				cr.Scale (xr / yr, 1);
 
 			if (direction == SweepDirection.Clockwise) {	
 				if (isLargeArc) {
@@ -269,7 +274,9 @@ namespace fkalc.UI.Framework
 				}
 			}
 
-			cr.Restore ();
+			Pop ();
+
+//			cr.Restore ();
 		}
 
 		public override void PushTransform (Transform transform)
