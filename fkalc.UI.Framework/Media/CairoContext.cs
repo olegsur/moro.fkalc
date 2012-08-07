@@ -173,6 +173,9 @@ namespace fkalc.UI.Framework
 
 			var r = 0.0;
 
+			if (xr == 0 && yr == 0)
+				return;
+
 			if (xr > yr) {
 				y1 = y1 * xr / yr;
 				y2 = y2 * xr / yr;
