@@ -165,6 +165,9 @@ namespace fkalc.UI.Framework
 
 		private void DrawArcSegment (double xm1, double ym1, double xm2, double ym2, double xr, double yr, double alpha, bool isLargeArc, SweepDirection direction)
 		{
+			if (xr == 0 || yr == 0)
+				return;
+
 			var x1 = xm1 * Math.Cos (-alpha) - ym1 * Math.Sin (-alpha);
 			var y1 = xm1 * Math.Sin (-alpha) + ym1 * Math.Cos (-alpha);
 
@@ -173,8 +176,6 @@ namespace fkalc.UI.Framework
 
 			var r = 0.0;
 
-			if (xr == 0 && yr == 0)
-				return;
 
 			if (xr > yr) {
 				y1 = y1 * xr / yr;
