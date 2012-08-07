@@ -39,6 +39,7 @@ namespace fkalc.UI.Framework
 		private readonly DependencyProperty<object> dataContext;
 		private readonly DependencyProperty<Thickness> margin;
 		private readonly DependencyProperty<HorizontalAlignment> horizontalAlignment;
+		private readonly DependencyProperty<VerticalAlignment> verticalAlignment;
 
 		public object DataContext { 
 			get { return dataContext.Value;} 
@@ -54,15 +55,22 @@ namespace fkalc.UI.Framework
 			get { return horizontalAlignment.Value;} 
 			set { horizontalAlignment.Value = value; }
 		}
+
+		public VerticalAlignment VerticalAlignment { 
+			get { return verticalAlignment.Value;} 
+			set { verticalAlignment.Value = value; }
+		}
 		
 		public FrameworkElement ()
 		{	
 			dataContext = BuildProperty<object> ("DataContext");
 			margin = BuildProperty<Thickness> ("Margin");
 			horizontalAlignment = BuildProperty<HorizontalAlignment> ("HorizontalAlignment");
+			verticalAlignment = BuildProperty<VerticalAlignment> ("VerticalAlignment");
 
 			Margin = new Thickness (0);
 			HorizontalAlignment = HorizontalAlignment.Left;
+			VerticalAlignment = VerticalAlignment.Top;
 		}
 		
 		protected override Size MeasureCore (Size availableSize)

@@ -44,56 +44,62 @@ namespace fkalc.UI
 				Orientation = Orientation.Horizontal
 			};
 
-			stackPanel.Children.Add (OpenParentheses ());
+			stackPanel.Children.Add (new OpenParentheses ());
 			stackPanel.Children.Add (Child);
-			stackPanel.Children.Add (CloseParentheses ());
+
+			var closeParentheses = new CloseParentheses ();
+			BindingOperations.SetBinding (this, "DataContext.ShowCloseParentheses", closeParentheses.GetProperty ("Visibility"), new BooleanToVisibilityConverter ());
+
+			stackPanel.Children.Add (closeParentheses);
 
 			Content = stackPanel;
 
-			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());
-
-			Margin = new Thickness (3, 0, 0, 0);
+			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());		
 		}
 
-		private UIElement OpenParentheses ()
+		private class Parentheses : UserControl
 		{
-			var figure = new PathFigure ();
-			figure.StartPoint = new Point (5, 1);
+			public Parentheses ()
+			{
+				WidthRequest = 6;
+				VerticalAlignment = VerticalAlignment.Stretch;
+				Margin = new Thickness (2, 4, 2, 4);
+			}
 
+			protected void DrawArc (DrawingContext dc, Point start, Point end, Size size, SweepDirection sweepDirection)
+			{
+				var figure = new PathFigure ();
+				figure.StartPoint = start;
 
-			figure.Segments.Add (new ArcSegment () { Point = new Point (5, 30), Size = new Size (14, 20), SweepDirection = SweepDirection.Counterclockwise });
+				figure.Segments.Add (new ArcSegment () 
+				{ 
+					Point = end, Size = size, SweepDirection = sweepDirection
+				}
+				);
 				
-			var geometry = new PathGeometry ();
-			geometry.Figures.Add (figure);
+				var geometry = new PathGeometry ();
+				geometry.Figures.Add (figure);
 
-			var path = new Path ();
-			path.Data = geometry;
-			path.StrokeThickness = 2;
-			path.WidthRequest = 6;
-			path.HeightRequest = 30;
-
-			return path;
+				dc.DrawGeometry (null, new Pen (Colors.Black, 2), geometry);
+			}
 		}
 
-		private UIElement CloseParentheses ()
+		private class OpenParentheses : Parentheses
 		{
-			var figure = new PathFigure ();
-			figure.StartPoint = new Point (2, 1);
+			protected override void OnRender (DrawingContext dc)
+			{
+				base.OnRender (dc);
+				DrawArc (dc, new Point (5, -3), new Point (5, Height + 3), new Size (10, Height), SweepDirection.Counterclockwise);
+			}
+		}
 
-			figure.Segments.Add (new ArcSegment () { Point = new Point (2, 30), Size = new Size (14, 20), SweepDirection = SweepDirection.Clockwise });
-				
-			var geometry = new PathGeometry ();
-			geometry.Figures.Add (figure);
-
-			var path = new Path ();
-			path.Data = geometry;
-			path.StrokeThickness = 2;
-			path.HeightRequest = 30;
-			path.WidthRequest = 5;
-
-			BindingOperations.SetBinding (this, "DataContext.ShowCloseParentheses", path.GetProperty ("Visibility"), new BooleanToVisibilityConverter ());
-
-			return path;
+		private class CloseParentheses : Parentheses
+		{
+			protected override void OnRender (DrawingContext dc)
+			{
+				base.OnRender (dc);
+				DrawArc (dc, new Point (0, -3), new Point (0, Height + 3), new Size (10, Height), SweepDirection.Clockwise);
+			}
 		}
 	}
 }

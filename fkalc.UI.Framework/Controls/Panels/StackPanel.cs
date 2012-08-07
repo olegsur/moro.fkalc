@@ -103,9 +103,13 @@ namespace fkalc.UI.Framework
 						
 			if (Orientation == Orientation.Horizontal) {
 				width = children.Sum (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
-				height = children.Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
+
+				height = children.Where (c => c.DesiredSize.Height > 0).Max (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);
+				height += children.Any (c => c.DesiredSize.Height == 0) ? children.Where (c => c.DesiredSize.Height == 0).Max (c => c.Margin.Top + c.Margin.Bottom) : 0;
 			} else {
-				width = children.Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				width = children.Where (c => c.DesiredSize.Width > 0).Max (c => c.DesiredSize.Width + c.Margin.Left + c.Margin.Right);
+				width += children.Any (c => c.DesiredSize.Width == 0) ? children.Where (c => c.DesiredSize.Width == 0).Max (c => c.Margin.Left + c.Margin.Right) : 0;
+
 				height = children.Sum (c => c.DesiredSize.Height + c.Margin.Top + c.Margin.Bottom);			
 			}
 		
@@ -122,7 +126,11 @@ namespace fkalc.UI.Framework
 				var height = child.DesiredSize.Height;
 				
 				if (Orientation == Orientation.Vertical && child.HorizontalAlignment == HorizontalAlignment.Stretch) {
-					width = finalSize.Width;
+					width = finalSize.Width - child.Margin.Left - child.Margin.Right;
+				}
+
+				if (Orientation == Orientation.Horizontal && child.VerticalAlignment == VerticalAlignment.Stretch) {
+					height = finalSize.Height - child.Margin.Top - child.Margin.Bottom;
 				}
 
 				if (Orientation == Orientation.Horizontal) {

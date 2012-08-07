@@ -46,11 +46,10 @@ namespace fkalc.UI
 				Fill = Brushes.Black
 			};
 						
-			canvas.Children.Add (ellipse);	
-			
+			canvas.Children.Add (ellipse);			
 			
 			Content = canvas;
-			Margin = new Thickness (5);
+			Margin = new Thickness (2, 0, 2, 0);
 		}
 	}
 }
