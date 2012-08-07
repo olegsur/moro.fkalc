@@ -31,7 +31,7 @@ namespace fkalc.Core
 	{
 		public double Value { get; set; }
 
-		public NumberCoreToken (double value)
+		public NumberCoreToken (Location location, double value) : base(location, TokenType.Number)
 		{
 			Value = value;
 		}

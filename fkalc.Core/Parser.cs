@@ -42,9 +42,9 @@ namespace fkalc.Core
 		public StatementBlock ParseStatementBlock ()
 		{
 			var result = new StatementBlock ();
-			Expect<StartBlockCoreToken> ();
+			Expect (TokenType.StartBlock);
 
-			while (enumerator.Current is EndBlockCoreToken == false) {
+			while (enumerator.Current.Type != TokenType.EndBlock) {
 				try {
 					result.Add (ParseExpressionStatement ());
 				} catch {
@@ -52,7 +52,7 @@ namespace fkalc.Core
 						enumerator.Current.Location.Region.HasError = true;
 					}
 
-					while (enumerator.Current is SemicolonCoreToken == false) {
+					while (enumerator.Current.Type != TokenType.Semicolon) {
 						enumerator.MoveNext ();
 					}
 
@@ -60,7 +60,7 @@ namespace fkalc.Core
 				}
 			}
 
-			Expect<EndBlockCoreToken> ();
+			Expect (TokenType.EndBlock);
 
 			return result;
 		}
@@ -71,7 +71,7 @@ namespace fkalc.Core
 
 			var expression = ParseExpression ();
 
-			if (enumerator.Current is AssignmentCoreToken) {
+			if (enumerator.Current.Type == TokenType.Assignment) {
 				if (expression is Variable) {
 					enumerator.MoveNext ();
 					var right = ParseExpression ();
@@ -93,7 +93,7 @@ namespace fkalc.Core
 				result = new ExpressionStatement (expression) { Location = expression.Location };
 			}
 
-			Expect<SemicolonCoreToken> ();
+			Expect (TokenType.Semicolon);
 
 			return result;
 		}
@@ -111,17 +111,18 @@ namespace fkalc.Core
 			while (true) {			
 				var opt = enumerator.Current;
 
-				if (opt is PlusCoreToken) {
+				Expression right;
+
+				switch (opt.Type) {
+				case TokenType.Plus:
 					enumerator.MoveNext ();
-					var right = ParseMultiplicativeExpression ();
+					right = ParseMultiplicativeExpression ();
 
 					left = new Addition (left, right) { Location = opt.Location };
 					continue;
-				}
-
-				if (opt is MinusCoreToken) {
+				case TokenType.Minus:
 					enumerator.MoveNext ();
-					var right = ParseMultiplicativeExpression ();
+					right = ParseMultiplicativeExpression ();
 
 					left = new Subtraction (left, right) { Location = opt.Location };
 					continue;
@@ -140,20 +141,21 @@ namespace fkalc.Core
 			while (true) {			
 				var opt = enumerator.Current;
 
-				if (opt is MultiplicationCoreToken) {
+				Expression right;
+
+				switch (opt.Type) {
+				case TokenType.Multiplication:
 					enumerator.MoveNext ();
-					var right = ParseUnaryExpression ();
+					right = ParseUnaryExpression ();
 
 					left = new Multiplication (left, right) { Location = opt.Location };
 					continue;
-				}
-
-				if (opt is DivisionCoreToken) {
+				case TokenType.Division:
 					enumerator.MoveNext ();
-					var right = ParseUnaryExpression ();
+					right = ParseUnaryExpression ();
 
 					left = new Division (left, right) { Location = opt.Location };
-					continue;
+					continue;				
 				}
 
 				break;
@@ -174,7 +176,7 @@ namespace fkalc.Core
 				var token = enumerator.Current as NumberCoreToken;
 				result = new Const (token.Value) { Location = token.Location };
 				enumerator.MoveNext ();
-			} else if (enumerator.Current is OpenBracketCoreToken)
+			} else if (enumerator.Current.Type == TokenType.OpenParentheses)
 				result = ParseTuple ();
 			else {
 				if (enumerator.Current is IdentifierCoreToken) {
@@ -183,7 +185,7 @@ namespace fkalc.Core
 
 					enumerator.MoveNext ();
 
-					if (enumerator.Current is OpenBracketCoreToken) {	
+					if (enumerator.Current.Type == TokenType.OpenParentheses) {	
 						result = ParseFunctionCall (id);
 						result.Location = token.Location;
 					} else					
@@ -197,11 +199,11 @@ namespace fkalc.Core
 
 		private Expression ParseFunctionCall (string id)
 		{
-			Expect<OpenBracketCoreToken> ();
+			Expect (TokenType.OpenParentheses);
 
 			var arg_list = ParseArgumentList ();
 
-			Expect<CloseBracketCoreToken> ();
+			Expect (TokenType.CloseParentheses);
 
 			return new Function (id, arg_list.ToArray ());
 		}
@@ -217,23 +219,23 @@ namespace fkalc.Core
 
 		private Expression ParseTuple ()
 		{
-			Expect<OpenBracketCoreToken> ();
+			Expect (TokenType.OpenParentheses);
 
 			var result = ParseExpression ();
 
-			Expect<CloseBracketCoreToken> ();
+			Expect (TokenType.CloseParentheses);
 
 			return result;
 		}
 
-		private void Expect<T> () where T: CoreToken
+		private void Expect (TokenType type)
 		{
-			if (enumerator.Current is T) {
+			if (enumerator.Current.Type == type) {
 				enumerator.MoveNext ();
 				return;
 			}
 
 			throw new Exception ("Error");
-		}				                       
+		}
 	}
 }

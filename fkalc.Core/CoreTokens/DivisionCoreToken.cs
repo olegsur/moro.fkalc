@@ -31,6 +31,7 @@ namespace fkalc.Core
 	{
 		public DivisionCoreToken ()
 		{
+			Type = TokenType.Division;
 		}
 	}
 }

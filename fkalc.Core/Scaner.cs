@@ -41,13 +41,13 @@ namespace fkalc.Core
 
 		public IEnumerable<CoreToken> Scan ()
 		{
-			yield return new StartBlockCoreToken ();
+			yield return new CoreToken (null, TokenType.StartBlock);
 
 			foreach (var token in Scan (Regions)) {
 				yield return token;
 			}
 
-			yield return new EndBlockCoreToken ();
+			yield return new CoreToken (null, TokenType.EndBlock);
 		}
 
 		private  IEnumerable<CoreToken> Scan (IEnumerable<IMathRegionViewModel> regions)
@@ -56,7 +56,7 @@ namespace fkalc.Core
 				foreach (var coreToken in Scan(region.Root, region)) {
 					yield return coreToken;
 				}
-				yield return new SemicolonCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.Semicolon);
 			}
 		}
 
@@ -66,34 +66,34 @@ namespace fkalc.Core
 				var t = token as ITextToken;
 				double value;
 				if (double.TryParse (t.Text, out value))
-					yield return new NumberCoreToken (value) { Location = new Location(region) };
+					yield return new NumberCoreToken (new Location (region), value);
 				else
-					yield return new IdentifierCoreToken (t.Text) { Location = new Location(region) };
+					yield return new IdentifierCoreToken (new Location (region), t.Text);
 			}
 
 			if (token is IPlusToken)
-				yield return new PlusCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.Plus);
 
 			if (token is IMinusToken)
-				yield return new MinusCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.Minus);
 
 			if (token is IMultiplicationToken)
-				yield return new MultiplicationCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.Multiplication);
 
 			if (token is IFractionToken) {
 				var fraction = token as IFractionToken;
 
-				yield return new OpenBracketCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.OpenParentheses);
 				foreach (var coreToken in Scan(fraction.Dividend, region))
 					yield return coreToken;
-				yield return new CloseBracketCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.CloseParentheses);
 
-				yield return new DivisionCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.Division);
 
-				yield return new OpenBracketCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.OpenParentheses);
 				foreach (var t in Scan(fraction.Divisor, region))
 					yield return t;
-				yield return new CloseBracketCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.CloseParentheses); 
 			}
 
 			if (token is IHBoxToken) {
@@ -104,20 +104,18 @@ namespace fkalc.Core
 			}
 
 			if (token is IAssignmentToken) {
-				yield return new AssignmentCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.Assignment);
 			}
-
-
 
 			if (token is IParenthesesToken) {
 				var parentheses = token as IParenthesesToken;
 
-				yield return new OpenBracketCoreToken () { Location = new Location(region) };
+				yield return new CoreToken (new Location (region), TokenType.OpenParentheses);
 				foreach (var coreToken in Scan(parentheses.Child, region))
 					yield return coreToken;
 
 				if (parentheses.ShowCloseParentheses)
-					yield return new CloseBracketCoreToken () { Location = new Location(region) };
+					yield return new CoreToken (new Location (region), TokenType.CloseParentheses);
 			}
 		}
 	}

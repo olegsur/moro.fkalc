@@ -29,7 +29,32 @@ namespace fkalc.Core
 {
 	public class CoreToken
 	{
-		public Location Location { get; set; }
+		public TokenType Type { get; private set; }
+		public Location Location { get; private set; }
+
+		public CoreToken (Location location, TokenType type)
+		{			
+			Location = location;
+			Type = type;
+		}
+	}
+
+	public enum TokenType
+	{
+		None,
+		Plus,
+		Minus,
+		Multiplication,
+		Division,
+		Assignment,
+		Semicolon,
+		OpenParentheses,
+		CloseParentheses,
+		Identifier,
+		Number,
+
+		StartBlock,
+		EndBlock
 	}
 }
 

@@ -31,7 +31,7 @@ namespace fkalc.Core
 	{
 		public string Id { get; private set; }
 
-		public IdentifierCoreToken (string id)
+		public IdentifierCoreToken (Location location, string id) : base(location, TokenType.Identifier)
 		{
 			Id = id;
 		}
