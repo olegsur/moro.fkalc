@@ -100,6 +100,7 @@ namespace fkalc.UI.Framework
 
 			if (pen != null) {
 				cr.Color = new Cairo.Color (pen.Color.R, pen.Color.G, pen.Color.B, pen.Color.Alfa);	
+				cr.LineWidth = pen.Thickness;
 				cr.Rectangle (rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);			
 			
 				cr.Stroke ();
@@ -197,7 +198,7 @@ namespace fkalc.UI.Framework
 			var yc1 = 0.0;
 			var yc2 = 0.0;
 
-			if ((y2 - y1) != 0) {
+			if (Math.Abs (y1 - y2) > 0.000000001) {
 				var A = (x1 - x2) / (y2 - y1);
 				var B = (x2 * x2 - x1 * x1 + y2 * y2 - y1 * y1) / (2 * (y2 - y1));
 
