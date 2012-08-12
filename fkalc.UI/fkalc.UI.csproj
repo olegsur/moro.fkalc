@@ -84,6 +84,7 @@
     <Compile Include="Areas\AssignmentArea.cs" />
     <Compile Include="Areas\ParenthesesArea.cs" />
     <Compile Include="Areas\CommaArea.cs" />
+    <Compile Include="Areas\ExponentiationArea.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

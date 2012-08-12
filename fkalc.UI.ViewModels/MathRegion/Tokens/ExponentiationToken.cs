@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// ExponentiationToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,61 +25,52 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class TokenAreaConverter : IValueConverter
+	public class ExponentiationToken: ContainerToken
 	{
-		public TokenAreaConverter ()
-		{
+		private readonly DependencyProperty<Token> _base;
+		private readonly DependencyProperty<Token> power;
+
+		public Token Base { 
+			get { return _base.Value; } 
+			set{ _base.Value = value; }
 		}
 
-		public object Convert (object value)
-		{
-			Area result = null;
-
-			if (value is TextToken) 
-				result = new TextArea ();				
-
-			if (value is PlusToken)
-				result = new PlusArea ();
-
-			if (value is MinusToken)
-				result = new MinusArea ();
-
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			if (value is ExponentiationToken)
-				result = new ExponentiationArea ();
-
-			result.DataContext = value;
-
-			return result;
+		public Token Power { 
+			get { return power.Value; } 
+			set{ power.Value = value; }
 		}
 
-		public object ConvertBack (object value)
+		public ExponentiationToken ()
 		{
-			throw new System.NotImplementedException ();
+			_base = BuildProperty<Token> ("Base");
+			_base.DependencyPropertyValueChanged += HandleValueChanged;
+
+			power = BuildProperty<Token> ("Power");
+			power.DependencyPropertyValueChanged += HandleValueChanged;
+
+			Base = new TextToken ();
+			Power = new TextToken ();					
+		}
+
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+				
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			if (oldToken == Base)
+				Base = newToken;
+
+			if (oldToken == Power)
+				Power = newToken;
 		}
 	}
 }

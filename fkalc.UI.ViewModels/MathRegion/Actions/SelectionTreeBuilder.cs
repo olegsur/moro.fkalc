@@ -77,6 +77,19 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 				yield return new SelectionToken (SelectionType.Right, parentheses);
 			}
+
+			if (token is ExponentiationToken) {
+				var exponentiation = token as ExponentiationToken;
+
+				yield return new SelectionToken (SelectionType.Left, exponentiation);
+
+				foreach (var node in Build(exponentiation.Base))
+					yield return node;
+				foreach (var node in Build(exponentiation.Power))
+					yield return node;
+
+				yield return new SelectionToken (SelectionType.Right, exponentiation);
+			}
 		}
 
 		private bool IsOperator (Token token)

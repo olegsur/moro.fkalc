@@ -1,5 +1,5 @@
 //
-// CommaAction.cs
+// ExponentiationAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -28,29 +28,66 @@ using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class CommaAction: IAction
+	public class ExponentiationAction: IAction
 	{
 		private MathRegionViewModel Region { get; set; }
-
-		public CommaAction (MathRegionViewModel region)
+		
+		public ExponentiationAction (MathRegionViewModel region)
 		{
 			Region = region;
 		}
-
+		
 		public void Do ()
 		{
-			var selectedToken = Region.Selection.SelectedToken;
-
-			if (selectedToken.Parent == null || selectedToken.Parent is HBoxToken == false || selectedToken.Parent.Parent is ParenthesesToken == false)
-				return;
-
-			//var parentheses = selectedToken.Parent.Parent as ParenthesesToken;
-
 			Region.SetNeedToEvaluate (true);
 
-			var operation = new CommaToken ();
-			new InsertHBinaryOperation (Region, operation).Do ();
+			var parent = Region.Selection.SelectedToken.Parent;
+
+			Token _base;
+			Token power;
+
+			if (Region.Selection.SelectedToken is TextToken) {
+				var textToken = Region.Selection.SelectedToken as TextToken;
+
+				_base = new TextToken ()
+				{
+					Text = GetLeftString (textToken.Text)
+				};
+
+				power = new TextToken ()
+				{
+					Text = GetRightString (textToken.Text)
+				};
+			} else {
+				_base = Region.Selection.SelectedToken;
+				power = new TextToken ();
+			}
+
+			var exponentiation = new ExponentiationToken ();			
+
+			parent.Replace (Region.Selection.SelectedToken, exponentiation);
+			exponentiation.Base = _base;
+			exponentiation.Power = power;
+				
+			Region.Selection.SelectedToken = power;
+		}
+
+		private string GetLeftString (string text)
+		{
+			if (string.IsNullOrEmpty (text))
+				return null;
+
+			return text.Substring (0, Region.Selection.Position);
+		}
+
+		private string GetRightString (string text)
+		{
+			if (string.IsNullOrEmpty (text))
+				return null;
+
+			return text.Substring (Region.Selection.Position, text.Length - Region.Selection.Position);
 		}
 	}
 }
 
+	

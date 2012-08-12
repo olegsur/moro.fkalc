@@ -117,9 +117,13 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.CloseBracketCommand", closeBracketBinding.GetProperty ("Command"));
 			closeBracketBinding.Gesture = new KeyGesture (Gdk.Key.parenright);
 
-			var commatBinding = new KeyBinding ();
-			BindingOperations.SetBinding (this, "DataContext.CommaCommand", commatBinding.GetProperty ("Command"));
-			commatBinding.Gesture = new KeyGesture (Gdk.Key.comma);
+			var commaBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.CommaCommand", commaBinding.GetProperty ("Command"));
+			commaBinding.Gesture = new KeyGesture (Gdk.Key.comma);
+
+			var exponentiationBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.ExponentiationCommand", exponentiationBinding.GetProperty ("Command"));
+			exponentiationBinding.Gesture = new KeyGesture (Gdk.Key.asciicircum);
 
 			InputBindings.Add (plusKeyBinding);
 			InputBindings.Add (minusKeyBinding);
@@ -131,7 +135,8 @@ namespace fkalc.UI
 			InputBindings.Add (rightKeyBinding);
 			InputBindings.Add (openBracketBinding);
 			InputBindings.Add (closeBracketBinding);
-			InputBindings.Add (commatBinding);
+			InputBindings.Add (commaBinding);
+			InputBindings.Add (exponentiationBinding);
 
 			selection = BuildProperty<Selection> ("Selection");
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");

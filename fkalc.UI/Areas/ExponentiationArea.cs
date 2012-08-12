@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// ExponentiationArea.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,61 +25,42 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI
 {
-	public class TokenAreaConverter : IValueConverter
+	public class ExponentiationArea : Area
 	{
-		public TokenAreaConverter ()
+		public ContentControl Base { get; private set; }
+		public ContentControl Power { get; private set; }
+
+		public ExponentiationArea ()
 		{
-		}
+			Base = new ContentControl () 
+			{
+				Content = new TextArea(),
+				Margin = new Thickness (0, 3, 3, 0)
+			};
 
-		public object Convert (object value)
-		{
-			Area result = null;
+			Power = new ContentControl () 
+			{
+				Content = new TextArea(),
+			};
 
-			if (value is TextToken) 
-				result = new TextArea ();				
+			var grid = new Grid ();
 
-			if (value is PlusToken)
-				result = new PlusArea ();
+			grid.Children.Add (Base);
+			grid.Children.Add (Power);
 
-			if (value is MinusToken)
-				result = new MinusArea ();
+			grid.SetRow (1, Base);
+			grid.SetColumn (0, Base);
 
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
+			grid.SetRow (0, Power);
+			grid.SetColumn (1, Power);
 
-			if (value is FractionToken)
-				result = new FractionArea ();
+			BindingOperations.SetBinding (this, "DataContext.Base", Base.GetProperty ("Content"), new TokenAreaConverter ());
+			BindingOperations.SetBinding (this, "DataContext.Power", Power.GetProperty ("Content"), new TokenAreaConverter ());
 
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			if (value is ExponentiationToken)
-				result = new ExponentiationArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
+			Content = grid;
 		}
 	}
 }

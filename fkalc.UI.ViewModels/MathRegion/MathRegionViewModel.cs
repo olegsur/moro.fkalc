@@ -56,6 +56,7 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<ICommand> openBracketCommand;
 		private readonly DependencyProperty<ICommand> closeBracketCommand;
 		private readonly DependencyProperty<ICommand> commaCommand;
+		private readonly DependencyProperty<ICommand> exponentiationCommand;
 
 		private readonly DependencyProperty<bool> needToEvaluate;
 		private readonly DependencyProperty<bool> hasError;
@@ -137,6 +138,9 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 			commaCommand = BuildProperty<ICommand> ("CommaCommand");
 			commaCommand.Value = new DelegateCommand<object> (o => new CommaAction (this).Do ());
+
+			exponentiationCommand = BuildProperty<ICommand> ("ExponentiationCommand");
+			exponentiationCommand.Value = new DelegateCommand<object> (o => new ExponentiationAction (this).Do ());
 
 			needToEvaluate = BuildProperty<bool> ("NeedToEvaluate");
 			needToEvaluate.DependencyPropertyValueChanged += HandleNeedToEvaluateChanged;
