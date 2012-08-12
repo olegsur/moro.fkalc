@@ -90,6 +90,17 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 				yield return new SelectionToken (SelectionType.Right, exponentiation);
 			}
+
+			if (token is SquareRootToken) {
+				var squareRoot = token as SquareRootToken;
+
+				yield return new SelectionToken (SelectionType.Left, squareRoot);
+
+				foreach (var node in Build(squareRoot.Child))
+					yield return node;
+
+				yield return new SelectionToken (SelectionType.Right, squareRoot);
+			}
 		}
 
 		private bool IsOperator (Token token)

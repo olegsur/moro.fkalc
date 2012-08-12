@@ -73,6 +73,8 @@
     <Compile Include="MathRegion\Actions\CommaAction.cs" />
     <Compile Include="MathRegion\Tokens\ExponentiationToken.cs" />
     <Compile Include="MathRegion\Actions\ExponentiationAction.cs" />
+    <Compile Include="MathRegion\Tokens\SquareRootToken.cs" />
+    <Compile Include="MathRegion\Actions\SquareRootAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

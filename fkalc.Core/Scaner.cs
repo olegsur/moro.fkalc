@@ -135,6 +135,16 @@ namespace fkalc.Core
 					yield return coreToken;
 				yield return new CoreToken (new Location (region), TokenType.CloseParentheses); 
 			}
+
+			if (token is ISquareRootToken) {
+				var squareRoot = token as ISquareRootToken;
+
+				yield return new IdentifierCoreToken (new Location (region), "^sqrt");
+				yield return new CoreToken (new Location (region), TokenType.OpenParentheses);
+				foreach (var coreToken in Scan(squareRoot.Child, region))
+					yield return coreToken;			
+				yield return new CoreToken (new Location (region), TokenType.CloseParentheses); 
+			}
 		}
 	}
 }

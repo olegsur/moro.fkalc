@@ -136,11 +136,20 @@ namespace fkalc.UI.Framework
 			foreach (var height in heights) {
 				x = 0;
 				foreach (var width in widths) {
-					var child = col.FirstOrDefault (c => c.Row == height.Key && c.Column == width.Key);
+					foreach (var child in col.Where(c => c.Row == height.Key && c.Column == width.Key)) {
+						var w = child.DesiredSize.Width;
+						var h = child.DesiredSize.Height;
 
-					if (child != null)
-						child.Arrange (new Rect (new Point (x + child.Margin.Left, y + child.Margin.Top), child.DesiredSize));
+						if (child.HorizontalAlignment == HorizontalAlignment.Stretch) {
+							w = width.Value - child.Margin.Left - child.Margin.Right;
+						}
 
+						if (child.VerticalAlignment == VerticalAlignment.Stretch) {
+							h = height.Value - child.Margin.Top - child.Margin.Bottom;
+						}
+
+						child.Arrange (new Rect (new Point (x + child.Margin.Left, y + child.Margin.Top), new Size (w, h)));
+					}
 					x += width.Value;
 				}
 				y += height.Value;

@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// SquareRootAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,65 +24,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class TokenAreaConverter : IValueConverter
+	public class SquareRootAction : IAction
 	{
-		public TokenAreaConverter ()
+		private MathRegionViewModel Region { get; set; }
+
+		public SquareRootAction (MathRegionViewModel region)
 		{
+			Region = region;
 		}
 
-		public object Convert (object value)
+		public void Do ()
 		{
-			Area result = null;
+			Region.SetNeedToEvaluate (true);
 
-			if (value is TextToken) 
-				result = new TextArea ();				
+			var parent = Region.Selection.SelectedToken.Parent;
+			var child = Region.Selection.SelectedToken;
 
-			if (value is PlusToken)
-				result = new PlusArea ();
+			var squareRoot = new SquareRootToken ();
 
-			if (value is MinusToken)
-				result = new MinusArea ();
+			parent.Replace (Region.Selection.SelectedToken, squareRoot);
 
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
+			squareRoot.Child = child;
 
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			if (value is ExponentiationToken)
-				result = new ExponentiationArea ();
-
-			if (value is SquareRootToken)
-				result = new SquareRootArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
+			Region.Selection.SelectedToken = child;
 		}
 	}
 }

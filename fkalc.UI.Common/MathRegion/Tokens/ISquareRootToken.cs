@@ -1,5 +1,5 @@
 //
-// GridChild.cs
+// ISquareRootToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,22 +25,11 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.UI.Framework
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class GridChild : ContentControl
+	public interface ISquareRootToken : IToken
 	{
-		public uint Row { get; set; }
-		public uint Column { get ; set; }
-
-		public GridChild (UIElement child)
-		{
-			Content = child;
-
-			BindingOperations.SetBinding (child.GetProperty ("Visibility"), GetProperty ("Visibility"));
-			BindingOperations.SetBinding (child.GetProperty ("Margin"), GetProperty ("Margin"));
-			BindingOperations.SetBinding (child.GetProperty ("HorizontalAlignment"), GetProperty ("HorizontalAlignment"));
-			BindingOperations.SetBinding (child.GetProperty ("VerticalAlignment"), GetProperty ("VerticalAlignment"));
-		}	
+		IToken Child { get; }
 	}
 }
 

@@ -125,6 +125,10 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.ExponentiationCommand", exponentiationBinding.GetProperty ("Command"));
 			exponentiationBinding.Gesture = new KeyGesture (Gdk.Key.asciicircum);
 
+			var squareRootBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.SquareRootCommand", squareRootBinding.GetProperty ("Command"));
+			squareRootBinding.Gesture = new KeyGesture (Gdk.Key.backslash);
+
 			InputBindings.Add (plusKeyBinding);
 			InputBindings.Add (minusKeyBinding);
 			InputBindings.Add (multiplicationBinding);
@@ -137,6 +141,7 @@ namespace fkalc.UI
 			InputBindings.Add (closeBracketBinding);
 			InputBindings.Add (commaBinding);
 			InputBindings.Add (exponentiationBinding);
+			InputBindings.Add (squareRootBinding);
 
 			selection = BuildProperty<Selection> ("Selection");
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");
