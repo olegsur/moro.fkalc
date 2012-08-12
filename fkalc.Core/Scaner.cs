@@ -120,6 +120,21 @@ namespace fkalc.Core
 
 			if (token is ICommaToken)
 				yield return new CoreToken (new Location (region), TokenType.Comma);
+
+			if (token is IExponentiationToken) {
+				var exponentiation = token as IExponentiationToken;
+
+				yield return new IdentifierCoreToken (new Location (region), "^pow");
+				yield return new CoreToken (new Location (region), TokenType.OpenParentheses);
+				foreach (var coreToken in Scan(exponentiation.Base, region))
+					yield return coreToken;
+
+				yield return new CoreToken (new Location (region), TokenType.Comma);
+
+				foreach (var coreToken in Scan(exponentiation.Power, region))
+					yield return coreToken;
+				yield return new CoreToken (new Location (region), TokenType.CloseParentheses); 
+			}
 		}
 	}
 }

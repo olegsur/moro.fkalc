@@ -45,6 +45,7 @@
     <Compile Include="MathRegion\Tokens\IAssignmentToken.cs" />
     <Compile Include="MathRegion\Tokens\IParenthesesToken.cs" />
     <Compile Include="MathRegion\Tokens\ICommaToken.cs" />
+    <Compile Include="MathRegion\Tokens\IExponentiationToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

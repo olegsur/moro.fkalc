@@ -1,5 +1,5 @@
 //
-// IFractionToken.cs
+// IExponentiationToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -27,10 +27,10 @@ using System;
 
 namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public interface IFractionToken : IToken
+	public interface IExponentiationToken : IToken
 	{
-		IToken Dividend { get; }
-		IToken Divisor { get; }
+		IToken Base { get; }
+		IToken Power { get; }
 	}
 }
 

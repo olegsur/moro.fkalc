@@ -25,10 +25,11 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
+using fkalc.UI.Common.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class ExponentiationToken: ContainerToken
+	public class ExponentiationToken: ContainerToken, IExponentiationToken
 	{
 		private readonly DependencyProperty<Token> _base;
 		private readonly DependencyProperty<Token> power;
@@ -71,6 +72,18 @@ namespace fkalc.UI.ViewModels.MathRegion.Tokens
 
 			if (oldToken == Power)
 				Power = newToken;
+		}
+
+		IToken IExponentiationToken.Base {
+			get {
+				return Base;
+			}
+		}
+
+		IToken IExponentiationToken.Power {
+			get {
+				return Power;
+			}
 		}
 	}
 }
