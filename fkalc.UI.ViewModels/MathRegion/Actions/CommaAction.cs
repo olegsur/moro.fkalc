@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// CommaAction.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,59 +24,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
 using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Actions
 {
-	public class TokenAreaConverter : IValueConverter
+	public class CommaAction: IAction
 	{
-		public TokenAreaConverter ()
+		private MathRegionViewModel Region { get; set; }
+
+		public CommaAction (MathRegionViewModel region)
 		{
+			Region = region;
 		}
 
-		public object Convert (object value)
+		public void Do ()
 		{
-			Area result = null;
+			var selectedToken = Region.Selection.SelectedToken;
 
-			if (value is TextToken) 
-				result = new TextArea ();				
+			if (selectedToken.Parent == null || selectedToken.Parent is HBoxToken == false || selectedToken.Parent.Parent is ParenthesesToken == false)
+				return;
 
-			if (value is PlusToken)
-				result = new PlusArea ();
+			var parentheses = selectedToken.Parent.Parent as ParenthesesToken;
 
-			if (value is MinusToken)
-				result = new MinusArea ();
+			Region.SetNeedToEvaluate (true);
 
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
+			var operation = new CommaToken ();
+			new InsertHBinaryOperation (Region, operation).Do ();
 		}
 	}
 }

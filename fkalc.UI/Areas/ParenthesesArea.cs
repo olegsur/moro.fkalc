@@ -36,7 +36,8 @@ namespace fkalc.UI
 		{
 			Child = new ContentControl ()
 			{
-				Content = new TextArea ()
+				Content = new TextArea (),
+				VerticalAlignment = VerticalAlignment.Center
 			};
 
 			var stackPanel = new StackPanel ()

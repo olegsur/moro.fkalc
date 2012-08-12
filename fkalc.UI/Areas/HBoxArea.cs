@@ -94,7 +94,16 @@ namespace fkalc.UI
 					var height = child.DesiredSize.Height;
 
 					x += child.Margin.Left;	
-					y = baseLine - BaseLineCalculator.GetBaseLine (GetArea (child));
+
+					switch (child.VerticalAlignment) {
+					
+					case VerticalAlignment.Bottom:
+						y = Height - height;
+						break;					
+					default:
+						y = baseLine - BaseLineCalculator.GetBaseLine (GetArea (child));
+						break;
+					}
 
 					child.Arrange (new Rect (new Point (x, y), new Size (width, height)));
 				

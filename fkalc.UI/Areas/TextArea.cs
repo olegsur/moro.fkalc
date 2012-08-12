@@ -55,6 +55,8 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.FontSize", textBlock.GetProperty ("FontSize"));
 
 			textBlock.GetProperty ("Text").DependencyPropertyValueChanged += TextChanged;
+
+			Margin = new Thickness (1, 0, 1, 0);
 		}
 
 		private void TextChanged (object sender, DPropertyValueChangedEventArgs e)

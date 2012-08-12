@@ -135,7 +135,20 @@ namespace fkalc.UI.Framework
 
 				if (Orientation == Orientation.Horizontal) {
 					x += child.Margin.Left;	
-					y = (Height - height) / 2;
+
+					switch (child.VerticalAlignment) {
+					case VerticalAlignment.Top:
+						y = 0;
+						break;
+					case VerticalAlignment.Bottom:
+						y = Height - height;
+						break;
+					case VerticalAlignment.Center:
+					default:
+						y = (Height - height) / 2;
+						break;
+					}
+
 				} else {
 					x = (Width - width) / 2;
 					y += child.Margin.Top;

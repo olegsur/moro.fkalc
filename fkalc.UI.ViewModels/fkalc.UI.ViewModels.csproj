@@ -69,6 +69,8 @@
     <Compile Include="MathRegion\Actions\OpenBracketAction.cs" />
     <Compile Include="MathRegion\Actions\CloseBracketAction.cs" />
     <Compile Include="MathRegion\Tokens\ParenthesesToken.cs" />
+    <Compile Include="MathRegion\Tokens\CommaToken.cs" />
+    <Compile Include="MathRegion\Actions\CommaAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

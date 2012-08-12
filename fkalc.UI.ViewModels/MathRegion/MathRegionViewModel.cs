@@ -25,12 +25,12 @@
 // THE SOFTWARE.
 
 using System;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
+using System.Linq;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Actions;
 using fkalc.UI.Common.MathRegion;
 using fkalc.UI.Common.MathRegion.Tokens;
-using System.Linq;
+using fkalc.UI.ViewModels.MathRegion.Actions;
+using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI.ViewModels.MathRegion
 {
@@ -55,6 +55,7 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<ICommand> evaluateCommand;
 		private readonly DependencyProperty<ICommand> openBracketCommand;
 		private readonly DependencyProperty<ICommand> closeBracketCommand;
+		private readonly DependencyProperty<ICommand> commaCommand;
 
 		private readonly DependencyProperty<bool> needToEvaluate;
 		private readonly DependencyProperty<bool> hasError;
@@ -133,6 +134,9 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 			closeBracketCommand = BuildProperty<ICommand> ("CloseBracketCommand");
 			closeBracketCommand.Value = new DelegateCommand<object> (o => new CloseBracketAction (this).Do ());
+
+			commaCommand = BuildProperty<ICommand> ("CommaCommand");
+			commaCommand.Value = new DelegateCommand<object> (o => new CommaAction (this).Do ());
 
 			needToEvaluate = BuildProperty<bool> ("NeedToEvaluate");
 			needToEvaluate.DependencyPropertyValueChanged += HandleNeedToEvaluateChanged;

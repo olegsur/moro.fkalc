@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// CommaArea.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,58 +25,46 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI
 {
-	public class TokenAreaConverter : IValueConverter
+	public class CommaArea : Area
 	{
-		public TokenAreaConverter ()
+		public CommaArea ()
 		{
-		}
+			var figure = new PathFigure ();
+			figure.StartPoint = new Point (4, 2);
 
-		public object Convert (object value)
-		{
-			Area result = null;
+			figure.Segments.Add (new ArcSegment () 
+			{ 
+				Point = new Point (2, 2), Size = new Size (1.0001, 1.0001), RotationAngle = Math.PI, IsLargeArc = true, SweepDirection = SweepDirection.Clockwise
+			}
+			);
 
-			if (value is TextToken) 
-				result = new TextArea ();				
+			figure.Segments.Add (new ArcSegment () 
+			{ 
+				Point = new Point (4, 2), Size = new Size (1.0001, 1.0001), RotationAngle = Math.PI, IsLargeArc = true, SweepDirection = SweepDirection.Clockwise
+			}
+			);
 
-			if (value is PlusToken)
-				result = new PlusArea ();
+			figure.Segments.Add (new ArcSegment () 
+			{ 
+				Point = new Point (2, 6), Size = new Size (12, 12), RotationAngle = Math.PI, IsLargeArc = false, SweepDirection = SweepDirection.Clockwise
+			}
+			);
+				
+			var geometry = new PathGeometry ();
+			geometry.Figures.Add (figure);
+			var path = new Path ();
+			path.Data = geometry;
 
-			if (value is MinusToken)
-				result = new MinusArea ();
+			Content = path;
 
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
+			HeightRequest = 3;
+			WidthRequest = 3;
 
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
+			VerticalAlignment = VerticalAlignment.Bottom;
+			Margin = new Thickness (2, 0, 2, 0);
 		}
 	}
 }
