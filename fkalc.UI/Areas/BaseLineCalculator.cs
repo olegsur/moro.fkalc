@@ -33,6 +33,11 @@ namespace fkalc.UI
 		{
 			if (area is FractionArea)
 				return AreaHelper.GetArea ((area as FractionArea).Dividend).DesiredSize.Height + 6;
+
+			if (area is ExponentiationArea) {
+				return AreaHelper.GetArea ((area as ExponentiationArea).Power).DesiredSize.Height + 
+					AreaHelper.GetArea ((area as ExponentiationArea).Base).DesiredSize.Height / 2 + 3;
+			}
 			
 			return area.DesiredSize.Height / 2;	
 		}
