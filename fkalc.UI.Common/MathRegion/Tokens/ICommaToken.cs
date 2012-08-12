@@ -1,5 +1,5 @@
 //
-// NumberCoreToken.cs
+// ICommaToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,37 +25,10 @@
 // THE SOFTWARE.
 using System;
 
-namespace fkalc.Core
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class CoreToken
+	public interface ICommaToken : IToken
 	{
-		public TokenType Type { get; private set; }
-		public Location Location { get; private set; }
-
-		public CoreToken (Location location, TokenType type)
-		{			
-			Location = location;
-			Type = type;
-		}
-	}
-
-	public enum TokenType
-	{
-		None,
-		Plus,
-		Minus,
-		Multiplication,
-		Division,
-		Assignment,
-		Semicolon,
-		OpenParentheses,
-		CloseParentheses,
-		Identifier,
-		Number,
-		Comma,
-
-		StartBlock,
-		EndBlock
 	}
 }
 

@@ -196,7 +196,6 @@ namespace fkalc.Core
 			return result;
 		}
 
-
 		private Expression ParseFunctionCall (string id)
 		{
 			Expect (TokenType.OpenParentheses);
@@ -212,7 +211,9 @@ namespace fkalc.Core
 		{
 			var result = new List<Expression> ();
 
-			result.Add (ParseExpression ());
+			do {
+				result.Add (ParseExpression ());
+			} while(Accept(TokenType.Comma));
 
 			return result;
 		}
@@ -236,6 +237,16 @@ namespace fkalc.Core
 			}
 
 			throw new Exception ("Error");
+		}
+
+		private bool Accept (TokenType type)
+		{
+			if (enumerator.Current.Type == type) {
+				enumerator.MoveNext ();
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

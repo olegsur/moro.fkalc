@@ -117,6 +117,9 @@ namespace fkalc.Core
 				if (parentheses.ShowCloseParentheses)
 					yield return new CoreToken (new Location (region), TokenType.CloseParentheses);
 			}
+
+			if (token is ICommaToken)
+				yield return new CoreToken (new Location (region), TokenType.Comma);
 		}
 	}
 }
