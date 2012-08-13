@@ -129,6 +129,10 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.SquareRootCommand", squareRootBinding.GetProperty ("Command"));
 			squareRootBinding.Gesture = new KeyGesture (Gdk.Key.backslash);
 
+			var absoluteBinding = new KeyBinding ();
+			BindingOperations.SetBinding (this, "DataContext.AbsoluteCommand", absoluteBinding.GetProperty ("Command"));
+			absoluteBinding.Gesture = new KeyGesture (Gdk.Key.bar);
+
 			InputBindings.Add (plusKeyBinding);
 			InputBindings.Add (minusKeyBinding);
 			InputBindings.Add (multiplicationBinding);
@@ -142,6 +146,7 @@ namespace fkalc.UI
 			InputBindings.Add (commaBinding);
 			InputBindings.Add (exponentiationBinding);
 			InputBindings.Add (squareRootBinding);
+			InputBindings.Add (absoluteBinding);
 
 			selection = BuildProperty<Selection> ("Selection");
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");

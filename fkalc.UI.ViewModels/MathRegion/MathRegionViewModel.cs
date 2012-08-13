@@ -58,6 +58,7 @@ namespace fkalc.UI.ViewModels.MathRegion
 		private readonly DependencyProperty<ICommand> commaCommand;
 		private readonly DependencyProperty<ICommand> exponentiationCommand;
 		private readonly DependencyProperty<ICommand> squareRootCommand;
+		private readonly DependencyProperty<ICommand> absoluteCommand;
 
 		private readonly DependencyProperty<bool> needToEvaluate;
 		private readonly DependencyProperty<bool> hasError;
@@ -145,6 +146,9 @@ namespace fkalc.UI.ViewModels.MathRegion
 
 			squareRootCommand = BuildProperty<ICommand> ("SquareRootCommand");
 			squareRootCommand.Value = new DelegateCommand<object> (o => new SquareRootAction (this).Do ());
+
+			absoluteCommand = BuildProperty<ICommand> ("AbsoluteCommand");
+			absoluteCommand.Value = new DelegateCommand<object> (o => new AbsoluteAction (this).Do ());
 
 			needToEvaluate = BuildProperty<bool> ("NeedToEvaluate");
 			needToEvaluate.DependencyPropertyValueChanged += HandleNeedToEvaluateChanged;

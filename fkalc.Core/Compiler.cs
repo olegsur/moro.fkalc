@@ -39,6 +39,7 @@ namespace fkalc.Core
 			functions.Add (new FunctionSignature () { Id = "^pow", Parameters = new[] {"x","y"}, Body = () => Math.Pow(CurrentScope.GetVariable("x"), CurrentScope.GetVariable("y"))});
 
 			functions.Add (new FunctionSignature () { Id = "^sqrt", Parameters = new[] {"x"}, Body = () => Math.Sqrt(CurrentScope.GetVariable("x"))});
+			functions.Add (new FunctionSignature () { Id = "^abs", Parameters = new[] {"x"}, Body = () => Math.Abs(CurrentScope.GetVariable("x"))});
 		}
 
 		public Action Compile (Statement statement)

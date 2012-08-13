@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// AbsoluteToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,68 +24,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using fkalc.UI.Common.MathRegion.Tokens;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
-namespace fkalc.UI
+namespace fkalc.UI.ViewModels.MathRegion.Tokens
 {
-	public class TokenAreaConverter : IValueConverter
+	public class AbsoluteToken: ContainerToken, IAbsoluteToken
 	{
-		public TokenAreaConverter ()
-		{
+		private readonly DependencyProperty<Token> child;
+
+		public Token Child { 
+			get { return child.Value; } 
+			set{ child.Value = value; }
 		}
 
-		public object Convert (object value)
+		public AbsoluteToken ()
 		{
-			Area result = null;
+			child = BuildProperty<Token> ("Child");
+			child.DependencyPropertyValueChanged += HandleValueChanged;
 
-			if (value is TextToken) 
-				result = new TextArea ();				
-
-			if (value is PlusToken)
-				result = new PlusArea ();
-
-			if (value is MinusToken)
-				result = new MinusArea ();
-
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			if (value is ExponentiationToken)
-				result = new ExponentiationArea ();
-
-			if (value is SquareRootToken)
-				result = new SquareRootArea ();
-
-			if (value is AbsoluteToken)
-				result = new AbsoluteArea ();
-
-			result.DataContext = value;
-
-			return result;
+			Child = new TextToken ();
 		}
 
-		public object ConvertBack (object value)
+		private void HandleValueChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
 		{
-			throw new System.NotImplementedException ();
+			if (e.OldValue != null)
+				e.OldValue.Parent = null;
+
+			if (e.NewValue != null)
+				e.NewValue.Parent = this;
+		}
+
+		public override void Replace (Token oldToken, Token newToken)
+		{
+			Child = newToken;
+		}
+
+		IToken IAbsoluteToken.Child {
+			get {
+				return Child;
+			}
 		}
 	}
 }

@@ -145,6 +145,16 @@ namespace fkalc.Core
 					yield return coreToken;			
 				yield return new CoreToken (new Location (region), TokenType.CloseParentheses); 
 			}
+
+			if (token is IAbsoluteToken) {
+				var absolute = token as IAbsoluteToken;
+
+				yield return new IdentifierCoreToken (new Location (region), "^abs");
+				yield return new CoreToken (new Location (region), TokenType.OpenParentheses);
+				foreach (var coreToken in Scan(absolute.Child, region))
+					yield return coreToken;			
+				yield return new CoreToken (new Location (region), TokenType.CloseParentheses); 
+			}
 		}
 	}
 }

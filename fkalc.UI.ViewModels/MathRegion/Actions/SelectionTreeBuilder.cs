@@ -101,6 +101,17 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 
 				yield return new SelectionToken (SelectionType.Right, squareRoot);
 			}
+
+			if (token is AbsoluteToken) {
+				var absolute = token as AbsoluteToken;
+
+				yield return new SelectionToken (SelectionType.Left, absolute);
+
+				foreach (var node in Build(absolute.Child))
+					yield return node;
+
+				yield return new SelectionToken (SelectionType.Right, absolute);
+			}
 		}
 
 		private bool IsOperator (Token token)

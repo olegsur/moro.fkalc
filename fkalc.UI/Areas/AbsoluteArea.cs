@@ -1,5 +1,5 @@
 //
-// TokenAreaConverter.cs
+// AbsoluteArea.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,67 +25,34 @@
 // THE SOFTWARE.
 using System;
 using fkalc.UI.Framework;
-using fkalc.UI.ViewModels.MathRegion.Tokens;
 
 namespace fkalc.UI
 {
-	public class TokenAreaConverter : IValueConverter
+	public class AbsoluteArea : Area
 	{
-		public TokenAreaConverter ()
+		public ContentControl Child { get; private set; }
+
+		public AbsoluteArea ()
 		{
-		}
+			Child = new ContentControl ()
+			{
+				Content = new TextArea (),
+				VerticalAlignment = VerticalAlignment.Center,
+				Margin = new Thickness(3)
+			};
 
-		public object Convert (object value)
-		{
-			Area result = null;
+			var stackPanel = new StackPanel ()
+			{
+				Orientation = Orientation.Horizontal
+			};
 
-			if (value is TextToken) 
-				result = new TextArea ();				
+			stackPanel.Children.Add (new Line () { WidthRequest = 2, VerticalAlignment = VerticalAlignment.Stretch, StrokeThickness = 2, });
+			stackPanel.Children.Add (Child);
+			stackPanel.Children.Add (new Line () { WidthRequest = 2, VerticalAlignment = VerticalAlignment.Stretch, StrokeThickness = 2, });
 
-			if (value is PlusToken)
-				result = new PlusArea ();
+			Content = stackPanel;
 
-			if (value is MinusToken)
-				result = new MinusArea ();
-
-			if (value is MultiplicationToken)
-				result = new MultiplicationArea ();
-
-			if (value is FractionToken)
-				result = new FractionArea ();
-
-			if (value is HBoxToken)
-				result = new HBoxArea ();
-
-			if (value is ResultToken)
-				result = new ResultArea ();
-
-			if (value is AssignmentToken)
-				result = new AssignmentArea ();
-
-			if (value is ParenthesesToken)
-				result = new ParenthesesArea ();
-
-			if (value is CommaToken)
-				result = new CommaArea ();
-
-			if (value is ExponentiationToken)
-				result = new ExponentiationArea ();
-
-			if (value is SquareRootToken)
-				result = new SquareRootArea ();
-
-			if (value is AbsoluteToken)
-				result = new AbsoluteArea ();
-
-			result.DataContext = value;
-
-			return result;
-		}
-
-		public object ConvertBack (object value)
-		{
-			throw new System.NotImplementedException ();
+			BindingOperations.SetBinding (this, "DataContext.Child", Child.GetProperty ("Content"), new TokenAreaConverter ());	
 		}
 	}
 }

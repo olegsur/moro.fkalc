@@ -1,5 +1,5 @@
 //
-// CommaArea.cs
+// IAbsoluteToken.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,48 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.UI.Common.MathRegion.Tokens
 {
-	public class CommaArea : Area
+	public interface IAbsoluteToken : IToken
 	{
-		public CommaArea ()
-		{
-			var figure = new PathFigure ();
-			figure.StartPoint = new Point (4, 2);
-
-			figure.Segments.Add (new ArcSegment () 
-			{ 
-				Point = new Point (2, 2), Size = new Size (1, 1), RotationAngle = Math.PI, IsLargeArc = true, SweepDirection = SweepDirection.Clockwise
-			}
-			);
-
-			figure.Segments.Add (new ArcSegment () 
-			{ 
-				Point = new Point (4, 2), Size = new Size (1, 1), RotationAngle = Math.PI, IsLargeArc = true, SweepDirection = SweepDirection.Clockwise
-			}
-			);
-
-			figure.Segments.Add (new ArcSegment () 
-			{ 
-				Point = new Point (2, 6), Size = new Size (12, 12), RotationAngle = Math.PI, IsLargeArc = false, SweepDirection = SweepDirection.Clockwise
-			}
-			);
-				
-			var geometry = new PathGeometry ();
-			geometry.Figures.Add (figure);
-			var path = new Path ();
-			path.Data = geometry;
-
-			Content = path;
-
-			HeightRequest = 3;
-			WidthRequest = 3;
-
-			VerticalAlignment = VerticalAlignment.Bottom;
-			Margin = new Thickness (2, 0, 2, 0);
-		}
+		IToken Child { get; }
 	}
 }
 

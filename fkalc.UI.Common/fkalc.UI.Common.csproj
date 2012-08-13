@@ -47,6 +47,7 @@
     <Compile Include="MathRegion\Tokens\ICommaToken.cs" />
     <Compile Include="MathRegion\Tokens\IExponentiationToken.cs" />
     <Compile Include="MathRegion\Tokens\ISquareRootToken.cs" />
+    <Compile Include="MathRegion\Tokens\IAbsoluteToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
