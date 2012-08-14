@@ -59,7 +59,24 @@ namespace fkalc.UI.ViewModels.MathRegion.Actions
 					Text = GetRightString (textToken.Text)
 				};
 			} else {
-				_base = Region.Selection.SelectedToken;
+				if (Region.Selection.SelectedToken is FractionToken) {
+					var fraction = Region.Selection.SelectedToken;
+
+					var parentheses = new ParenthesesToken ();
+					parentheses.ShowCloseParentheses = true;
+
+					parent.Replace (fraction, parentheses);
+
+					var container = new HBoxToken ();
+					parentheses.Child = container;
+
+					container.Add (fraction);
+
+					_base = parentheses;
+					Region.Selection.SelectedToken = parentheses;
+				} else
+					_base = Region.Selection.SelectedToken;
+
 				power = new TextToken ();
 			}
 

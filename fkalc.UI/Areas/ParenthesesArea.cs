@@ -64,7 +64,7 @@ namespace fkalc.UI
 			{
 				WidthRequest = 6;
 				VerticalAlignment = VerticalAlignment.Stretch;
-				Margin = new Thickness (2, 4, 2, 4);
+				Margin = new Thickness (2, 4, 0, 4);
 			}
 
 			protected void DrawArc (DrawingContext dc, Point start, Point end, Size size, SweepDirection sweepDirection)
