@@ -36,7 +36,7 @@ namespace fkalc.UI
 
 			if (area is ExponentiationArea) {
 				return AreaHelper.GetArea ((area as ExponentiationArea).Power).DesiredSize.Height + 
-					AreaHelper.GetArea ((area as ExponentiationArea).Base).DesiredSize.Height / 2 + 3;
+					AreaHelper.GetArea ((area as ExponentiationArea).Base).DesiredSize.Height / 2;
 			}
 			
 			return area.DesiredSize.Height / 2;	

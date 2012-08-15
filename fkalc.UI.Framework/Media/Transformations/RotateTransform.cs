@@ -44,12 +44,13 @@ namespace fkalc.UI.Framework
 			CenterX = centerX;
 			CenterY = centerY;
 
+			var cos = Math.Cos (angle);
+			var sin = Math.Sin (angle);
+
 			var x = -Math.Cos (angle) * centerX + Math.Sin (angle) * centerY + centerX;
 			var y = -Math.Sin (angle) * centerX - Math.Cos (angle) * centerY + centerY;
 
-			angle = -angle;
-
-			Value = new Matrix (Math.Cos (angle), -Math.Sin (angle), Math.Sin (angle), Math.Cos (angle), x, y);
+			Value = new Matrix (cos, -sin, sin, cos, x, y);
 		}
 	}
 }

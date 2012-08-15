@@ -44,6 +44,9 @@ namespace fkalc.UI
 			Power = new ContentControl () 
 			{
 				Content = new TextArea(),
+				RenderTransform = new ScaleTransform(0.75, 0.75),
+				LayoutTransform = new ScaleTransform(0.75, 0.75),
+				//BorderColor = Colors.Blue
 			};
 
 			var grid = new Grid ();

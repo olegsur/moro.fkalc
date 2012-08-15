@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Linq;
 
 namespace fkalc.UI.Framework
 {
@@ -44,6 +45,25 @@ namespace fkalc.UI.Framework
 			get {
 				return new MatrixTransform (Value.Inverse ());
 			}
+		}
+
+		public Rect TransformBounds (Rect rect)
+		{
+			var inverse = this;
+			var points = new [] {
+				inverse.TransformPoint (rect.TopLeft),
+				inverse.TransformPoint (rect.TopRight),
+				inverse.TransformPoint (rect.BottomLeft) ,
+				inverse.TransformPoint (rect.BottomRight)
+			};
+
+			var x1 = points.Min (p => p.X);
+			var y1 = points.Min (p => p.Y);
+
+			var x2 = points.Max (p => p.X);
+			var y2 = points.Max (p => p.Y);
+
+			return new Rect (x1, y1, x2 - x1, y2 - y1);
 		}
 	}
 }

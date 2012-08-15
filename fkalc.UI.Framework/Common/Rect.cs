@@ -36,6 +36,11 @@ namespace fkalc.UI.Framework
 
 		public Size Size { get; private set; }
 
+		public Point TopLeft { get; private set; }
+		public Point TopRight { get; private set; }
+		public Point BottomLeft { get; private set; }
+		public Point BottomRight { get; private set; }
+
 		public Rect (double x, double y, double width, double height) : this()
 		{
 			X = x;
@@ -44,6 +49,11 @@ namespace fkalc.UI.Framework
 			Height = height;
 
 			Size = new Size (Width, Height);
+
+			TopLeft = new Point (x, y);
+			TopRight = new Point (x + width, y);
+			BottomLeft = new Point (x, y + height);
+			BottomRight = new Point (x + width, y + height);
 		}
 
 		public Rect (Size size) : this (0,0, size.Width, size.Height)

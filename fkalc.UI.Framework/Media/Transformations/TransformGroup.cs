@@ -1,5 +1,5 @@
 //
-// FormattedText.cs
+// TransformGroup.cs
 //
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,40 +24,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace fkalc.UI.Framework
 {
-	public class FormattedText
+	public class TransformGroup : Transform
 	{
-		public string Text { get; private set; }
-		public string FontFamily { get; private set; }
-		public double FontSize { get; set; }
-		public double Width { get; private set; }
-		public double Height { get; private set; }
+		public override Matrix Value { get; protected set; }
 
-		public FormattedText (string text, string fontFamily, double fontSize)
+		public TransformGroup (IEnumerable<Transform> transforms)
 		{
-			Text = text;
-			FontFamily = fontFamily;
-			FontSize = fontSize;
+			Value = Matrix.Identity;
 
-			var size = Measure ();
-
-			Width = size.Width;
-			Height = size.Height;
-		}
-
-		private Size Measure ()
-		{
-			var surface = new Cairo.ImageSurface (Cairo.Format.ARGB32, 1, 1);
-			
-			using (Cairo.Context cr = new Cairo.Context(surface)) {			
-				cr.SelectFontFace (FontFamily, Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);
-				cr.SetFontSize (FontSize);
-			
-				var textExtents = cr.TextExtents (Text);
-			
-				return new Size (textExtents.Width, textExtents.Height);
+			foreach (var t in transforms.Reverse()) {
+				Value *= t.Value;
 			}
 		}
 	}

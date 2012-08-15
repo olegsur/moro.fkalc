@@ -136,6 +136,7 @@
     <Compile Include="Media\Transformations\ScaleTransform.cs" />
     <Compile Include="Media\Transformations\RotateTransform.cs" />
     <Compile Include="Common\VerticalAlignment.cs" />
+    <Compile Include="Media\Transformations\TransformGroup.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

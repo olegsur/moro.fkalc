@@ -86,8 +86,6 @@ namespace fkalc.UI.ViewModels.MathRegion.Tokens
 				return Divisor;
 			}
 		}
-
-
 	}
 }
 

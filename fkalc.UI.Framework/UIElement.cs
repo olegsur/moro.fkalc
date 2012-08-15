@@ -67,6 +67,8 @@ namespace fkalc.UI.Framework
 		public List<KeyBinding> InputBindings { get; private set; }
 
 		private bool lookingFocus;
+
+		public Transform RenderTransform { get; set; }
 		
 		public UIElement ()
 		{
@@ -114,6 +116,9 @@ namespace fkalc.UI.Framework
 					if (uielement.IsVisible) {
 						dc.PushTransform (uielement.VisualTransform);
 
+						//if (uielement.RenderTransform != null)
+						//	dc.PushTransform (uielement.RenderTransform);
+
 						uielement.Render (dc);
 
 						dc.Pop ();
@@ -130,6 +135,9 @@ namespace fkalc.UI.Framework
 		protected virtual void ArrangeCore (Rect finalRect)
 		{			
 			VisualTransform = new TranslateTransform (finalRect.X, finalRect.Y);
+
+			if (RenderTransform != null)
+				VisualTransform = new TransformGroup (new [] {VisualTransform, RenderTransform});
 		}
 
 		protected virtual void OnRender (DrawingContext dc)

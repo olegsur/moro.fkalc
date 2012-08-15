@@ -66,6 +66,8 @@ namespace fkalc.UI
 
 			BindingOperations.SetBinding (this, "DataContext.Dividend", Dividend.GetProperty ("Content"), new TokenAreaConverter ());
 			BindingOperations.SetBinding (this, "DataContext.Divisor", Divisor.GetProperty ("Content"), new TokenAreaConverter ());
+
+			Margin = new Thickness (2, 0, 2, 0);
 		}
 	}
 }

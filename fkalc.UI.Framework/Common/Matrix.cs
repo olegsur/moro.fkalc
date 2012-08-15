@@ -29,6 +29,9 @@ namespace fkalc.UI.Framework
 {
 	public struct Matrix
 	{
+		private static Matrix identity = new Matrix (1, 0, 0, 1, 0, 0);
+		public static Matrix Identity { get { return identity; } }
+
 		public double M11 { get; private set; }
 		public double M12 { get; private set; }
 		public double M21 { get; private set; }

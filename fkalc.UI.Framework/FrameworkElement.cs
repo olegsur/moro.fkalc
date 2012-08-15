@@ -36,6 +36,8 @@ namespace fkalc.UI.Framework
 		public double? HeightRequest { get; set; }
 		public double? WidthRequest { get; set; }
 
+		public Transform LayoutTransform { get; set; }
+
 		private readonly DependencyProperty<object> dataContext;
 		private readonly DependencyProperty<Thickness> margin;
 		private readonly DependencyProperty<HorizontalAlignment> horizontalAlignment;
@@ -73,10 +75,12 @@ namespace fkalc.UI.Framework
 			VerticalAlignment = VerticalAlignment.Top;
 		}
 		
-		protected override Size MeasureCore (Size availableSize)
+		protected sealed override Size MeasureCore (Size availableSize)
 		{
 			var size = MeasureOverride (availableSize);
-			
+
+			if (LayoutTransform != null)
+				size = LayoutTransform.TransformBounds (new Rect (size)).Size;
 			
 			var height = HeightRequest ?? size.Height;
 			var width = WidthRequest ?? size.Width;
@@ -84,7 +88,7 @@ namespace fkalc.UI.Framework
 			return new Size (width, height);
 		}
 		
-		protected override void ArrangeCore (Rect finalRect)
+		protected sealed override void ArrangeCore (Rect finalRect)
 		{	
 			base.ArrangeCore (finalRect);
 

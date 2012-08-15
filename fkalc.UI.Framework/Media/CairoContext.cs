@@ -281,7 +281,7 @@ namespace fkalc.UI.Framework
 			cr.Save ();
 
 			var m = transform.Value;
-			cr.Transform (new Cairo.Matrix (m.M11, m.M12, m.M21, m.M22, m.OffsetX, m.OffsetY));
+			cr.Transform (new Cairo.Matrix (m.M11, m.M21, m.M12, m.M22, m.OffsetX, m.OffsetY));
 		}
 
 		public override void Pop ()
