@@ -46,7 +46,7 @@ namespace fkalc.UI.Framework
 			CenterX = centerX;
 			CenterY = centerY;
 
-			Value = new Matrix (scaleX, 0, 0, scaleY, - centerX, - centerY);
+			Value = new Matrix (scaleX, 0, 0, scaleY, (1 - scaleX) * centerX, (1 - scaleY) * centerY);
 		}
 	}
 }
