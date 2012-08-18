@@ -63,8 +63,8 @@ namespace fkalc.UI.Framework
 			var a21 = - M21 / determinant;
 			var a22 = M11 / determinant;
 
-			var offsetX = -(a11 * OffsetX + a21 * OffsetY);
-			var offsetY = -(a12 * OffsetX + a22 * OffsetY);
+			var offsetX = -(a11 * OffsetX + a12 * OffsetY);
+			var offsetY = -(a21 * OffsetX + a22 * OffsetY);
 
 			return new Matrix (a11, a12, a21, a22, offsetX, offsetY);
 		}
@@ -76,13 +76,14 @@ namespace fkalc.UI.Framework
 
 		public static Matrix operator * (Matrix m1, Matrix m2)
 		{
-			var a11 = m2.M11 * m1.M11 + m2.M12 * m1.M21;
-			var a12 = m2.M11 * m1.M12 + m2.M12 * m1.M22;
-			var a21 = m2.M21 * m1.M11 + m2.M22 * m1.M21;
-			var a22 = m2.M21 * m1.M12 + m2.M22 * m1.M22;
+			var a11 = m1.M11 * m2.M11 + m1.M12 * m2.M21;
+			var a12 = m1.M11 * m2.M12 + m1.M12 * m2.M22;
 
-			var offsetX = m2.M11 * m1.OffsetX + m2.M21 * m1.OffsetY + m2.OffsetX;
-			var offsetY = m2.M12 * m1.OffsetX + m2.M22 * m1.OffsetY + m2.OffsetY;
+			var a21 = m1.M21 * m2.M11 + m1.M22 * m2.M21;
+			var a22 = m1.M21 * m2.M12 + m1.M22 * m2.M22;
+
+			var offsetX = m1.M11 * m2.OffsetX + m1.M12 * m2.OffsetY + m1.OffsetX;
+			var offsetY = m1.M21 * m2.OffsetX + m1.M22 * m2.OffsetY + m1.OffsetY;
 
 			return new Matrix (a11, a12, a21, a22, offsetX, offsetY);
 		}

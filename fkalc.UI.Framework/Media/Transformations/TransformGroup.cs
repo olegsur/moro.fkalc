@@ -37,7 +37,7 @@ namespace fkalc.UI.Framework
 		{
 			Value = Matrix.Identity;
 
-			foreach (var t in transforms.Reverse()) {
+			foreach (var t in transforms) {
 				Value *= t.Value;
 			}
 		}

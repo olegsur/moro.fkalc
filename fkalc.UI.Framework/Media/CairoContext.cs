@@ -164,7 +164,7 @@ namespace fkalc.UI.Framework
 
 		private void DrawArcSegment (double xm1, double ym1, double xm2, double ym2, double xr, double yr, double alpha, bool isLargeArc, SweepDirection direction)
 		{
-			if (xr == 0 || yr == 0)
+			if (xr <= 0 || yr <= 0)
 				return;
 
 
