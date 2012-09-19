@@ -116,9 +116,6 @@ namespace fkalc.UI.Framework
 					if (uielement.IsVisible) {
 						dc.PushTransform (uielement.VisualTransform);
 
-						//if (uielement.RenderTransform != null)
-						//	dc.PushTransform (uielement.RenderTransform);
-
 						uielement.Render (dc);
 
 						dc.Pop ();

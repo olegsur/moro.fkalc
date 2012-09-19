@@ -38,6 +38,9 @@ namespace fkalc.UI.Framework
 		
 		public Canvas ()
 		{		
+			HorizontalAlignment = HorizontalAlignment.Stretch;
+			VerticalAlignment = VerticalAlignment.Stretch;
+			
 			Children.CollectionChanged += HandleCollectionChanged;
 		}
 			

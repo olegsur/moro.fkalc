@@ -40,10 +40,13 @@ namespace fkalc.UI
 
 		private DocumentCursor documentCursor = new DocumentCursor ();
 		private Canvas canvas = new Canvas ();
-		private ItemsControl itemsControl = new ItemsControl ();
+		private ItemsControl itemsControl = new ItemsControl () {HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch};
 		
 		public DocumentView ()
 		{	
+			HorizontalAlignment = HorizontalAlignment.Stretch;
+			VerticalAlignment = VerticalAlignment.Stretch;
+
 			newRegionCommand = BuildProperty<ICommand> ("NewRegionCommand");
 
 			Focusable = true;

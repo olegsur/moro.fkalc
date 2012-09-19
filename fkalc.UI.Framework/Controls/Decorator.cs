@@ -36,6 +36,9 @@ namespace fkalc.UI.Framework
 		{
 			child = BuildProperty<UIElement> ("Child");
 			child.DependencyPropertyValueChanged += HandleChildChanged;
+			
+			BindingOperations.SetBinding (this, "Child.HorizontalAlignment", GetProperty ("HorizontalAlignment"));
+			BindingOperations.SetBinding (this, "Child.VerticalAlignment", GetProperty ("VerticalAlignment"));			
 		}
 
 		private void HandleChildChanged (object sender, DPropertyValueChangedEventArgs<UIElement> e)
@@ -67,7 +70,7 @@ namespace fkalc.UI.Framework
 			if (Child == null)
 				return;
 				
-			Child.Arrange (new Rect (new Size (Width, Height)));
+			Child.Arrange (new Rect (finalSize));
 		}
 		
 		public override int VisualChildrenCount {

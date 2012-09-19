@@ -79,11 +79,14 @@ namespace fkalc.UI.Framework
 		{
 			var size = MeasureOverride (availableSize);
 
-			if (LayoutTransform != null)
-				size = LayoutTransform.TransformBounds (new Rect (size)).Size;
-			
 			var height = HeightRequest ?? size.Height;
 			var width = WidthRequest ?? size.Width;
+
+			if (LayoutTransform != null) {
+				size = LayoutTransform.TransformBounds (new Rect (0, 0, width, height)).Size;
+				height = size.Height;
+				width = size.Width;
+			}				
 			
 			return new Size (width, height);
 		}
@@ -91,9 +94,9 @@ namespace fkalc.UI.Framework
 		protected sealed override void ArrangeCore (Rect finalRect)
 		{	
 			base.ArrangeCore (finalRect);
-
-			Height = finalRect.Height;
-			Width = finalRect.Width;
+			
+			Height = VerticalAlignment == VerticalAlignment.Stretch ? finalRect.Height : DesiredSize.Height;
+			Width = HorizontalAlignment == HorizontalAlignment.Stretch ? finalRect.Width : DesiredSize.Width;
 			
 			ArrangeOverride (finalRect.Size);
 		}
