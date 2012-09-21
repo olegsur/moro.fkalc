@@ -110,7 +110,7 @@ namespace fkalc.UI.Framework
 		{
 			var col = children.Where (c => c.Visibility != Visibility.Collapsed);
 
-			foreach (var child in children.Where(c => c.Visibility != Visibility.Collapsed)) {
+			foreach (var child in col) {
 				child.Measure (availableSize);
 			}
 

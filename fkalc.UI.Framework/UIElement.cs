@@ -115,8 +115,12 @@ namespace fkalc.UI.Framework
 
 					if (uielement.IsVisible) {
 						dc.PushTransform (uielement.VisualTransform);
-
-						uielement.Render (dc);
+						
+						if (uielement.VisualTransform is TransformGroup)
+							uielement.Render (dc);
+						else
+							uielement.Render (dc);
+						
 
 						dc.Pop ();
 					}

@@ -66,7 +66,7 @@ namespace fkalc.UI.Framework
 			if (Content == null || Content.Visibility == Visibility.Collapsed)
 				return;
 			
-			Content.Arrange (new Rect (new Size (Width, Height)));
+			Content.Arrange (new Rect (finalSize));
 		}
 		
 		public override int VisualChildrenCount {

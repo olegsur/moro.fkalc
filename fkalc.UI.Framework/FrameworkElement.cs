@@ -75,6 +75,8 @@ namespace fkalc.UI.Framework
 			VerticalAlignment = VerticalAlignment.Top;
 		}
 		
+		private Size savedSize;
+		
 		protected sealed override Size MeasureCore (Size availableSize)
 		{
 			var size = MeasureOverride (availableSize);
@@ -83,6 +85,8 @@ namespace fkalc.UI.Framework
 			var width = WidthRequest ?? size.Width;
 
 			if (LayoutTransform != null) {
+				savedSize = size;
+				
 				size = LayoutTransform.TransformBounds (new Rect (0, 0, width, height)).Size;
 				height = size.Height;
 				width = size.Width;
@@ -98,7 +102,13 @@ namespace fkalc.UI.Framework
 			Height = VerticalAlignment == VerticalAlignment.Stretch ? finalRect.Height : DesiredSize.Height;
 			Width = HorizontalAlignment == HorizontalAlignment.Stretch ? finalRect.Width : DesiredSize.Width;
 			
-			ArrangeOverride (finalRect.Size);
+			if (LayoutTransform != null) {
+				//TODO: adjust height and width depends on vertical/horizontal aligments
+				Height = savedSize.Height;
+				Width = savedSize.Width;
+			}
+			
+			ArrangeOverride (new Size (Width, Height));
 		}
 		
 		protected virtual Size MeasureOverride (Size availableSize)
