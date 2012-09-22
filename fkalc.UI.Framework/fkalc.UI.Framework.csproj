@@ -137,6 +137,10 @@
     <Compile Include="Media\Transformations\RotateTransform.cs" />
     <Compile Include="Common\VerticalAlignment.cs" />
     <Compile Include="Media\Transformations\TransformGroup.cs" />
+    <Compile Include="Controls\Panels\RowDefinition.cs" />
+    <Compile Include="Controls\Panels\GridUnitType.cs" />
+    <Compile Include="Controls\Panels\GridLength.cs" />
+    <Compile Include="Controls\Panels\ColumnDefinition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

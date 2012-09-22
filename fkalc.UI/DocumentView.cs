@@ -53,11 +53,28 @@ namespace fkalc.UI
 
 			itemsControl.ItemsPanel = canvas;
 			itemsControl.ItemTemplate = new DataTemplate (Factory);
-
-			this.PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
-			this.ButtonPressEvent += HandleButtonPressEvent;
 			
-			Content = new AdornerDecorator () { Child = itemsControl };
+			var adornerDecorator = new AdornerDecorator () { Child = itemsControl };
+			
+			var grid = new Grid () {HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch};
+			grid.RowDefinitions.Add (new RowDefinition ());
+			grid.RowDefinitions.Add (new RowDefinition () {Height = GridLength.Auto});
+			grid.ColumnDefinitions.Add (new ColumnDefinition ());
+			grid.ColumnDefinitions.Add (new ColumnDefinition () {Width = GridLength.Auto});
+			
+			var textBlock = new TextBlock (){Text ="Test"};
+			textBlock.FontFamily = "Arial";
+			textBlock.FontSize = 20;
+			
+			grid.Children.Add (adornerDecorator);
+			grid.Children.Add (textBlock);
+			
+			grid.SetRow (1, textBlock);			
+			
+			Content = grid;
+
+			PreviewKeyPressEvent += HandlePreviewKeyPressEvent;
+			ButtonPressEvent += HandleButtonPressEvent;
 
 			AdornerLayer.GetAdornerLayer (itemsControl).Add (documentCursor);
 			
