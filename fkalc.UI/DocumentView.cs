@@ -62,14 +62,16 @@ namespace fkalc.UI
 			grid.ColumnDefinitions.Add (new ColumnDefinition ());
 			grid.ColumnDefinitions.Add (new ColumnDefinition () {Width = GridLength.Auto});
 			
-			var textBlock = new TextBlock (){Text ="Test"};
+			var textBlock = new TextBlock (){Text ="+"};
 			textBlock.FontFamily = "Arial";
 			textBlock.FontSize = 20;
 			
-			grid.Children.Add (adornerDecorator);
-			grid.Children.Add (textBlock);
+			var button = new Button () { Content = textBlock};			
 			
-			grid.SetRow (1, textBlock);			
+			grid.Children.Add (adornerDecorator);
+			grid.Children.Add (button);
+			
+			grid.SetRow (1, button);			
 			
 			Content = grid;
 
@@ -85,7 +87,7 @@ namespace fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.DocumentCursor", documentCursor.GetProperty ("DataContext"));
 			BindingOperations.SetBinding (this, "DataContext.Regions", itemsControl.GetProperty ("ItemsSource"));
 			BindingOperations.SetBinding (this, "DataContext.NewRegionCommand", GetProperty ("NewRegionCommand"));
-		}
+		}		
 
 		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{		
