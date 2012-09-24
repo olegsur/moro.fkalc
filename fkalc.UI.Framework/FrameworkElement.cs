@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Linq;
 
 namespace fkalc.UI.Framework
 {
@@ -42,6 +43,8 @@ namespace fkalc.UI.Framework
 		private readonly DependencyProperty<Thickness> margin;
 		private readonly DependencyProperty<HorizontalAlignment> horizontalAlignment;
 		private readonly DependencyProperty<VerticalAlignment> verticalAlignment;
+		
+		private readonly DependencyProperty<Style> style;
 
 		public object DataContext { 
 			get { return dataContext.Value;} 
@@ -63,17 +66,25 @@ namespace fkalc.UI.Framework
 			set { verticalAlignment.Value = value; }
 		}
 		
+		public Style Style { 
+			get { return style.Value;} 
+			set { style.Value = value; }
+		}
+		
 		public FrameworkElement ()
 		{	
 			dataContext = BuildProperty<object> ("DataContext");
 			margin = BuildProperty<Thickness> ("Margin");
 			horizontalAlignment = BuildProperty<HorizontalAlignment> ("HorizontalAlignment");
 			verticalAlignment = BuildProperty<VerticalAlignment> ("VerticalAlignment");
+			style = BuildProperty<Style> ("Style");			
 
 			Margin = new Thickness (0);
 			HorizontalAlignment = HorizontalAlignment.Left;
 			VerticalAlignment = VerticalAlignment.Top;
-		}
+			
+			style.DependencyPropertyValueChanged += HandleStyleChanged;
+		}			
 		
 		private Size savedSize;
 		
@@ -125,6 +136,21 @@ namespace fkalc.UI.Framework
 			return IsVisible 
 				&& point.X >= 0 && point.X <= Width 
 				&& point.Y >= 0 && point.Y <= Height ? this : null;
+		}
+		
+		private void HandleStyleChanged (object sender, DPropertyValueChangedEventArgs<Style> e)
+		{
+			if (e.NewValue != null)
+				ApplyStyle (e.NewValue);
+		}
+
+		private void ApplyStyle (Style style)
+		{
+			foreach (var setter in style.Setters.OfType<Setter>()) {
+				var property = GetProperty (setter.Property);
+				if (property != null)
+					property.Value = setter.Value;
+			}
 		}
 	}
 }
