@@ -146,6 +146,8 @@
     <Compile Include="Style\Setter.cs" />
     <Compile Include="Style\SetterBase.cs" />
     <Compile Include="Style\Style.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="Style\StyleHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

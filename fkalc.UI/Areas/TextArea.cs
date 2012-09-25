@@ -36,8 +36,6 @@ namespace fkalc.UI
 		
 		public TextArea ()
 		{
-			textBlock.FontFamily = "Arial";
-			textBlock.FontSize = 20;
 			textBlock.Visibility = Visibility.Collapsed;
 
 			rectangle.HeightRequest = 12;

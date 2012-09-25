@@ -62,17 +62,8 @@ namespace fkalc.UI
 			grid.ColumnDefinitions.Add (new ColumnDefinition ());
 			grid.ColumnDefinitions.Add (new ColumnDefinition () {Width = GridLength.Auto});
 			
-			//var textBlock = new TextBlock (){Text ="+"};
-			//textBlock.FontFamily = "Arial";
-			//textBlock.FontSize = 20;
-			
-			var style = new Style ();
-			style.Setters.Add (new Setter ("FontFamily", "Arial"));
-			style.Setters.Add (new Setter ("FontSize", 20d));
-			
 			var textBlock = new TextBlock (){Text ="+"};
-			textBlock.Style = style;
-			
+						
 			var button = new Button () { Content = textBlock};			
 			
 			grid.Children.Add (adornerDecorator);

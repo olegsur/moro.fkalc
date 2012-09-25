@@ -1,5 +1,5 @@
 // 
-// TextBlock.cs
+// StyleHelper.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,52 +23,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-
 namespace fkalc.UI.Framework
 {
-	public class TextBlock : FrameworkElement
+	public static class StyleHelper
 	{
-		private readonly DependencyProperty<string> text;
-		private readonly DependencyProperty<string> fontFamily;
-		private readonly DependencyProperty<double> fontSize;
-
-		public string Text { 
-			get { return text.Value;} 
-			set { text.Value = value; }
-		}
-
-		public string FontFamily { 
-			get { return fontFamily.Value;} 
-			set { fontFamily.Value = value; }
-		}
-
-		public double FontSize { 
-			get { return fontSize.Value;} 
-			set { fontSize.Value = value; }
-		}
-		
-		public TextBlock ()
+		public static void ApplyStyle (FrameworkElement element)
 		{
-			text = BuildProperty<string> ("Text");
-			fontFamily = BuildProperty<string> ("FontFamily");
-			fontSize = BuildProperty<double> ("FontSize");
-			
-			StyleHelper.ApplyStyle (this);			
-		}	
-		
-		protected override void OnRender (DrawingContext dc)
-		{	
-			dc.DrawText (new FormattedText (Text, FontFamily, FontSize), new Point (0, Height));
+			object style;
+			if (Application.Current.Resources.TryGetValue (element.GetType (), out style) && style is Style) {
+				element.Style = style as Style;
+			}
 		}
-		
-		protected override Size MeasureOverride (Size availableSize)
-		{
-			var formatedText = new FormattedText (Text, FontFamily, FontSize);
-
-			return new Size (formatedText.Width, formatedText.Height);
-		}		
 	}
 }
 

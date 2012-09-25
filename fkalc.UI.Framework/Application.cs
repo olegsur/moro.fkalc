@@ -1,5 +1,5 @@
 // 
-// TextBlock.cs
+// Application.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,50 +25,31 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 
 namespace fkalc.UI.Framework
 {
-	public class TextBlock : FrameworkElement
+	public class Application
 	{
-		private readonly DependencyProperty<string> text;
-		private readonly DependencyProperty<string> fontFamily;
-		private readonly DependencyProperty<double> fontSize;
-
-		public string Text { 
-			get { return text.Value;} 
-			set { text.Value = value; }
-		}
-
-		public string FontFamily { 
-			get { return fontFamily.Value;} 
-			set { fontFamily.Value = value; }
-		}
-
-		public double FontSize { 
-			get { return fontSize.Value;} 
-			set { fontSize.Value = value; }
-		}
+		public static Application Current { get; private set; }
 		
-		public TextBlock ()
+		public Dictionary<object, object> Resources { get; private set; }
+		
+		private Application ()
 		{
-			text = BuildProperty<string> ("Text");
-			fontFamily = BuildProperty<string> ("FontFamily");
-			fontSize = BuildProperty<double> ("FontSize");
+			Resources = new Dictionary<object, object> ();
 			
-			StyleHelper.ApplyStyle (this);			
-		}	
-		
-		protected override void OnRender (DrawingContext dc)
-		{	
-			dc.DrawText (new FormattedText (Text, FontFamily, FontSize), new Point (0, Height));
+			var style = new Style ();
+			style.Setters.Add (new Setter ("FontFamily", "Arial"));
+			style.Setters.Add (new Setter ("FontSize", 20d));
+			
+			Resources [typeof(TextBlock)] = style;
 		}
 		
-		protected override Size MeasureOverride (Size availableSize)
-		{
-			var formatedText = new FormattedText (Text, FontFamily, FontSize);
-
-			return new Size (formatedText.Width, formatedText.Height);
-		}		
+		static Application ()
+		{	
+			Current = new Application ();
+		}
 	}
 }
 
