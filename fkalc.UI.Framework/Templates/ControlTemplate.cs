@@ -1,5 +1,5 @@
 // 
-// ContentControl.cs
+// ControlTemplate.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,41 +23,24 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 
 namespace fkalc.UI.Framework
 {
-	public class ContentControl : Control
+	public class ControlTemplate
 	{
-		private readonly DependencyProperty<UIElement> content;
-		public UIElement Content { 
-			get { return content.Value;} 
-			set { content.Value = value; }
-		}
-		
-		public ContentControl ()
-		{		
-			content = BuildProperty<UIElement> ("Content");
-			content.DependencyPropertyValueChanged += HandleContentChanged;
-		}
+		private Func<UIElement, UIElement> factory;
 
-		private void HandleContentChanged (object sender, DPropertyValueChangedEventArgs<UIElement> e)
-		{				
-			if (e.OldValue != null)
-				RemoveVisualChild (e.OldValue);
-				
-			if (e.NewValue != null)
-				AddVisualChild (e.NewValue);
-		}		
-
-		protected override int GetVisualChildrenCountCore ()
+		public ControlTemplate (Func<UIElement, UIElement> factory)
 		{
-			return Content == null ? 0 : 1;
+			this.factory = factory;
 		}
 
-		protected override Visual GetVisualChildCore (int index)
+		public UIElement LoadContent (UIElement element)
 		{
-			return Content;
+			return factory (element);
 		}
 	}
 }
+

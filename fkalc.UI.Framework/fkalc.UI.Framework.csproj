@@ -148,6 +148,7 @@
     <Compile Include="Style\Style.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Style\StyleHelper.cs" />
+    <Compile Include="Templates\ControlTemplate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

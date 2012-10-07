@@ -30,12 +30,40 @@ namespace fkalc.UI.Framework
 {
 	public class Border : Decorator
 	{ 
-		public Thickness Padding  { get; set; }
-		public Color BorderColor { get; set; }
+		private DependencyProperty<Thickness> padding;		
+		private DependencyProperty<Brush> background;
+		private DependencyProperty<Color> borderColor;
+		private DependencyProperty<double> borderThickness;	
+		
+		public Thickness Padding { 
+			get { return padding.Value;}
+			set { padding.Value = value;}
+		}
+		
+		public Brush Background { 
+			get { return background.Value;}
+			set { background.Value = value;}
+		}
+		
+		public Color BorderColor { 
+			get { return borderColor.Value;}
+			set { borderColor.Value = value;}
+		}
+		
+		public double BorderThickness { 
+			get { return borderThickness.Value;}
+			set { borderThickness.Value = value;}
+		}
 		
 		public Border ()
 		{
+			padding = BuildProperty<Thickness> ("Padding");
+			background = BuildProperty<Brush> ("Background");
+			borderColor = BuildProperty<Color> ("BorderColor");
+			borderThickness = BuildProperty<double> ("BorderThickness");
+					
 			BorderColor = Colors.Black;
+			BorderThickness = 1;
 			Padding = new Thickness (5);
 		}
 
@@ -57,7 +85,10 @@ namespace fkalc.UI.Framework
 			if (Child == null)
 				return;
 
-			Child.Arrange (new Rect (new Point (Padding.Left, Padding.Top), Child.DesiredSize));
+			Child.Arrange (new Rect (Padding.Left, 
+			                         Padding.Top,
+			                         finalSize.Width - Padding.Left - Padding.Right, 
+			                         finalSize.Height - Padding.Top - Padding.Bottom));
 		}
 
 		protected override void OnRender (DrawingContext dc)
@@ -65,7 +96,7 @@ namespace fkalc.UI.Framework
 			if (Child == null)
 				return;
 
-			dc.DrawRectangle (null, new Pen (BorderColor, 1), new Rect (0, 0, Width, Height));
+			dc.DrawRectangle (Background, new Pen (BorderColor, BorderThickness), new Rect (0, 0, Width, Height));
 		}
 	}
 }

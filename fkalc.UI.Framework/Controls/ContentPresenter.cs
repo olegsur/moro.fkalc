@@ -1,5 +1,5 @@
 // 
-// ContentControl.cs
+// ContentPresenter.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -24,40 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-
 namespace fkalc.UI.Framework
 {
-	public class ContentControl : Control
+	public class ContentPresenter : FrameworkElement
 	{
-		private readonly DependencyProperty<UIElement> content;
-		public UIElement Content { 
-			get { return content.Value;} 
-			set { content.Value = value; }
-		}
-		
-		public ContentControl ()
-		{		
-			content = BuildProperty<UIElement> ("Content");
-			content.DependencyPropertyValueChanged += HandleContentChanged;
-		}
-
-		private void HandleContentChanged (object sender, DPropertyValueChangedEventArgs<UIElement> e)
-		{				
-			if (e.OldValue != null)
-				RemoveVisualChild (e.OldValue);
-				
-			if (e.NewValue != null)
-				AddVisualChild (e.NewValue);
-		}		
-
-		protected override int GetVisualChildrenCountCore ()
+		public ContentPresenter ()
 		{
-			return Content == null ? 0 : 1;
-		}
-
-		protected override Visual GetVisualChildCore (int index)
-		{
-			return Content;
 		}
 	}
 }
+

@@ -28,10 +28,10 @@ namespace fkalc.UI.Framework
 {
 	public static class StyleHelper
 	{
-		public static void ApplyStyle (FrameworkElement element)
+		public static void ApplyStyle (FrameworkElement element, Type type)
 		{
 			object style;
-			if (Application.Current.Resources.TryGetValue (element.GetType (), out style) && style is Style) {
+			if (Application.Current.Resources.TryGetValue (type, out style) && style is Style) {
 				element.Style = style as Style;
 			}
 		}

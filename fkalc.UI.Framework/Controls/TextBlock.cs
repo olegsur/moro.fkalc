@@ -55,7 +55,7 @@ namespace fkalc.UI.Framework
 			fontFamily = BuildProperty<string> ("FontFamily");
 			fontSize = BuildProperty<double> ("FontSize");
 			
-			StyleHelper.ApplyStyle (this);			
+			StyleHelper.ApplyStyle (this, typeof(TextBlock));			
 		}	
 		
 		protected override void OnRender (DrawingContext dc)

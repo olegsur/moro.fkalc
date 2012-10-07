@@ -41,10 +41,67 @@ namespace fkalc.UI.Framework
 			
 			var style = new Style ();
 			style.Setters.Add (new Setter ("FontFamily", "Arial"));
-			style.Setters.Add (new Setter ("FontSize", 20d));
-			
+			style.Setters.Add (new Setter ("FontSize", 20d));			
 			Resources [typeof(TextBlock)] = style;
+			
+			style = new Style ();
+			style.Setters.Add (new Setter ("Background", Brushes.Gray));	
+			style.Setters.Add (new Setter ("BorderThickness", 3d));
+			style.Setters.Add (new Setter ("BorderColor", Colors.Black));
+			style.Setters.Add (new Setter ("Template", new ControlTemplate (ButtonTemplate)));			
+			Resources [typeof(Button)] = style;
+			
+			style = new Style ();			
+			style.Setters.Add (new Setter ("Template", new ControlTemplate (ItemsControlTemplate)));			
+			Resources [typeof(ItemsControl)] = style;
+			
+			style = new Style ();			
+			style.Setters.Add (new Setter ("Template", new ControlTemplate (UserControlTemplate)));			
+			Resources [typeof(UserControl)] = style;
 		}
+		
+		private static UIElement ButtonTemplate (UIElement element)
+		{
+			var border = new Border ();
+			
+			BindingOperations.SetBinding (element.GetProperty ("Padding"), border.GetProperty ("Padding"));
+			BindingOperations.SetBinding (element.GetProperty ("Background"), border.GetProperty ("Background"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderThickness"), border.GetProperty ("BorderThickness"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderColor"), border.GetProperty ("BorderColor"));
+			
+			BindingOperations.SetBinding (element.GetProperty ("Content"), border.GetProperty ("Child"));
+			
+			return border;		
+		}
+		
+		private static UIElement ItemsControlTemplate (UIElement element)
+		{
+			var border = new Border ();
+			
+			BindingOperations.SetBinding (element.GetProperty ("Padding"), border.GetProperty ("Padding"));
+			BindingOperations.SetBinding (element.GetProperty ("Background"), border.GetProperty ("Background"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderThickness"), border.GetProperty ("BorderThickness"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderColor"), border.GetProperty ("BorderColor"));
+			
+			BindingOperations.SetBinding (element.GetProperty ("ItemsPanel"), border.GetProperty ("Child"));
+			
+			return border;		
+		}
+		
+		private static UIElement UserControlTemplate (UIElement element)
+		{
+			var border = new Border ();
+			
+			BindingOperations.SetBinding (element.GetProperty ("Padding"), border.GetProperty ("Padding"));
+			BindingOperations.SetBinding (element.GetProperty ("Background"), border.GetProperty ("Background"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderThickness"), border.GetProperty ("BorderThickness"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderColor"), border.GetProperty ("BorderColor"));
+			
+			BindingOperations.SetBinding (element.GetProperty ("Content"), border.GetProperty ("Child"));
+			
+			return border;		
+		}
+	
 		
 		static Application ()
 		{	

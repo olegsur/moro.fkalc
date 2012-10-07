@@ -60,7 +60,7 @@ namespace fkalc.UI
 			grid.RowDefinitions.Add (new RowDefinition ());
 			grid.RowDefinitions.Add (new RowDefinition () {Height = GridLength.Auto});
 			grid.ColumnDefinitions.Add (new ColumnDefinition ());
-			grid.ColumnDefinitions.Add (new ColumnDefinition () {Width = GridLength.Auto});
+			grid.ColumnDefinitions.Add (new ColumnDefinition () {Width = GridLength.Auto});			
 			
 			var textBlock = new TextBlock (){Text ="+"};
 						

@@ -34,13 +34,19 @@ namespace fkalc.UI.Framework
 {
 	public class ItemsControl : Control
 	{
-		public Panel itemsPanel;
-
+		private readonly DependencyProperty<Panel> itemsPanel;
 		private readonly DependencyProperty<IEnumerable> itemsSource;
+		
+		public Panel ItemsPanel { 
+			get { return itemsPanel.Value; }
+			set { itemsPanel.Value = value; }
+		}
+		
 		public IEnumerable ItemsSource { 
 			get { return itemsSource.Value;} 
 			set { itemsSource.Value = value; }
-		}
+		}		
+		
 
 		public DataTemplate ItemTemplate { get; set; }
 
@@ -48,39 +54,38 @@ namespace fkalc.UI.Framework
 
 		public ItemsControl ()
 		{
+			itemsPanel = BuildProperty<Panel> ("ItemsPanel");
+			itemsPanel.DependencyPropertyValueChanged += HandleItemsPanelChanged;
+			
 			ItemsPanel = new StackPanel ();
 			itemsSource = BuildProperty<IEnumerable> ("ItemsSource");
 
 			itemsSource.DependencyPropertyValueChanged += ItemsSourceChanged;
 
 			ItemTemplate = new DataTemplate (o => o is UIElement ? o as UIElement : new TextBlock () {Text = o.ToString ()});
+			
+			StyleHelper.ApplyStyle (this, typeof(ItemsControl));
 		}
 
-		public Panel ItemsPanel { 
-			get { return itemsPanel; }
-			set { 
-				if (itemsPanel == value)
-					return;
-
-				if (value == null)
-					throw new ArgumentNullException ();
-
-				if (itemsPanel != null)
-					RemoveVisualChild (itemsPanel);
-
-				itemsPanel = value;
-
-				AddVisualChild (itemsPanel);
-			}
-		}
+		private void HandleItemsPanelChanged (object sender, DPropertyValueChangedEventArgs<Panel> e)
+		{
+			if (e.OldValue != null)
+				RemoveVisualChild (e.OldValue);
+				
+			if (e.NewValue != null)
+				AddVisualChild (e.NewValue);
+		}						
 
 		private void ItemsSourceChanged (object sender, DPropertyValueChangedEventArgs<IEnumerable> e)
 		{
-			itemsPanel.Children.Clear ();
+			if (ItemsPanel == null)
+				return;
+			
+			ItemsPanel.Children.Clear ();
 
 			foreach (var o in e.NewValue) {
 				var child = ItemTemplate.LoadContent (o);
-				itemsPanel.Children.Add (child);
+				ItemsPanel.Children.Add (child);
 
 				items.Add (new ItemVisual () { Item = o, Visual = child });
 			}
@@ -94,13 +99,16 @@ namespace fkalc.UI.Framework
 
 		private void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
+			if (ItemsPanel == null)
+				return;
+			
 			switch (e.Action) {
 			case NotifyCollectionChangedAction.Add:
 				var index = e.NewStartingIndex;
 
 				foreach (var o in e.NewItems) {
 					var child = ItemTemplate.LoadContent (o);
-					itemsPanel.Children.Insert (index, child);
+					ItemsPanel.Children.Insert (index, child);
 
 					items.Insert (index, new ItemVisual () { Item = o, Visual = child });
 					index++;
@@ -110,7 +118,7 @@ namespace fkalc.UI.Framework
 				foreach (var o in e.OldItems) {
 					var item = items.First (i => i.Item == o);
 
-					itemsPanel.Children.Remove (item.Visual);
+					ItemsPanel.Children.Remove (item.Visual);
 					items.Remove (item);
 				}
 				break;
@@ -119,41 +127,29 @@ namespace fkalc.UI.Framework
 				foreach (var o in e.NewItems) {
 					var child = ItemTemplate.LoadContent (o);
 
-					itemsPanel.Children[i] = child;
+					ItemsPanel.Children[i] = child;
 
 					items[i] = new ItemVisual () { Item = o, Visual = child };
 					i++;
 				}
 				break;
 			case NotifyCollectionChangedAction.Reset:
-				itemsPanel.Children.Clear ();
+				ItemsPanel.Children.Clear ();
 				break;
 			default:
 				break;
 			}
 
 		}
-
-		protected override Size MeasureOverride (Size availableSize)
+				
+		protected override int GetVisualChildrenCountCore ()
 		{
-			ItemsPanel.Measure (availableSize);
-			return ItemsPanel.DesiredSize;
+			return 1;
 		}
 
-		protected override void ArrangeOverride (Size finalSize)
+		protected override Visual GetVisualChildCore (int index)
 		{
-			ItemsPanel.Arrange (new Rect (finalSize));
-		}
-
-		public override int VisualChildrenCount {
-			get {
-				return 1;
-			}
-		}
-
-		public override Visual GetVisualChild (int index)
-		{
-			return itemsPanel;
+			return ItemsPanel;
 		}
 
 		private class ItemVisual

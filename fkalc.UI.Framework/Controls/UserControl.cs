@@ -32,6 +32,7 @@ namespace fkalc.UI.Framework
 	{
 		public UserControl ()
 		{
+			StyleHelper.ApplyStyle (this, typeof(UserControl));
 		}
 	}
 }
