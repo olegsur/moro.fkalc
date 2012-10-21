@@ -96,7 +96,8 @@ namespace fkalc.UI.Framework
 			if (Child == null)
 				return;
 
-			dc.DrawRectangle (Background, new Pen (BorderColor, BorderThickness), new Rect (0, 0, Width, Height));
+			dc.DrawRectangle (Background, new Pen (BorderColor, BorderThickness), new Rect (BorderThickness / 2, BorderThickness / 2, 
+			                                                                                Width - BorderThickness, Height-BorderThickness));
 		}
 	}
 }
