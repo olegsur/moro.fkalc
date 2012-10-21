@@ -59,8 +59,7 @@ namespace fkalc.UI.Framework
 			Resources [typeof(TextBlock)] = style;
 			
 			style = new Style ();
-			style.Setters.Add (new Setter ("Background", Brushes.Gray));	
-			style.Setters.Add (new Setter ("BorderThickness", 3d));
+			style.Setters.Add (new Setter ("BorderThickness", 1.5d));
 			style.Setters.Add (new Setter ("BorderColor", Colors.Black));
 			style.Setters.Add (new Setter ("Template", new ControlTemplate (ButtonTemplate)));			
 			Resources [typeof(Button)] = style;
@@ -135,7 +134,7 @@ namespace fkalc.UI.Framework
 			var title = new TextBlock ();
 			BindingOperations.SetBinding (element.GetProperty ("Title"), title.GetProperty ("Text"));
 						
-			var closeButton = new Button (){Content = new TextBlock () { Text = "x" }};
+			var closeButton = CloseButton ();			
 			closeButton.Click += (sender, e) => element.Close();
 			
 			titleGrid.Children.Add (title);			
@@ -160,6 +159,32 @@ namespace fkalc.UI.Framework
 			grid.SetRow (1, border);
 			
 			return grid;		
+		}
+		
+		private static Button CloseButton ()
+		{
+			var figure1 = new PathFigure ();
+			figure1.StartPoint = new Point (0, 0);
+			figure1.Segments.Add (new LineSegment () { Point = new Point(7,7)});
+			
+			var figure2 = new PathFigure ();
+			figure2.StartPoint = new Point (7, 0);
+			figure2.Segments.Add (new LineSegment () { Point = new Point(0,7)});
+			
+			var pathGeomentry = new PathGeometry ();
+			pathGeomentry.Figures.Add (figure1);
+			pathGeomentry.Figures.Add (figure2);
+			
+			var path = new Path ();
+			path.WidthRequest = 7;
+			path.HeightRequest = 7;
+			path.Stroke = Colors.Gray;
+			path.StrokeThickness = 2;
+			path.Data = pathGeomentry;
+						
+			var button = new Button () { Content = path };
+			button.Padding = new Thickness (3);
+			return button;
 		}
 		
 		public void Run (Window window)

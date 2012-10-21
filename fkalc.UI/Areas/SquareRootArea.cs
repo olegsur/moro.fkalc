@@ -61,8 +61,10 @@ namespace fkalc.UI
 			{
 				base.OnRender (dc);
 
-				var figure = new PathFigure ();
-				figure.StartPoint = new Point (0, 0.3 * Height);
+				var figure = new PathFigure ()
+				{
+					StartPoint = new Point (0, 0.3 * Height)
+				};
 
 				figure.Segments.Add (new LineSegment () { Point = new Point (3, 0.3 * Height) });
 				figure.Segments.Add (new LineSegment () { Point = new Point (6, Height) });

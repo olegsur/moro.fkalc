@@ -74,8 +74,8 @@ namespace fkalc.UI.Framework
 			
 			Child.Measure (availableSize);
 			
-			var width = Child.DesiredSize.Width + Padding.Left + Padding.Right;
-			var height = Child.DesiredSize.Height + Padding.Top + Padding.Bottom;
+			var width = Child.DesiredSize.Width + Padding.Left + Padding.Right + BorderThickness;
+			var height = Child.DesiredSize.Height + Padding.Top + Padding.Bottom + BorderThickness;
 			
 			return new Size (width, height);
 		}
@@ -85,10 +85,10 @@ namespace fkalc.UI.Framework
 			if (Child == null)
 				return;
 
-			Child.Arrange (new Rect (Padding.Left, 
-			                         Padding.Top,
-			                         finalSize.Width - Padding.Left - Padding.Right, 
-			                         finalSize.Height - Padding.Top - Padding.Bottom));
+			Child.Arrange (new Rect (Padding.Left + BorderThickness / 2, 
+			                         Padding.Top + BorderThickness / 2,
+			                         finalSize.Width - Padding.Left - Padding.Right - BorderThickness / 2, 
+			                         finalSize.Height - Padding.Top - Padding.Bottom - BorderThickness / 2));
 		}
 
 		protected override void OnRender (DrawingContext dc)
