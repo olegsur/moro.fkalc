@@ -82,7 +82,7 @@ namespace fkalc.UI.Framework
 				AddVisualChild (templateControl);
 		}
 		
-		protected sealed override Size MeasureOverride (Size availableSize)
+		protected override Size MeasureOverride (Size availableSize)
 		{
 			var child = GetVisualChild (0) as UIElement;
 			
@@ -94,7 +94,7 @@ namespace fkalc.UI.Framework
 			return child.DesiredSize;			
 		}
 		
-		protected sealed override void ArrangeOverride (Size finalSize)
+		protected override void ArrangeOverride (Size finalSize)
 		{
 			var child = GetVisualChild (0) as UIElement;
 			

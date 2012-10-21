@@ -149,6 +149,11 @@
     <Compile Include="Application.cs" />
     <Compile Include="Style\StyleHelper.cs" />
     <Compile Include="Templates\ControlTemplate.cs" />
+    <Compile Include="Controls\Window.cs" />
+    <Compile Include="ISurface.cs" />
+    <Compile Include="Gtk\GtkSurface.cs" />
+    <Compile Include="IApplication.cs" />
+    <Compile Include="Gtk\GtkApplication.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -159,5 +164,6 @@
     <Folder Include="Templates\" />
     <Folder Include="Media\Geometries\" />
     <Folder Include="Style\" />
+    <Folder Include="Gtk\" />
   </ItemGroup>
 </Project>

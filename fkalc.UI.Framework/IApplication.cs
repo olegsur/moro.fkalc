@@ -1,5 +1,5 @@
 // 
-// Main.cs
+// IApplication.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -25,21 +25,14 @@
 // THE SOFTWARE.
 
 using System;
-using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.UI.Framework
 {
-	class MainClass
+	public interface IApplication
 	{
-		public static void Main (string[] args)
-		{
-			var mainWindow = new Window ();
-			mainWindow.WidthRequest = 997;
-			mainWindow.HeightRequest = 679;
-			mainWindow.Title = "fkalc";
-			mainWindow.Content = new DocumentView ();
-			
-			Application.Current.Run (mainWindow);
-		}
+		void Init();
+		void Run();
+		void Shutdown ();
 	}
 }
+

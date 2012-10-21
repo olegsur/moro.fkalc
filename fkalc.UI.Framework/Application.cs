@@ -34,9 +34,23 @@ namespace fkalc.UI.Framework
 		public static Application Current { get; private set; }
 		
 		public Dictionary<object, object> Resources { get; private set; }
+		public Window MainWindow { get; private	set; }		
+		
+		internal static readonly bool IsInitialized = false;
+		
+		private IApplication aplication;
+	
+		static Application ()
+		{	
+			Current = new Application ();
+			IsInitialized = true;
+		}
 		
 		private Application ()
 		{
+			aplication = new GtkApplication ();			
+			aplication.Init ();
+			
 			Resources = new Dictionary<object, object> ();
 			
 			var style = new Style ();
@@ -58,6 +72,10 @@ namespace fkalc.UI.Framework
 			style = new Style ();			
 			style.Setters.Add (new Setter ("Template", new ControlTemplate (UserControlTemplate)));			
 			Resources [typeof(UserControl)] = style;
+			
+			style = new Style ();			
+			style.Setters.Add (new Setter ("Template", new ControlTemplate (element => WindowTemplate(element as Window))));			
+			Resources [typeof(Window)] = style;
 		}
 		
 		private static UIElement ButtonTemplate (UIElement element)
@@ -101,11 +119,57 @@ namespace fkalc.UI.Framework
 			
 			return border;		
 		}
-	
 		
-		static Application ()
-		{	
-			Current = new Application ();
+		private static UIElement WindowTemplate (Window element)
+		{
+			var grid = new Grid () {HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch};
+			grid.RowDefinitions.Add (new RowDefinition () {Height = GridLength.Auto});
+			grid.RowDefinitions.Add (new RowDefinition ());			
+			grid.ColumnDefinitions.Add (new ColumnDefinition ());
+			
+			var titleGrid = new Grid () {HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch};
+			titleGrid.RowDefinitions.Add (new RowDefinition ());
+			titleGrid.ColumnDefinitions.Add (new ColumnDefinition ());
+			titleGrid.ColumnDefinitions.Add (new ColumnDefinition () { Width = GridLength.Auto });
+			
+			var title = new TextBlock ();
+			BindingOperations.SetBinding (element.GetProperty ("Title"), title.GetProperty ("Text"));
+						
+			var closeButton = new Button (){Content = new TextBlock () { Text = "x" }};
+			closeButton.Click += (sender, e) => element.Close();
+			
+			titleGrid.Children.Add (title);			
+			titleGrid.Children.Add (closeButton);
+			
+			titleGrid.SetColumn (0, title);
+			titleGrid.SetColumn (1, closeButton);
+						
+			grid.Children.Add (titleGrid);
+			grid.SetRow (0, titleGrid);
+			
+			var border = new Border ();
+			
+			BindingOperations.SetBinding (element.GetProperty ("Padding"), border.GetProperty ("Padding"));
+			BindingOperations.SetBinding (element.GetProperty ("Background"), border.GetProperty ("Background"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderThickness"), border.GetProperty ("BorderThickness"));
+			BindingOperations.SetBinding (element.GetProperty ("BorderColor"), border.GetProperty ("BorderColor"));
+			
+			BindingOperations.SetBinding (element.GetProperty ("Content"), border.GetProperty ("Child"));
+			
+			grid.Children.Add (border);
+			grid.SetRow (1, border);
+			
+			return grid;		
+		}
+		
+		public void Run (Window window)
+		{
+			MainWindow = window;
+			MainWindow.Closed += (sender, e) => aplication.Shutdown();
+			
+			window.Show ();
+			
+			aplication.Run ();			
 		}
 	}
 }

@@ -1,5 +1,5 @@
 // 
-// Main.cs
+// IWindowAdapter.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,23 +23,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using fkalc.UI.Framework;
-
-namespace fkalc.UI
+namespace fkalc.UI.Framework
 {
-	class MainClass
+	public interface IWindowAdapter
 	{
-		public static void Main (string[] args)
-		{
-			var mainWindow = new Window ();
-			mainWindow.WidthRequest = 997;
-			mainWindow.HeightRequest = 679;
-			mainWindow.Title = "fkalc";
-			mainWindow.Content = new DocumentView ();
-			
-			Application.Current.Run (mainWindow);
-		}
+		void Show();
 	}
 }
+

@@ -1,5 +1,5 @@
 // 
-// Main.cs
+// Window.cs
 //  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
@@ -23,23 +23,65 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using fkalc.UI.Framework;
 
-namespace fkalc.UI
+namespace fkalc.UI.Framework
 {
-	class MainClass
+	public class Window : ContentControl
 	{
-		public static void Main (string[] args)
+		public event EventHandler Closed;
+	
+		private readonly DependencyProperty<string> title;
+		
+		public string Title { 
+			get { return title.Value;} 
+			set { title.Value = value; }
+		}
+		
+		private ISurface Surface { get; set;}
+		
+		public Window ()
 		{
-			var mainWindow = new Window ();
-			mainWindow.WidthRequest = 997;
-			mainWindow.HeightRequest = 679;
-			mainWindow.Title = "fkalc";
-			mainWindow.Content = new DocumentView ();
+			if (!Application.IsInitialized)
+				throw new ApplicationException ("Application must be initialized");
 			
-			Application.Current.Run (mainWindow);
+			title = BuildProperty<string> ("Title");
+						
+			Surface = new GtkSurface (this);
+			
+			StyleHelper.ApplyStyle (this, typeof(Window));
+		}
+		
+		public void Show ()
+		{
+			var width = WidthRequest ?? 100;
+			var height = HeightRequest ?? 50;
+			
+			Measure (new Size (width, height));
+			Arrange (new Rect (1, 1, width, height));
+			
+			Surface.Show ();
+		}
+		
+		protected override void ArrangeOverride (Size finalSize)
+		{
+			base.ArrangeOverride (finalSize);
+			
+			Surface.Resize (finalSize);
+		}
+		
+		public void Close ()
+		{
+			Surface.Close ();
+			RaiseClosed ();
+		}
+
+		private void RaiseClosed ()
+		{
+			if (Closed != null)
+				Closed (this, EventArgs.Empty);
+					
 		}
 	}
 }
+
