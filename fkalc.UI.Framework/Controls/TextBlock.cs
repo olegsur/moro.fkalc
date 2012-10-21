@@ -33,6 +33,7 @@ namespace fkalc.UI.Framework
 		private readonly DependencyProperty<string> text;
 		private readonly DependencyProperty<string> fontFamily;
 		private readonly DependencyProperty<double> fontSize;
+		private readonly DependencyProperty<Color> foreground;
 
 		public string Text { 
 			get { return text.Value;} 
@@ -49,23 +50,29 @@ namespace fkalc.UI.Framework
 			set { fontSize.Value = value; }
 		}
 		
+		public Color Foreground { 
+			get { return foreground.Value; }
+			set { foreground.Value = value; }				
+		}
+		
 		public TextBlock ()
 		{
 			text = BuildProperty<string> ("Text");
 			fontFamily = BuildProperty<string> ("FontFamily");
 			fontSize = BuildProperty<double> ("FontSize");
+			foreground = BuildProperty<Color> ("Foreground");			
 			
 			StyleHelper.ApplyStyle (this, typeof(TextBlock));			
 		}	
 		
 		protected override void OnRender (DrawingContext dc)
 		{	
-			dc.DrawText (new FormattedText (Text, FontFamily, FontSize), new Point (0, Height));
+			dc.DrawText (new FormattedText (Text, FontFamily, FontSize, Foreground), new Point (0, Height));
 		}
 		
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			var formatedText = new FormattedText (Text, FontFamily, FontSize);
+			var formatedText = new FormattedText (Text, FontFamily, FontSize, Foreground);
 
 			return new Size (formatedText.Width, formatedText.Height);
 		}		

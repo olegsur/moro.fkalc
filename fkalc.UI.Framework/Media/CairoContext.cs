@@ -77,7 +77,7 @@ namespace fkalc.UI.Framework
 
 		public override void DrawText (FormattedText formattedText, Point origin)
 		{
-			cr.Color = new Cairo.Color (0, 0, 0);	
+			cr.Color = new Cairo.Color (formattedText.Foreground.R, formattedText.Foreground.G, formattedText.Foreground.B,formattedText.Foreground.Alfa);	
 			cr.MoveTo (origin.X, origin.Y);
 			
 			cr.SelectFontFace (formattedText.FontFamily, Cairo.FontSlant.Normal, Cairo.FontWeight.Normal);

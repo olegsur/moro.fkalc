@@ -55,7 +55,8 @@ namespace fkalc.UI.Framework
 			
 			var style = new Style ();
 			style.Setters.Add (new Setter ("FontFamily", "Arial"));
-			style.Setters.Add (new Setter ("FontSize", 20d));			
+			style.Setters.Add (new Setter ("FontSize", 20d));	
+			style.Setters.Add (new Setter ("Foreground", Colors.Black));
 			Resources [typeof(TextBlock)] = style;
 			
 			style = new Style ();
@@ -131,20 +132,27 @@ namespace fkalc.UI.Framework
 			titleGrid.ColumnDefinitions.Add (new ColumnDefinition ());
 			titleGrid.ColumnDefinitions.Add (new ColumnDefinition () { Width = GridLength.Auto });
 			
-			var title = new TextBlock ();
+			var title = new TextBlock ();		
+			title.Foreground = Colors.White;
 			BindingOperations.SetBinding (element.GetProperty ("Title"), title.GetProperty ("Text"));
 						
 			var closeButton = CloseButton ();			
-			closeButton.Click += (sender, e) => element.Close();
+			closeButton.Click += (sender, e) => element.Close ();
 			
 			titleGrid.Children.Add (title);			
 			titleGrid.Children.Add (closeButton);
 			
 			titleGrid.SetColumn (0, title);
 			titleGrid.SetColumn (1, closeButton);
+			
+			var titleBorder = new Border ();
+			titleBorder.Background = new SolidColorBrush (new Color (0x55, 0x98, 0xd7));
+			titleBorder.Child = titleGrid;
+			titleBorder.Padding = new Thickness (3);
+				
 						
-			grid.Children.Add (titleGrid);
-			grid.SetRow (0, titleGrid);
+			grid.Children.Add (titleBorder);
+			grid.SetRow (0, titleBorder);
 			
 			var border = new Border ();
 			
@@ -178,12 +186,14 @@ namespace fkalc.UI.Framework
 			var path = new Path ();
 			path.WidthRequest = 7;
 			path.HeightRequest = 7;
-			path.Stroke = Colors.Gray;
+			path.Stroke = Colors.White;
 			path.StrokeThickness = 2;
 			path.Data = pathGeomentry;
 						
 			var button = new Button () { Content = path };
 			button.Padding = new Thickness (3);
+			button.BorderThickness = 1;
+			button.Background = new SolidColorBrush (new Color (0x55, 0x98, 0xd7));
 			return button;
 		}
 		

@@ -34,12 +34,14 @@ namespace fkalc.UI.Framework
 		public double FontSize { get; set; }
 		public double Width { get; private set; }
 		public double Height { get; private set; }
+		public Color Foreground { get; private set; }
 
-		public FormattedText (string text, string fontFamily, double fontSize)
+		public FormattedText (string text, string fontFamily, double fontSize, Color foreground)
 		{
 			Text = text;
 			FontFamily = fontFamily;
 			FontSize = fontSize;
+			Foreground = foreground;
 
 			var size = Measure ();
 

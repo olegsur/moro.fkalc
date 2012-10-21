@@ -62,7 +62,7 @@ namespace fkalc.UI
 				var textToken = Region.Selection.SelectedToken as TextToken;
 
 				if (!string.IsNullOrEmpty (textToken.Text) && Region.Selection.Position != 0) {
-					var ft = new FormattedText (textToken.Text.Substring (0, Region.Selection.Position), textToken.FontFamily, textToken.FontSize);
+					var ft = new FormattedText (textToken.Text.Substring (0, Region.Selection.Position), textToken.FontFamily, textToken.FontSize, Colors.Black);
 
 					width = ft.Width + 2;
 				} else
