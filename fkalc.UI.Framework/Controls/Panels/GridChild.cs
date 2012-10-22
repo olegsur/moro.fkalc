@@ -37,10 +37,63 @@ namespace fkalc.UI.Framework
 			Content = child;
 
 			BindingOperations.SetBinding (child.GetProperty ("Visibility"), GetProperty ("Visibility"));
-			BindingOperations.SetBinding (child.GetProperty ("Margin"), GetProperty ("Margin"));
-			BindingOperations.SetBinding (child.GetProperty ("HorizontalAlignment"), GetProperty ("HorizontalAlignment"));
-			BindingOperations.SetBinding (child.GetProperty ("VerticalAlignment"), GetProperty ("VerticalAlignment"));
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch;
+			VerticalAlignment = VerticalAlignment.Stretch;
 		}	
+		
+		protected override Size MeasureOverride (Size availableSize)
+		{
+			Content.Measure (availableSize);
+			
+			var margin = Content.GetProperty ("Margin") != null ? 
+				(Thickness)Content.GetProperty ("Margin").Value : new Thickness(0);
+			
+			return new Size(Content.DesiredSize.Width + margin.Left + margin.Right, Content.DesiredSize.Height + margin.Bottom + margin.Top);
+		}
+		
+		protected override void ArrangeOverride (Size finalSize)
+		{			
+			var horizontalAligment = Content.GetProperty ("HorizontalAlignment") != null ?
+				(HorizontalAlignment)Content.GetProperty ("HorizontalAlignment").Value : HorizontalAlignment.Stretch;
+			
+			var verticalAligment = Content.GetProperty ("VerticalAlignment") != null ?
+				(VerticalAlignment)Content.GetProperty ("VerticalAlignment").Value : VerticalAlignment.Stretch;
+			
+			var margin = Content.GetProperty ("Margin") != null ? 
+				(Thickness)Content.GetProperty ("Margin").Value : new Thickness (0);
+			
+			var x = margin.Left;
+			var y = margin.Top;
+			var width = Content.DesiredSize.Width;
+			var height = Content.DesiredSize.Height;
+			
+			switch (horizontalAligment) {
+			case HorizontalAlignment.Right:
+				x = Width - width;
+				break;
+			case HorizontalAlignment.Center:
+				x = (Width - width) / 2;
+				break;
+			case HorizontalAlignment.Stretch:
+				width = finalSize.Width;
+				break;			
+			}			
+			
+			switch (verticalAligment){
+			case VerticalAlignment.Bottom:
+				y = Height - height;
+				break;
+			case VerticalAlignment.Center:
+				x = (Height - height) / 2;
+				break;
+			case VerticalAlignment.Stretch:
+				height = finalSize.Height;
+				break;		
+			}
+				
+			Content.Arrange (new Rect (x, y, width - margin.Left - margin.Right, height - margin.Top - margin.Bottom));
+		}
 	}
 }
 

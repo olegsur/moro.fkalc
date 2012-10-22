@@ -134,6 +134,7 @@ namespace fkalc.UI.Framework
 			
 			var title = new TextBlock ();		
 			title.Foreground = Colors.White;
+			title.HorizontalAlignment = HorizontalAlignment.Center;
 			BindingOperations.SetBinding (element.GetProperty ("Title"), title.GetProperty ("Text"));
 						
 			var closeButton = CloseButton ();			
