@@ -154,6 +154,9 @@
     <Compile Include="Gtk\GtkSurface.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="Gtk\GtkApplication.cs" />
+    <Compile Include="Media\GradientBrush.cs" />
+    <Compile Include="Media\GradientStop.cs" />
+    <Compile Include="Media\LinearGradientBrush.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

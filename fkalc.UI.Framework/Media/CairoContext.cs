@@ -95,6 +95,18 @@ namespace fkalc.UI.Framework
 					cr.Rectangle (rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);			
 			
 					cr.Fill ();
+				} else if (brush is LinearGradientBrush) {
+					var b = brush as LinearGradientBrush;
+					
+					var pattern = new Cairo.LinearGradient (b.StartPoint.X * rectangle.X, b.StartPoint.Y * rectangle.Y, 
+					                                        b.EndPoint.X * rectangle.Width, b.EndPoint.Y * rectangle.Height);
+					foreach (var stop in b.GradientStops) {
+						pattern.AddColorStop (stop.Offset, new Cairo.Color (stop.Color.R, stop.Color.G, stop.Color.B, stop.Color.Alfa));						
+					}
+					
+					cr.Pattern = pattern;
+					cr.Rectangle (rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);			
+					cr.Fill();
 				}
 			}
 

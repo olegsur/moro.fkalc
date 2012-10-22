@@ -119,7 +119,8 @@ namespace fkalc.UI.Framework
 			
 			return border;		
 		}
-		
+
+				
 		private static UIElement WindowTemplate (Window element)
 		{
 			var grid = new Grid () {HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch};
@@ -147,11 +148,10 @@ namespace fkalc.UI.Framework
 			titleGrid.SetColumn (1, closeButton);
 			
 			var titleBorder = new Border ();
-			titleBorder.Background = new SolidColorBrush (new Color (0x55, 0x98, 0xd7));
+			titleBorder.Background = GetTitleBrush ();
 			titleBorder.Child = titleGrid;
 			titleBorder.Padding = new Thickness (3);
-				
-						
+									
 			grid.Children.Add (titleBorder);
 			grid.SetRow (0, titleBorder);
 			
@@ -168,6 +168,18 @@ namespace fkalc.UI.Framework
 			grid.SetRow (1, border);
 			
 			return grid;		
+		}	
+		
+		private static LinearGradientBrush GetTitleBrush ()
+		{
+			var result = new LinearGradientBrush ();
+			
+			result.StartPoint = new Point (0, 0);
+			result.EndPoint = new Point (0, 1);
+			result.GradientStops.Add (new GradientStop (new Color (0x97, 0xb8, 0xe2), 0));
+			result.GradientStops.Add (new GradientStop (new Color (0x4e, 0x76, 0xa8), 1));
+			
+			return result;
 		}
 		
 		private static Button CloseButton ()
@@ -194,7 +206,7 @@ namespace fkalc.UI.Framework
 			var button = new Button () { Content = path };
 			button.Padding = new Thickness (3);
 			button.BorderThickness = 1;
-			button.Background = new SolidColorBrush (new Color (0x55, 0x98, 0xd7));
+			button.Background = GetTitleBrush ();
 			return button;
 		}
 		
