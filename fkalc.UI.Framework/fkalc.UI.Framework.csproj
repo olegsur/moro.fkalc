@@ -157,6 +157,7 @@
     <Compile Include="Media\GradientBrush.cs" />
     <Compile Include="Media\GradientStop.cs" />
     <Compile Include="Media\LinearGradientBrush.cs" />
+    <Compile Include="Common\CornerRadius.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

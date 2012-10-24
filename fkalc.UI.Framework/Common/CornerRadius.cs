@@ -1,21 +1,21 @@
-//
-// PathGeometry.cs
-//
+// 
+// CornerRadius.cs
+//  
 // Author:
 //       Oleg Sur <oleg.sur@gmail.com>
-//
+// 
 // Copyright (c) 2012 Oleg Sur
-//
+// 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,21 +24,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Collections.Generic;
-
 namespace fkalc.UI.Framework
 {
-	public class PathFigure : DependencyObject
+	public struct CornerRadius
 	{
-		public Point StartPoint { get; set; }
-		public List<PathSegment> Segments { get; private set; }
-		public bool IsClosed { get; set; }
-
-		public PathFigure ()
+		public double BottomLeft { get; set; }
+		public double BottomRight { get; set; }
+		public double TopLeft { get; set; }
+		public double TopRight { get; set; }
+		
+		public CornerRadius (double uniformRadius) : this(uniformRadius, uniformRadius, uniformRadius, uniformRadius)
 		{
-			Segments = new List<PathSegment> ();
 		}
+		
+		public CornerRadius (double topLeft, double topRight, double bottomRight, double bottomLeft) : this()
+		{
+			TopLeft = topLeft;
+			TopRight = topRight;
+			BottomRight = bottomRight;
+			BottomLeft = bottomLeft;
+		}	
+		
 	}
-
 }
 

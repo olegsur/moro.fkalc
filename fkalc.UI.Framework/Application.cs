@@ -81,6 +81,7 @@ namespace fkalc.UI.Framework
 		private static UIElement ButtonTemplate (UIElement element)
 		{
 			var border = new Border ();
+			border.CornerRadius = new CornerRadius (3);
 			
 			BindingOperations.SetBinding (element.GetProperty ("Padding"), border.GetProperty ("Padding"));
 			BindingOperations.SetBinding (element.GetProperty ("Background"), border.GetProperty ("Background"));
@@ -204,7 +205,8 @@ namespace fkalc.UI.Framework
 			path.Data = pathGeomentry;
 						
 			var button = new Button () { Content = path };
-			button.Padding = new Thickness (3);
+			button.Padding = new Thickness (4);
+			button.BorderColor = new Color (0x1f, 0x42, 0x6f); 
 			button.BorderThickness = 1;
 			button.Background = GetTitleBrush ();
 			return button;

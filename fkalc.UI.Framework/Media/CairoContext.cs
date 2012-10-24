@@ -98,8 +98,7 @@ namespace fkalc.UI.Framework
 				} else if (brush is LinearGradientBrush) {
 					var b = brush as LinearGradientBrush;
 					
-					var pattern = new Cairo.LinearGradient (b.StartPoint.X * rectangle.X, b.StartPoint.Y * rectangle.Y, 
-					                                        b.EndPoint.X * rectangle.Width, b.EndPoint.Y * rectangle.Height);
+					var pattern = new Cairo.LinearGradient (b.StartPoint.X, b.StartPoint.Y, b.EndPoint.X, b.EndPoint.Y);
 					foreach (var stop in b.GradientStops) {
 						pattern.AddColorStop (stop.Offset, new Cairo.Color (stop.Color.R, stop.Color.G, stop.Color.B, stop.Color.Alfa));						
 					}
@@ -119,8 +118,76 @@ namespace fkalc.UI.Framework
 			}			
 		}
 
+		public override void DrawRoundedRectangle (Brush brush, Pen pen, Rect rectangle, double radiusX, double radiusY)
+		{
+			var figure = new PathFigure ();
+			figure.StartPoint = new Point (rectangle.X + radiusX, rectangle.Y);
+			figure.Segments.Add (new LineSegment () { Point = new Point(rectangle.X + rectangle.Width - radiusX, rectangle.Y) });
+			figure.Segments.Add (new ArcSegment () 
+			    {
+					Point = new Point(rectangle.X + rectangle.Width, rectangle.Y + radiusY),
+					Size = new Size(radiusX, radiusY),
+					SweepDirection = SweepDirection.Clockwise,
+					IsLargeArc = false
+				}
+			);
+			figure.Segments.Add (new LineSegment () { Point = new Point(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height - radiusY) });
+			figure.Segments.Add (new ArcSegment () 
+			    {
+					Point = new Point(rectangle.X + rectangle.Width - radiusX, rectangle.Y + rectangle.Height),
+					Size = new Size(radiusX, radiusY),
+					SweepDirection = SweepDirection.Clockwise,
+					IsLargeArc = false
+				}
+			);
+			figure.Segments.Add (new LineSegment () { Point = new Point(rectangle.X + radiusX, rectangle.Y + rectangle.Height) });
+			figure.Segments.Add (new ArcSegment () 
+			    {
+					Point = new Point(rectangle.X, rectangle.Y + rectangle.Height - radiusY),
+					Size = new Size(radiusX, radiusY),
+					SweepDirection = SweepDirection.Clockwise,
+					IsLargeArc = false
+				}
+			);
+			figure.Segments.Add (new LineSegment () { Point = new Point(rectangle.X, rectangle.Y + radiusY) });
+			figure.Segments.Add (new ArcSegment () 
+			    {
+					Point = new Point(rectangle.X + radiusX, rectangle.Y),
+					Size = new Size(radiusX, radiusY),
+					SweepDirection = SweepDirection.Clockwise,
+					IsLargeArc = false
+				}
+			);
+			
+			var path = new PathGeometry ();
+			path.Figures.Add (figure);			
+		}
+		
 		public override void DrawGeometry (Brush brush, Pen pen, Geometry geometry)
 		{
+			if (brush != null) {
+				if (brush is SolidColorBrush) {
+					var b = brush as SolidColorBrush;
+					cr.Color = new Cairo.Color (b.Color.R, b.Color.G, b.Color.B, b.Color.Alfa);	
+					
+					DrawGeometry (geometry);	
+			
+					cr.Fill ();
+				} else if (brush is LinearGradientBrush) {
+					var b = brush as LinearGradientBrush;
+					
+					var pattern = new Cairo.LinearGradient (b.StartPoint.X , b.StartPoint.Y, b.EndPoint.X, b.EndPoint.Y);
+					foreach (var stop in b.GradientStops) {
+						pattern.AddColorStop (stop.Offset, new Cairo.Color (stop.Color.R, stop.Color.G, stop.Color.B, stop.Color.Alfa));						
+					}
+					
+					cr.Pattern = pattern;
+					DrawGeometry (geometry);	
+					
+					cr.Fill();
+				}
+			}
+			
 			if (pen != null) {
 				cr.Color = new Cairo.Color (pen.Color.R, pen.Color.G, pen.Color.B, pen.Color.Alfa);	
 				cr.LineWidth = pen.Thickness;
@@ -149,6 +216,9 @@ namespace fkalc.UI.Framework
 			foreach (var segment in figure.Segments) {
 				DrawSegment (segment);
 			}
+			
+			if (figure.IsClosed)
+				cr.ClosePath ();
 		}
 
 		private void DrawSegment (PathSegment segment)
@@ -233,22 +303,49 @@ namespace fkalc.UI.Framework
 				
 			}
 
-			var angle1 = Math.Asin ((y1 - yc1) / r);
-			if (x1 < xc1)
+			var angle1 = Math.Asin (Math.Abs (y1 - yc1) / r);
+			if ((x1 < xc1) && (y1 >= yc1))
 				angle1 = Math.PI - angle1;
-		    
-			var angle2 = Math.Asin ((y2 - yc1) / r);
-			if (x2 < xc1)
-				angle2 = Math.PI - angle2;
+			if (y1 < yc1)
+			if (x1 < xc1)
+				angle1 = Math.PI + angle1;
+			else 
+				angle1 = - angle1;
 			
-			var alfa1 = Math.Asin ((y1 - yc2) / r);
-			if (x1 < xc2)
+			var angle2 = Math.Asin (Math.Abs (y2 - yc1) / r);
+			if ((x2 < xc1) && (y2 >= yc1))
+				angle2 = Math.PI - angle2;
+			if (y2 < yc1) {
+				if (x2 < xc1)
+					angle2 = Math.PI + angle2;
+				else 
+					angle2 = - angle2;
+
+			}
+
+			
+			var alfa1 = Math.Asin (Math.Abs (y1 - yc2) / r);
+			
+			if ((x1 < xc2) && (y1 >= yc2))
 				alfa1 = Math.PI - alfa1;
+			if (y1 < yc2) {
+				if (x1 < xc2)
+					alfa1 = Math.PI + alfa1;
+				else 
+					alfa1 = - alfa1;
+			}
 
-			var alfa2 = Math.Asin ((y2 - yc2) / r);
-			if (x2 < xc2)
+			var alfa2 = Math.Asin (Math.Abs (y2 - yc2) / r);
+			if ((x2 < xc2) && (y2 >= yc2))
 				alfa2 = Math.PI - alfa2;
+			if (y2 < yc2) {
+				if (x2 < xc2)
+					alfa2 = Math.PI + alfa2;
+				else 
+					alfa2 = - alfa2;
+			}
 
+			
 			cr.Save ();
 
 			cr.Rotate (alpha);
@@ -260,28 +357,33 @@ namespace fkalc.UI.Framework
 
 			if (direction == SweepDirection.Clockwise) {	
 				if (isLargeArc) {
-					if ((alfa2 - alfa1) > (angle2 - angle1)) 
+					if ((y1 < y2) || ((Math.Abs (y1 - y2) < 0.00000001) && (x1 > x2))) 
 						cr.Arc (xc1, yc1, r, angle1, angle2);
 					else 
 						cr.Arc (xc2, yc2, r, alfa1, alfa2);
-				} else {
-					if ((alfa2 - alfa1) < (angle2 - angle1)) 
+						
+				} else {			
+					if ((y1 > y2) || ((Math.Abs (y1 - y2) < 0.00000001) && (x1 < x2))) 
 						cr.Arc (xc1, yc1, r, angle1, angle2);
 					else 
-						cr.Arc (xc2, yc2, r, alfa1, alfa2);						
+						cr.Arc (xc2, yc2, r, alfa1, alfa2);									
 				}
 
 			} else {
+				
 				if (isLargeArc) {
-					if ((alfa2 - alfa1) < (angle2 - angle1)) 
+					if ((y1 > y2) || ((Math.Abs (y1 - y2) < 0.00000001) && (x1 < x2))) 
 						cr.ArcNegative (xc1, yc1, r, angle1, angle2);
 					else 
 						cr.ArcNegative (xc2, yc2, r, alfa1, alfa2);
-				} else {
-					if ((alfa2 - alfa1) > (angle2 - angle1)) 
+						
+				} else {					
+				
+					if ((y1 < y2) || ((Math.Abs (y1 - y2) < 0.00000001) && (x1 > x2))) 
 						cr.ArcNegative (xc1, yc1, r, angle1, angle2);
-					else
-						cr.ArcNegative (xc2, yc2, r, alfa1, alfa2);	
+					else 
+						cr.ArcNegative (xc2, yc2, r, alfa1, alfa2);
+									
 				}
 			}
 

@@ -34,6 +34,7 @@ namespace fkalc.UI.Framework
 		private DependencyProperty<Brush> background;
 		private DependencyProperty<Color> borderColor;
 		private DependencyProperty<double> borderThickness;	
+		private DependencyProperty<CornerRadius> cornerRadius;
 		
 		public Thickness Padding { 
 			get { return padding.Value;}
@@ -55,12 +56,18 @@ namespace fkalc.UI.Framework
 			set { borderThickness.Value = value;}
 		}
 		
+		public CornerRadius CornerRadius { 
+			get { return cornerRadius.Value;}
+			set { cornerRadius.Value = value;}
+		}
+		
 		public Border ()
 		{
 			padding = BuildProperty<Thickness> ("Padding");
 			background = BuildProperty<Brush> ("Background");
 			borderColor = BuildProperty<Color> ("BorderColor");
 			borderThickness = BuildProperty<double> ("BorderThickness");
+			cornerRadius = BuildProperty<CornerRadius> ("CornerRadius");
 					
 			BorderColor = Colors.Black;
 			BorderThickness = 1;
@@ -95,9 +102,81 @@ namespace fkalc.UI.Framework
 		{		
 			if (Child == null)
 				return;
+			
+			var x = BorderThickness / 2;
+			var y = BorderThickness / 2;
+			var width = Width - BorderThickness;
+			var height = Height - BorderThickness;
 
-			dc.DrawRectangle (Background, new Pen (BorderColor, BorderThickness), new Rect (BorderThickness / 2, BorderThickness / 2, 
-			                                                                                Width - BorderThickness, Height-BorderThickness));
+			var figure = new PathFigure ();
+			figure.StartPoint = new Point (x + CornerRadius.TopLeft, y);
+			figure.IsClosed = true;
+			
+			figure.Segments.Add (new LineSegment () { Point = new Point(x + width - CornerRadius.TopRight, y)});
+			if (CornerRadius.TopRight > 0) {
+				figure.Segments.Add (new ArcSegment () 
+			    	{
+						Point = new Point(x + width, y + CornerRadius.TopRight),
+						Size = new Size(CornerRadius.TopRight, CornerRadius.TopRight),
+						SweepDirection = SweepDirection.Clockwise,
+						IsLargeArc = false
+					}
+				);
+			}
+			figure.Segments.Add (new LineSegment () { Point = new Point(x + width, y + height - CornerRadius.BottomRight) });
+			if (CornerRadius.BottomRight > 0) {
+				figure.Segments.Add (new ArcSegment () 
+			    	{
+						Point = new Point(x + width - CornerRadius.BottomRight, y + height),
+						Size = new Size(CornerRadius.BottomRight, CornerRadius.BottomRight),
+						SweepDirection = SweepDirection.Clockwise,
+						IsLargeArc = false
+					}
+				);
+			}
+			figure.Segments.Add (new LineSegment () { Point = new Point(x + CornerRadius.BottomLeft, y + height) });
+			if (CornerRadius.BottomLeft > 0) {
+				figure.Segments.Add (new ArcSegment () 
+				    {
+						Point = new Point(x, y + height - CornerRadius.BottomLeft),
+						Size = new Size(CornerRadius.BottomLeft, CornerRadius.BottomLeft),
+						SweepDirection = SweepDirection.Clockwise,
+						IsLargeArc = false
+					}
+				);
+			}
+			figure.Segments.Add (new LineSegment () { Point = new Point(x, y + CornerRadius.TopLeft) });
+			if (CornerRadius.TopLeft > 0) {				
+				figure.Segments.Add (new ArcSegment () 
+			    	{
+						Point = new Point(x + CornerRadius.TopLeft, y),
+						Size = new Size(CornerRadius.TopLeft, CornerRadius.TopLeft),
+						SweepDirection = SweepDirection.Clockwise,
+						IsLargeArc = false
+					}
+				);
+			}
+			
+			var path = new PathGeometry ();
+			path.Figures.Add (figure);				
+			
+			//todo: resove it
+			var brush = Background;
+			
+			if (brush is LinearGradientBrush) {
+				var b = brush as LinearGradientBrush;
+				var newBrush = new LinearGradientBrush ()
+				{
+					StartPoint = new Point (b.StartPoint.X * width, b.StartPoint.Y * height),
+					EndPoint = new Point (b.EndPoint.X * width, b.EndPoint.Y * height)
+				};
+				
+				newBrush.GradientStops.AddRange (b.GradientStops);
+				
+				brush = newBrush;
+			}
+			
+			dc.DrawGeometry (brush, new Pen (BorderColor, BorderThickness), path);
 		}
 	}
 }

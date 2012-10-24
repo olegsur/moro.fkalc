@@ -31,11 +31,8 @@ namespace fkalc.UI.Framework
 	public struct Thickness
 	{	
 		public double Bottom { get; private set; }
-
 		public double Left { get; private set; }
-
 		public double Right { get; private set; }
-
 		public double Top { get; private set; }
 		
 		public Thickness (double uniformLength) : this (uniformLength,uniformLength,uniformLength,uniformLength)
