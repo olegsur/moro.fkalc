@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.fkalc.Core", "moro.fka
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.fkalc.UI.Common", "moro.fkalc.UI.Common\moro.fkalc.UI.Common.csproj", "{7F86C0C8-0B78-482B-AC9F-5C660AA93001}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.Framework.Data", "moro.Framework.Data\moro.Framework.Data.csproj", "{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,6 +27,10 @@ Global
 		{44E2A5D4-9CC0-4CF4-8FD8-7856C1624DEE}.Debug|x86.Build.0 = Debug|x86
 		{44E2A5D4-9CC0-4CF4-8FD8-7856C1624DEE}.Release|x86.ActiveCfg = Release|x86
 		{44E2A5D4-9CC0-4CF4-8FD8-7856C1624DEE}.Release|x86.Build.0 = Release|x86
+		{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}.Debug|x86.Build.0 = Debug|Any CPU
+		{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}.Release|x86.ActiveCfg = Release|Any CPU
+		{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}.Release|x86.Build.0 = Release|Any CPU
 		{7F86C0C8-0B78-482B-AC9F-5C660AA93001}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{7F86C0C8-0B78-482B-AC9F-5C660AA93001}.Debug|x86.Build.0 = Debug|Any CPU
 		{7F86C0C8-0B78-482B-AC9F-5C660AA93001}.Release|x86.ActiveCfg = Release|Any CPU

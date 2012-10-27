@@ -11,24 +11,24 @@
     <AssemblyName>fkalc.UI</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,9 +94,13 @@
       <Project>{89883CC4-E276-40ED-802F-260F61A610C1}</Project>
       <Name>moro.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="ViewModels\moro.fkalc.UI.ViewModels.csproj">
+    <ProjectReference Include="..\moro.fkalc.UI.ViewModels\moro.fkalc.UI.ViewModels.csproj">
       <Project>{B196D221-ACC3-42F3-9666-51C5877407CA}</Project>
       <Name>moro.fkalc.UI.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\moro.Framework.Data\moro.Framework.Data.csproj">
+      <Project>{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}</Project>
+      <Name>moro.Framework.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

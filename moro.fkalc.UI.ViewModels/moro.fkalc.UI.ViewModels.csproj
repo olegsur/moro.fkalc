@@ -11,22 +11,22 @@
     <AssemblyName>fkalc.UI.ViewModels</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -91,6 +91,10 @@
     <ProjectReference Include="..\moro.fkalc.UI.Common\moro.fkalc.UI.Common.csproj">
       <Project>{7F86C0C8-0B78-482B-AC9F-5C660AA93001}</Project>
       <Name>moro.fkalc.UI.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\moro.Framework.Data\moro.Framework.Data.csproj">
+      <Project>{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}</Project>
+      <Name>moro.Framework.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ProjectExtensions>

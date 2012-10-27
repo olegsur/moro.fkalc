@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using moro.fkalc.UI.Common.MathRegion.Tokens;
+using moro.Framework.Data;
 
 namespace moro.fkalc.UI.ViewModels.MathRegion.Tokens
 {

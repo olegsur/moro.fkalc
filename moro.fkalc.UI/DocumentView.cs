@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using moro.Framework;
 using moro.fkalc.UI.ViewModels.MathRegion;
 using moro.fkalc.UI.ViewModels;
+using moro.Framework.Data;
 
 namespace moro.fkalc.UI
 {

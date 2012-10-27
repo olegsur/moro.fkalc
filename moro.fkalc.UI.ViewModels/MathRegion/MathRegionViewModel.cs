@@ -31,6 +31,7 @@ using moro.fkalc.UI.Common.MathRegion;
 using moro.fkalc.UI.Common.MathRegion.Tokens;
 using moro.fkalc.UI.ViewModels.MathRegion.Actions;
 using moro.fkalc.UI.ViewModels.MathRegion.Tokens;
+using moro.Framework.Data;
 
 namespace moro.fkalc.UI.ViewModels.MathRegion
 {
