@@ -26,6 +26,7 @@
 
 using System;
 using moro.Framework;
+using moro.fkalc.UI.ViewModels;
 
 namespace moro.fkalc.UI
 {
@@ -37,7 +38,10 @@ namespace moro.fkalc.UI
 			mainWindow.WidthRequest = 997;
 			mainWindow.HeightRequest = 679;
 			mainWindow.Title = "fkalc";
-			mainWindow.Content = new DocumentView ();
+			mainWindow.Content = new DocumentView ()
+			{
+				DataContext = new DocumentViewModel ()
+			};
 			
 			Application.Current.Run (mainWindow);
 		}
