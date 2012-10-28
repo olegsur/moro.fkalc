@@ -47,8 +47,8 @@ namespace moro.fkalc.UI
 
 		public DocumentCursor ()
 		{
-			x = BuildProperty<double> ("X");
-			y = BuildProperty<double> ("Y");
+			x = BuildVisualProperty<double> ("X");
+			y = BuildVisualProperty<double> ("Y");
 
 			BindingOperations.SetBinding (this, "DataContext.X", x);
 			BindingOperations.SetBinding (this, "DataContext.Y", y);

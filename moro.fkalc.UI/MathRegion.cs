@@ -163,15 +163,11 @@ namespace moro.fkalc.UI
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
 		{
 			border.BorderColor = Colors.Red;
-
-			Screen.QueueDraw ();
 		}
 		
 		private void HandleMouseLeaveEvent (object sender, EventArgs e)
 		{
 			border.BorderColor = Colors.Bisque;
-			
-			Screen.QueueDraw ();
 		}
 
 		private void HandleLostKeyboardFocusEvent (object sender, EventArgs e)

@@ -92,7 +92,6 @@ namespace moro.fkalc.UI
 		{		
 			if (Mouse.Device.TargetElement != canvas) {
 				documentCursor.Visibility = Visibility.Collapsed;
-				Screen.QueueDraw ();
 				return;
 			}
 
@@ -100,8 +99,6 @@ namespace moro.fkalc.UI
 			documentCursor.Y = args.Event.Y;
 									
 			documentCursor.Visibility = Visibility.Visible;
-    
-			Screen.QueueDraw ();			
 		}
 		
 		private void HandlePreviewKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
@@ -117,8 +114,6 @@ namespace moro.fkalc.UI
 				if (NewRegionCommand != null)
 					NewRegionCommand.Execute (null);
 			}		    
-		
-			Screen.QueueDraw ();
 		}
 
 		private UIElement Factory (object viewModel)
