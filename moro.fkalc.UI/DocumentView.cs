@@ -88,15 +88,16 @@ namespace moro.fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.NewRegionCommand", GetProperty ("NewRegionCommand"));
 		}		
 
-		private void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
+		private void HandleButtonPressEvent (object o, MouseButtonEventArgs args)
 		{		
 			if (Mouse.Device.TargetElement != canvas) {
 				documentCursor.Visibility = Visibility.Collapsed;
 				return;
 			}
 
-			documentCursor.X = args.Event.X;
-			documentCursor.Y = args.Event.Y;
+			var point = Mouse.GetPosition (this);
+			documentCursor.X = Math.Round (point.X);
+			documentCursor.Y = Math.Round (point.Y);
 									
 			documentCursor.Visibility = Visibility.Visible;
 		}

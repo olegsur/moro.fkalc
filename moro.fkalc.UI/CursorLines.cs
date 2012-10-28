@@ -75,7 +75,7 @@ namespace moro.fkalc.UI
 			var endPoint = activeArea.PointToScreen (new Point (width, activeArea.Height + 2));
 			endPoint = Region.PointFromScreen (endPoint);
 
-			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
+			dc.DrawLine (new Pen (Colors.Red, 1.5), startPoint, endPoint);
 		}
 
 		private void DrawHLine (DrawingContext dc)
@@ -87,10 +87,10 @@ namespace moro.fkalc.UI
 			var startPoint = activeArea.PointToScreen (new Point (-1, activeArea.Height + 2));
 			startPoint = Region.PointFromScreen (startPoint);
 
-			var endPoint = activeArea.PointToScreen (new Point (activeArea.Width + 3, activeArea.Height + 2));
+			var endPoint = activeArea.PointToScreen (new Point (activeArea.Width + 2, activeArea.Height + 2));
 			endPoint = Region.PointFromScreen (endPoint);
 
-			dc.DrawLine (new Pen (Colors.Red, 2), startPoint, endPoint);
+			dc.DrawLine (new Pen (Colors.Red, 1.5), startPoint, endPoint);
 		} 
 
 		private Area GetArea (Token token, UIElement uielement)
