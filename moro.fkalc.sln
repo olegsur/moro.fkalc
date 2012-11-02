@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.fkalc.UI", "moro.fkalc.UI\moro.fkalc.UI.csproj", "{44E2A5D4-9CC0-4CF4-8FD8-7856C1624DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.Framework", "moro.Framework\moro.Framework.csproj", "{89883CC4-E276-40ED-802F-260F61A610C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.Framework", "moro.PresentationFramework\moro.Framework\moro.Framework.csproj", "{89883CC4-E276-40ED-802F-260F61A610C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.fkalc.UI.ViewModels", "moro.fkalc.UI.ViewModels\moro.fkalc.UI.ViewModels.csproj", "{B196D221-ACC3-42F3-9666-51C5877407CA}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.fkalc.Core", "moro.fka
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.fkalc.UI.Common", "moro.fkalc.UI.Common\moro.fkalc.UI.Common.csproj", "{7F86C0C8-0B78-482B-AC9F-5C660AA93001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.Framework.Data", "moro.Framework.Data\moro.Framework.Data.csproj", "{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moro.Framework.Data", "moro.PresentationFramework\moro.Framework.Data\moro.Framework.Data.csproj", "{49DA0351-1DBC-45D8-B8EF-5F7FF8BAF354}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
