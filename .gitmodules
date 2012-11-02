@@ -1,0 +1,3 @@
+[submodule "moro.PresentationFramework"]
+	path = moro.PresentationFramework
+	url = git@github.com:olegsur/moro.PresentationFramework.git
