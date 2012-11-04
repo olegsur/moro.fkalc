@@ -80,59 +80,59 @@ namespace moro.fkalc.UI
 
 			var plusKeyBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.PlusCommand", plusKeyBinding.GetProperty ("Command"));
-			plusKeyBinding.Gesture = new KeyGesture (Gdk.Key.plus);
+			plusKeyBinding.Gesture = new KeyGesture (Key.Add);
 
 			var minusKeyBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.MinusCommand", minusKeyBinding.GetProperty ("Command"));
-			minusKeyBinding.Gesture = new KeyGesture (Gdk.Key.minus);
+			minusKeyBinding.Gesture = new KeyGesture (Key.Subtract);
 
 			var multiplicationBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.MultiplicationCommand", multiplicationBinding.GetProperty ("Command"));
-			multiplicationBinding.Gesture = new KeyGesture (Gdk.Key.asterisk);
+			multiplicationBinding.Gesture = new KeyGesture (Key.Multiply);
 
 			var divideBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.DivideCommand", divideBinding.GetProperty ("Command"));
-			divideBinding.Gesture = new KeyGesture (Gdk.Key.slash);
+			divideBinding.Gesture = new KeyGesture (Key.Oem2);
 
 			var assignmentBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.AssignmentCommand", assignmentBinding.GetProperty ("Command"));
-			assignmentBinding.Gesture = new KeyGesture (Gdk.Key.colon);
+			assignmentBinding.Gesture = new KeyGesture (Key.Oem1, ModifierKeys.Shift);
 
 			var resultKeyBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.ResultCommand", resultKeyBinding.GetProperty ("Command"));
-			resultKeyBinding.Gesture = new KeyGesture (Gdk.Key.equal);
+			resultKeyBinding.Gesture = new KeyGesture (Key.OemPlus);
 
 			var leftKeyBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.LeftCommand", leftKeyBinding.GetProperty ("Command"));
-			leftKeyBinding.Gesture = new KeyGesture (Gdk.Key.Left);
+			leftKeyBinding.Gesture = new KeyGesture (Key.Left);
 
 			var rightKeyBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.RightCommand", rightKeyBinding.GetProperty ("Command"));
-			rightKeyBinding.Gesture = new KeyGesture (Gdk.Key.Right);
+			rightKeyBinding.Gesture = new KeyGesture (Key.Right);
 
 			var openBracketBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.OpenBracketCommand", openBracketBinding.GetProperty ("Command"));
-			openBracketBinding.Gesture = new KeyGesture (Gdk.Key.parenleft);
+			openBracketBinding.Gesture = new KeyGesture (Key.D9, ModifierKeys.Shift);
 
 			var closeBracketBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.CloseBracketCommand", closeBracketBinding.GetProperty ("Command"));
-			closeBracketBinding.Gesture = new KeyGesture (Gdk.Key.parenright);
+			closeBracketBinding.Gesture = new KeyGesture (Key.D0, ModifierKeys.Shift);
 
 			var commaBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.CommaCommand", commaBinding.GetProperty ("Command"));
-			commaBinding.Gesture = new KeyGesture (Gdk.Key.comma);
+			commaBinding.Gesture = new KeyGesture (Key.OemComma);
 
 			var exponentiationBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.ExponentiationCommand", exponentiationBinding.GetProperty ("Command"));
-			exponentiationBinding.Gesture = new KeyGesture (Gdk.Key.asciicircum);
+			exponentiationBinding.Gesture = new KeyGesture (Key.D6, ModifierKeys.Shift);
 
 			var squareRootBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.SquareRootCommand", squareRootBinding.GetProperty ("Command"));
-			squareRootBinding.Gesture = new KeyGesture (Gdk.Key.backslash);
+			squareRootBinding.Gesture = new KeyGesture (Key.Back);
 
 			var absoluteBinding = new KeyBinding ();
 			BindingOperations.SetBinding (this, "DataContext.AbsoluteCommand", absoluteBinding.GetProperty ("Command"));
-			absoluteBinding.Gesture = new KeyGesture (Gdk.Key.bar);
+			absoluteBinding.Gesture = new KeyGesture (Key.Oem5, ModifierKeys.Shift);
 
 			InputBindings.Add (plusKeyBinding);
 			InputBindings.Add (minusKeyBinding);

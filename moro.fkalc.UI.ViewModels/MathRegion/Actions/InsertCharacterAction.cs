@@ -27,16 +27,17 @@
 using System;
 using System.Text.RegularExpressions;
 using moro.fkalc.UI.ViewModels.MathRegion.Tokens;
+using moro.Framework;
 
 namespace moro.fkalc.UI.ViewModels.MathRegion.Actions
 {
 	public class InsertCharacterAction : IAction
 	{
-		private uint Key { get; set; }
+		private Key Key { get; set; }
 
 		private MathRegionViewModel Region { get; set; }
 
-		public InsertCharacterAction (uint key, MathRegionViewModel region)
+		public InsertCharacterAction (Key key, MathRegionViewModel region)
 		{
 			Key = key;
 			Region = region;
@@ -46,7 +47,8 @@ namespace moro.fkalc.UI.ViewModels.MathRegion.Actions
 		{
 			Region.SetNeedToEvaluate (true);
 
-			var name = Gdk.Keyval.Name (Key);
+			var name = Enum.GetName (typeof(Key), Key);
+			var character = name.Length > 1 ? name [1] : name [0];
 
 			if (Region.Selection.SelectedToken is TextToken == false) {
 				var operation = new MultiplicationToken ();			
@@ -56,20 +58,20 @@ namespace moro.fkalc.UI.ViewModels.MathRegion.Actions
 
 			var textToken = Region.Selection.SelectedToken as TextToken;
 
-			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"^\d") && Regex.IsMatch (name, @"\D")) {
+			if (!string.IsNullOrEmpty (textToken.Text) && Regex.IsMatch (textToken.Text, @"^\d") && Regex.IsMatch (character.ToString (), @"\D")) {
 				var operation = new MultiplicationToken ();			
 				
 				new InsertHBinaryOperation (Region, operation).Do ();
 			}
 
 			textToken = Region.Selection.SelectedToken as TextToken;
-			
+									
 			if (string.IsNullOrEmpty (textToken.Text))
-				textToken.Text += name [0];
+				textToken.Text += character;
 			else 
-				textToken.Text = textToken.Text.Insert (Region.Selection.Position, name [0].ToString ());
+				textToken.Text = textToken.Text.Insert (Region.Selection.Position, character.ToString ());
 
 			Region.Selection.Position++;
-		}
+		}	
 	}
 }

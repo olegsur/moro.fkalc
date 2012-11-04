@@ -104,7 +104,7 @@ namespace moro.fkalc.UI.ViewModels.MathRegion
 			selection = BuildProperty<Selection> ("Selection");
 
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");
-			insertCharacterCommand.Value = new DelegateCommand<uint> (o => new InsertCharacterAction (o, this).Do ());
+			insertCharacterCommand.Value = new DelegateCommand<Key> (o => new InsertCharacterAction (o, this).Do ());
 
 			plusCommand = BuildProperty<ICommand> ("PlusCommand");
 			plusCommand.Value = new DelegateCommand<object> (o => new PlusAction (this).Do ());

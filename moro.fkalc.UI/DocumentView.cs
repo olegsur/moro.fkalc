@@ -102,12 +102,12 @@ namespace moro.fkalc.UI
 			documentCursor.Visibility = Visibility.Visible;
 		}
 		
-		private void HandlePreviewKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		private void HandlePreviewKeyPressEvent (object o, KeyEventArgs args)
 		{
-			ProcessKey (args.Event);
+			ProcessKey ();
 		}
 		
-		private void ProcessKey (Gdk.EventKey evnt)
+		private void ProcessKey ()
 		{
 			if (Keyboard.FocusedElement == this) {
 				documentCursor.Visibility = Visibility.Collapsed;

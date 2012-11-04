@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using moro.Framework;
 
 namespace moro.fkalc.UI
 {
@@ -38,28 +39,20 @@ namespace moro.fkalc.UI
 			Region.KeyPressEvent += HandleKeyPressEvent;
 		}
 
-		private void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		private void HandleKeyPressEvent (object o, KeyEventArgs args)
 		{
-			if (!NeedToProcess (args.Event.KeyValue))
+			if (!NeedToProcess (args.Key))
 				return;
 
 			if (Region.InsertCharacterCommand != null) {
-				Region.InsertCharacterCommand.Execute (args.Event.KeyValue);
+				Region.InsertCharacterCommand.Execute (args.Key);
 			}
 		}
 		
-		private bool NeedToProcess (uint keyval)
-		{
-			var name = Gdk.Keyval.Name (keyval);			
-			
-			if (name.Length != 1)
-				return false;
-			
-			var key = name [0];
-			
-			return (key >= '0' && key <= '9') ||
-				(key >= 'A' && key <= 'Z') ||
-				(key >= 'a' && key <= 'z');
+		private bool NeedToProcess (Key key)
+		{			
+			return (key >= Key.D0 && key <= Key.D9) ||
+				(key >= Key.A && key <= Key.Z);
 		}
 	}
 }
