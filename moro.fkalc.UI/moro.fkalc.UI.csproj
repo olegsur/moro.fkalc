@@ -54,6 +54,7 @@
     <Compile Include="Areas\ExponentiationArea.cs" />
     <Compile Include="Areas\SquareRootArea.cs" />
     <Compile Include="Areas\AbsoluteArea.cs" />
+    <Compile Include="MainWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
