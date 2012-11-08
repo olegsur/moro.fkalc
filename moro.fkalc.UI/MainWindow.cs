@@ -27,6 +27,7 @@ using System;
 
 using moro.Framework;
 using moro.fkalc.UI.ViewModels;
+using moro.Framework.Data;
 
 namespace moro.fkalc.UI
 {
@@ -38,7 +39,22 @@ namespace moro.fkalc.UI
 			HeightRequest = 679;
 			Title = "fkalc";
 
-			var menuItems = new ObservableCollection<string> () { "File", "Edit", "View", "Help" };
+			var fileMenuItem = new MenuItem ()
+			{
+				Header = new TextBlock()
+				{
+					Text = "File"
+				},
+				ItemsSource = new ObservableCollection<UIElement>()
+				{ 
+					new TextBlock() { Text = "New", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(5, 0, 5, 5) },
+					new TextBlock() { Text = "Open", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(5, 0, 5, 5)} , 
+					new TextBlock() { Text = "Close", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(5, 0, 5, 5)}},
+				Template = new ControlTemplate(MenuItemTemplate),
+
+			};
+
+			var menuItems = new ObservableCollection<MenuItem> () { fileMenuItem };
 
 			var menu = new Menu ()
 			{
@@ -72,6 +88,25 @@ namespace moro.fkalc.UI
 			grid.SetColumn (0, document);
 
 			Content = grid;
+		}
+
+		private static UIElement MenuItemTemplate (UIElement element)
+		{
+			var header = new ContentControl ();
+			BindingOperations.SetBinding (element.GetProperty ("Header"), header.GetProperty ("Content"));
+
+			var popup = new Popup ()
+			{
+				PlacementTarget = header
+			};
+
+			BindingOperations.SetBinding (element.GetProperty ("ItemsPanel"), popup.GetProperty ("Child"));
+			BindingOperations.SetBinding (element.GetProperty ("IsSubmenuOpen"), popup.GetProperty ("IsOpen"));
+
+//			var stackPanel = new StackPanel ();
+//			stackPanel.Children.Add (header);
+//			stackPanel.Children.Add (popup);
+			return header;
 		}
 	}
 }
