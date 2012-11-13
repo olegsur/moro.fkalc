@@ -47,11 +47,12 @@ namespace moro.fkalc.UI
 				},
 				ItemsSource = new ObservableCollection<UIElement>()
 				{ 
-					new TextBlock() { Text = "New", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(5, 0, 5, 5) },
-					new TextBlock() { Text = "Open", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(5, 0, 5, 5)} , 
-					new TextBlock() { Text = "Close", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(5, 0, 5, 5)}},
-				Template = new ControlTemplate(MenuItemTemplate),
-
+					new TextBlock() { Text = "New", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5) },
+					new TextBlock() { Text = "Open", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)}, 
+					new TextBlock() { Text = "Close", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)}
+				},
+				//Template = new ControlTemplate(MenuItemTemplate),
+				Margin = new Thickness(5),
 			};
 
 			var menuItems = new ObservableCollection<MenuItem> () { fileMenuItem };
@@ -97,15 +98,14 @@ namespace moro.fkalc.UI
 
 			var popup = new Popup ()
 			{
-				PlacementTarget = header
+				PlacementTarget = element,
+				VerticalOffset = 6,
+				HorizontalOffset = -5,
 			};
 
 			BindingOperations.SetBinding (element.GetProperty ("ItemsPanel"), popup.GetProperty ("Child"));
 			BindingOperations.SetBinding (element.GetProperty ("IsSubmenuOpen"), popup.GetProperty ("IsOpen"));
 
-//			var stackPanel = new StackPanel ();
-//			stackPanel.Children.Add (header);
-//			stackPanel.Children.Add (popup);
 			return header;
 		}
 	}
