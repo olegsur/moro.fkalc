@@ -45,14 +45,14 @@ namespace moro.fkalc.UI
 			Dividend = new ContentControl () 
 			{
 				Content = new TextArea(),
-				Margin = new Thickness (5, 0, 5, 5),
+				Margin = new Thickness (5, 0, 5, 3),
 				HorizontalAlignment = HorizontalAlignment.Center
 			};
 
 			Divisor = new ContentControl () 
 			{
 				Content = new TextArea(),
-				Margin = new Thickness (5, 5, 5, 0),
+				Margin = new Thickness (5, 2, 5, 0),
 				HorizontalAlignment = HorizontalAlignment.Center
 			};
 			
