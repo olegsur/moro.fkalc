@@ -51,7 +51,7 @@ namespace moro.fkalc.UI
 		
 		private bool NeedToProcess (Key key)
 		{			
-			return (key >= Key.D0 && key <= Key.D9) ||
+			return (key >= Key.D0 && key <= Key.D9 && Keyboard.Modifiers == ModifierKeys.None) ||
 				(key >= Key.A && key <= Key.Z);
 		}
 	}

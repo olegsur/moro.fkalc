@@ -47,7 +47,7 @@ namespace moro.fkalc.UI.ViewModels.MathRegion.Actions
 		{
 			Region.SetNeedToEvaluate (true);
 
-			var name = Enum.GetName (typeof(Key), Key);
+			var name = Enum.GetName (typeof(Key), Key).ToLower ();
 			var character = name.Length > 1 ? name [1] : name [0];
 
 			if (Region.Selection.SelectedToken is TextToken == false) {

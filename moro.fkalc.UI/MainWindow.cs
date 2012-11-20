@@ -49,9 +49,9 @@ namespace moro.fkalc.UI
 				{ 
 					new TextBlock() { Text = "New", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5) },
 					new TextBlock() { Text = "Open", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)}, 
-					new TextBlock() { Text = "Close", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)}
+					new TextBlock() { Text = "Close", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)},
+					new MenuItem() { Header = new TextBlock() { Text = "Quit" }, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)},
 				},
-				//Template = new ControlTemplate(MenuItemTemplate),
 				Margin = new Thickness(5),
 			};
 
