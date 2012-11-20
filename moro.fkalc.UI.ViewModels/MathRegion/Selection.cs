@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 using System;
 using moro.fkalc.UI.ViewModels.MathRegion.Tokens;
+using moro.Framework.Data;
 
 namespace moro.fkalc.UI.ViewModels.MathRegion
 {
@@ -34,31 +35,42 @@ namespace moro.fkalc.UI.ViewModels.MathRegion
 		Right,
 	}
 
-	public class Selection
+	public class Selection : DependencyObject
 	{
-		private Token selectedToken;
+		private readonly DependencyProperty<Token> selectedToken;
+		private readonly DependencyProperty<int> position;
+		private readonly DependencyProperty<SelectionType> type;
 
-		public int Position { get; set; }
-		public SelectionType Type { get; set; }
+		public Token SelectedToken { 
+			get { return selectedToken.Value; }
+			set { selectedToken.Value = value; }
+		}
+
+		public int Position { 
+			get { return position.Value; }
+			set { position.Value = value; }
+		}
+
+		public SelectionType Type { 
+			get { return type.Value; }
+			set { type.Value = value; }
+		}
 
 		public Selection ()
 		{
+			selectedToken = BuildProperty<Token> ("SelectedToken");
+			position = BuildProperty<int> ("Position");
+			type = BuildProperty<SelectionType> ("Type");
+
+			selectedToken.DependencyPropertyValueChanged += HandleSelectedTokenChanged;
+
 			Type = SelectionType.Left;
 		}
 
-		public Token SelectedToken {
-			get {
-				return selectedToken;
-			}
-			set {
-				if (selectedToken == value)
-					return;
-
-				selectedToken = value;
-				Position = 0;
-			}
+		private void HandleSelectedTokenChanged (object sender, DPropertyValueChangedEventArgs<Token> e)
+		{
+			Position = 0;
 		}
-
 	}
 }
 

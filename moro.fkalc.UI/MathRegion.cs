@@ -153,6 +153,8 @@ namespace moro.fkalc.UI
 			insertCharacterCommand = BuildProperty<ICommand> ("InsertCharacterCommand");
 			evaluateCommand = BuildProperty<ICommand> ("EvaluateCommand");
 
+			selection.DependencyPropertyValueChanged += HandleSelectionChanged;
+
 			BindingOperations.SetBinding (this, "DataContext.Selection", GetProperty ("Selection"));
 			BindingOperations.SetBinding (this, "DataContext.InsertCharacterCommand", GetProperty ("InsertCharacterCommand"));
 			BindingOperations.SetBinding (this, "DataContext.EvaluateCommand", GetProperty ("EvaluateCommand"));
@@ -175,6 +177,26 @@ namespace moro.fkalc.UI
 			if (EvaluateCommand != null) {
 				EvaluateCommand.Execute (null);
 			}
+		}
+
+		private void HandleSelectionChanged (object sender, DPropertyValueChangedEventArgs<Selection> e)
+		{	
+			if (e.OldValue != null) {
+				e.OldValue.GetProperty ("Position").DependencyPropertyValueChanged -= HandleSelectionChanged;
+				e.OldValue.GetProperty ("SelectedToken").DependencyPropertyValueChanged -= HandleSelectionChanged;
+				e.OldValue.GetProperty ("Type").DependencyPropertyValueChanged -= HandleSelectionChanged;
+			}
+
+			if (e.NewValue != null) {
+				e.NewValue.GetProperty ("Position").DependencyPropertyValueChanged += HandleSelectionChanged;
+				e.NewValue.GetProperty ("SelectedToken").DependencyPropertyValueChanged += HandleSelectionChanged;
+				e.NewValue.GetProperty ("Type").DependencyPropertyValueChanged += HandleSelectionChanged;
+			}
+		}
+
+		private void HandleSelectionChanged (object sender, DPropertyValueChangedEventArgs e)
+		{
+			RenderRoot ();
 		}
 
 		private class HasErrorToBrushesConverter : IValueConverter
