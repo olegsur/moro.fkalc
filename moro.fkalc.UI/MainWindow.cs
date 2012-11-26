@@ -39,6 +39,9 @@ namespace moro.fkalc.UI
 			HeightRequest = 679;
 			Title = "fkalc";
 
+			var quitButton = new Button () { Content = new TextBlock() { Text = "Quit" }, BorderThickness = 0 };
+			quitButton.Click += (sender, e) => Application.Current.Shutdown ();
+
 			var fileMenuItem = new MenuItem ()
 			{
 				Header = new TextBlock()
@@ -50,7 +53,7 @@ namespace moro.fkalc.UI
 					new TextBlock() { Text = "New", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5) },
 					new TextBlock() { Text = "Open", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)}, 
 					new TextBlock() { Text = "Close", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)},
-					new MenuItem() { Header = new TextBlock() { Text = "Quit" }, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)},
+					new MenuItem() { Header = quitButton, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 50, 5)},
 				},
 				Margin = new Thickness(5),
 			};
@@ -69,6 +72,14 @@ namespace moro.fkalc.UI
 				DataContext = new DocumentViewModel ()
 			};
 
+			var tabControl = new TabControl ()
+			{
+				ItemsSource = new ObservableCollection<UIElement>()
+				{
+					new TabItem() { Header = new TextBlock() { Text = "Document" }, Content = document }
+				},
+			};			
+
 			var grid = new Grid ()
 			{
 				HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -80,33 +91,15 @@ namespace moro.fkalc.UI
 			grid.ColumnDefinitions.Add (new ColumnDefinition ());
 
 			grid.Children.Add (menu);
-			grid.Children.Add (document);		
+			grid.Children.Add (tabControl);		
 
 			grid.SetRow (0, menu);
 			grid.SetColumn (0, menu);
 
-			grid.SetRow (1, document);
-			grid.SetColumn (0, document);
+			grid.SetRow (1, tabControl);
+			grid.SetColumn (0, tabControl);
 
 			Content = grid;
-		}
-
-		private static UIElement MenuItemTemplate (UIElement element)
-		{
-			var header = new ContentControl ();
-			BindingOperations.SetBinding (element.GetProperty ("Header"), header.GetProperty ("Content"));
-
-			var popup = new Popup ()
-			{
-				PlacementTarget = element,
-				VerticalOffset = 6,
-				HorizontalOffset = -5,
-			};
-
-			BindingOperations.SetBinding (element.GetProperty ("ItemsPanel"), popup.GetProperty ("Child"));
-			BindingOperations.SetBinding (element.GetProperty ("IsSubmenuOpen"), popup.GetProperty ("IsOpen"));
-
-			return header;
 		}
 	}
 }
