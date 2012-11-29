@@ -70,6 +70,7 @@
     <Compile Include="MathRegion\Actions\SquareRootAction.cs" />
     <Compile Include="MathRegion\Tokens\AbsoluteToken.cs" />
     <Compile Include="MathRegion\Actions\AbsoluteAction.cs" />
+    <Compile Include="MainWindowModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

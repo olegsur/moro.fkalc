@@ -67,18 +67,10 @@ namespace moro.fkalc.UI
 				ItemsSource = menuItems,
 			};
 
-			var document = new DocumentView ()
-			{
-				DataContext = new DocumentViewModel ()
-			};
+			var tabControl = new TabControl ();
+			tabControl.ItemTemplate = new DataTemplate (DocumentTemplate);
 
-			var tabControl = new TabControl ()
-			{
-				ItemsSource = new ObservableCollection<UIElement>()
-				{
-					new TabItem() { Header = new TextBlock() { Text = "Document" }, Content = document }
-				},
-			};			
+			BindingOperations.SetBinding (this, "DataContext.Documents", tabControl.GetProperty ("ItemsSource"));
 
 			var grid = new Grid ()
 			{
@@ -100,6 +92,16 @@ namespace moro.fkalc.UI
 			grid.SetColumn (0, tabControl);
 
 			Content = grid;
+		}
+
+		private UIElement DocumentTemplate (object viewModel)
+		{
+			var document = new DocumentView ()
+			{
+				DataContext = viewModel,
+			};
+
+			return new TabItem () { Header = new TextBlock() { Text = "Document" }, Content = document };
 		}
 	}
 }
