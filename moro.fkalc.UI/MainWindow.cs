@@ -94,14 +94,19 @@ namespace moro.fkalc.UI
 			Content = grid;
 		}
 
-		private UIElement DocumentTemplate (object viewModel)
+		private UIElement DocumentTemplate (object o)
 		{
+			var viewModel = o as DependencyObject;
+
 			var document = new DocumentView ()
 			{
 				DataContext = viewModel,
 			};
 
-			return new TabItem () { Header = new TextBlock() { Text = "Document" }, Content = document };
+			var header = new TextBlock ();
+			BindingOperations.SetBinding (viewModel.GetProperty ("Title"), header.GetProperty ("Text")); 
+
+			return new TabItem () { Header = header, Content = document };
 		}
 	}
 }

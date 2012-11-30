@@ -40,7 +40,8 @@ namespace moro.fkalc.UI.ViewModels
 			documents = BuildProperty<ObservableCollection<DocumentViewModel>> ("Documents");
 			documents.Value = new ObservableCollection<DocumentViewModel> ();
 
-			Documents.Add (new DocumentViewModel ());
+			Documents.Add (new DocumentViewModel ("Document 1"));
+			Documents.Add (new DocumentViewModel ("Document 2"));
 		}
 	}
 }

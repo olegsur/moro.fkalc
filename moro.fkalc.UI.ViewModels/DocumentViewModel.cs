@@ -33,6 +33,7 @@ namespace moro.fkalc.UI.ViewModels
 {
 	public class DocumentViewModel : DependencyObject, IDocumentViewModel
 	{
+		private readonly DependencyProperty<string> title;
 		private readonly DependencyProperty<ObservableCollection<MathRegionViewModel>> regions;
 		private readonly DependencyProperty<DocumentCursorViewModel> documentCursor;
 		private readonly DependencyProperty<ICommand> newRegionCommand;
@@ -40,8 +41,11 @@ namespace moro.fkalc.UI.ViewModels
 		public ObservableCollection<MathRegionViewModel> Regions { get { return regions.Value; } }
 		public DocumentCursorViewModel DocumentCursor { get { return documentCursor.Value; } }
 
-		public DocumentViewModel ()
+		public DocumentViewModel (string title)
 		{
+			this.title = BuildProperty<string> ("Title");
+			this.title.Value = title;
+
 			regions = BuildProperty<ObservableCollection<MathRegionViewModel>> ("Regions");
 			regions.Value = new ObservableCollection<MathRegionViewModel> ();
 
