@@ -164,12 +164,14 @@ namespace moro.fkalc.UI
 
 		private void HandleMouseEnterEvent (object sender, EventArgs e)
 		{
-			border.BorderColor = Colors.Red;
+			var style = new Style ();
+			style.Setters.Add (new Setter ("BorderColor", Colors.Red));
+			border.Style = style;
 		}
 		
 		private void HandleMouseLeaveEvent (object sender, EventArgs e)
 		{
-			border.BorderColor = Colors.Bisque;
+			border.Style = null;
 		}
 
 		private void HandleLostKeyboardFocusEvent (object sender, EventArgs e)
