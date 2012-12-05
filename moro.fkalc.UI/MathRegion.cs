@@ -61,10 +61,16 @@ namespace moro.fkalc.UI
 		{
 			Focusable = true;
 
-			border = new Border ()
-			{
-				BorderColor = Colors.Bisque
-			};	
+			var style = new Style ();
+			style.Setters.Add (new Setter ("BorderColor", Colors.Bisque));
+
+			var trigger = new Trigger () {Property = "IsMouseOver", Value = true};
+			trigger.Setters.Add (new Setter ("BorderColor", Colors.Red));
+
+			style.Triggers.Add (trigger);
+
+			border = new Border ();
+			border.Style = style;
 
 			BindingOperations.SetBinding (this, "DataContext.Root", border.GetProperty ("Child"), new TokenAreaConverter ());
 									
@@ -72,8 +78,6 @@ namespace moro.fkalc.UI
 
 			AdornerLayer.GetAdornerLayer (border).Add (new CursorLines (this));
 			
-			MouseEnterEvent += HandleMouseEnterEvent;
-			MouseLeaveEvent += HandleMouseLeaveEvent;
 			LostKeyboardFocusEvent += HandleLostKeyboardFocusEvent;
 			
 			new InsertCharacterProcessor (this);
@@ -160,18 +164,6 @@ namespace moro.fkalc.UI
 			BindingOperations.SetBinding (this, "DataContext.EvaluateCommand", GetProperty ("EvaluateCommand"));
 
 			BindingOperations.SetBinding (this, "DataContext.HasError", GetProperty ("Background"), new HasErrorToBrushesConverter ());
-		}
-
-		private void HandleMouseEnterEvent (object sender, EventArgs e)
-		{
-			var style = new Style ();
-			style.Setters.Add (new Setter ("BorderColor", Colors.Red));
-			border.Style = style;
-		}
-		
-		private void HandleMouseLeaveEvent (object sender, EventArgs e)
-		{
-			border.Style = null;
 		}
 
 		private void HandleLostKeyboardFocusEvent (object sender, EventArgs e)
